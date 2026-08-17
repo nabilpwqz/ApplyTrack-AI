@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { applicationsAPI, aiAPI } from '../services/api.ts';
-import { Application, RecruiterContact } from '../types/index.ts';
+import { Application, ApplicationStatus, RecruiterContact } from '../types/index.ts';
 import { 
   MapPin, 
   DollarSign, 
@@ -13,8 +13,7 @@ import {
   ArrowLeft,
   X,
   CheckCircle,
-  HelpCircle,
-  BookOpen
+  HelpCircle
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -24,7 +23,6 @@ export const ApplicationDetails: React.FC = () => {
   const queryClient = useQueryClient();
 
   const [activeAITab, setActiveAITab] = useState<'FOLLOWUP' | 'PROBABILITY' | 'PREP' | 'SALARY'>('FOLLOWUP');
-  const [copiedText, setCopiedText] = useState<boolean>(false);
 
   // AI Follow-up settings state
   const [tone, setTone] = useState<string>('Professional');
@@ -57,7 +55,7 @@ export const ApplicationDetails: React.FC = () => {
 
   // Mutate: Update Status
   const updateStatusMutation = useMutation({
-    mutationFn: (status: string) => applicationsAPI.update(id!, { status }),
+    mutationFn: (status: ApplicationStatus) => applicationsAPI.update(id!, { status }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['applicationDetails', id] });
       queryClient.invalidateQueries({ queryKey: ['applicationsList'] });
@@ -109,7 +107,7 @@ export const ApplicationDetails: React.FC = () => {
     );
   }
 
-  const payload = detailsData?.data || {};
+  const payload: any = detailsData?.data || {};
   const app: Application = payload.application || {};
   const analyses = payload.aiAnalyses || [];
 
@@ -117,9 +115,7 @@ export const ApplicationDetails: React.FC = () => {
 
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
-    setCopiedText(true);
     toast.success('Copied text to clipboard');
-    setTimeout(() => setCopiedText(false), 2000);
   };
 
   const handleGenerateFollowUp = async () => {
@@ -162,7 +158,7 @@ export const ApplicationDetails: React.FC = () => {
     if (!contactName) return toast.error('Name is required');
     
     const existingContacts = app.contacts || [];
-    const newContacts = [...existingContacts, {
+    const newContacts: RecruiterContact[] = [...existingContacts, {
       name: contactName,
       role: contactRole || 'Recruiter',
       email: contactEmail,
@@ -171,7 +167,7 @@ export const ApplicationDetails: React.FC = () => {
     addContactMutation.mutate(newContacts);
   };
 
-  const getStatusBadge = (status: string) => {
+  const getStatusBadge = (status: ApplicationStatus) => {
     switch (status) {
       case 'SAVED': return 'badge-neutral text-slate-300';
       case 'APPLIED': return 'badge-primary text-slate-950 font-bold';
@@ -240,7 +236,7 @@ export const ApplicationDetails: React.FC = () => {
           <label className="label py-1 text-slate-500 text-[10px] uppercase font-bold">Change stage</label>
           <select 
             value={app.status}
-            onChange={(e) => updateStatusMutation.mutate(e.target.value)}
+            onChange={(e) => updateStatusMutation.mutate(e.target.value as ApplicationStatus)}
             className="select select-sm select-bordered bg-neutral border-white/10 text-white rounded-lg text-xs font-semibold focus:outline-none"
           >
             <option value="SAVED">Saved</option>
@@ -622,12 +618,12 @@ export const ApplicationDetails: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-3 bg-neutral/40 border border-white/5 rounded-xl text-center space-y-1">
+                <div className="p-3 bg-neutral/40 border border-white/5 rounded-xl text-center space-y-0.5">
                   <span className="text-[9px] text-slate-500 uppercase font-bold tracking-wider">Health Rating</span>
                   <div className="text-2xl font-black text-white">{app.companyId.healthScore || 50}/100</div>
                   <span className="badge badge-warning badge-xs font-bold text-slate-950">Healthy</span>
                 </div>
-                <div className="p-3 bg-neutral/40 border border-white/5 rounded-xl text-center space-y-1">
+                <div className="p-3 bg-neutral/40 border border-white/5 rounded-xl text-center space-y-0.5">
                   <span className="text-[9px] text-slate-500 uppercase font-bold tracking-wider">Estimated Layoff Risk</span>
                   <div className="text-2xl font-black text-error">{app.companyId.layoffRisk || 15}%</div>
                   <span className="badge badge-ghost border border-white/10 badge-xs font-bold text-slate-400">Low</span>
@@ -641,7 +637,7 @@ export const ApplicationDetails: React.FC = () => {
       </div>
 
       {timelineModal && (
-        <div className="fixed inset-0 z-50 bg-[#000]/70 flex items-center justify-center p-4 backdrop-blur-xs">
+        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4 backdrop-blur-xs">
           <div className="w-full max-w-md bg-neutral border border-white/10 rounded-2xl p-6 space-y-4 shadow-2xl relative">
             <button onClick={() => setTimelineModal(false)} className="absolute top-4 right-4 text-slate-400 hover:text-white">
               <X className="w-5 h-5" />
@@ -697,7 +693,7 @@ export const ApplicationDetails: React.FC = () => {
       )}
 
       {contactModal && (
-        <div className="fixed inset-0 z-50 bg-[#000]/70 flex items-center justify-center p-4 backdrop-blur-xs">
+        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4 backdrop-blur-xs">
           <div className="w-full max-w-md bg-neutral border border-white/10 rounded-2xl p-6 space-y-4 shadow-2xl relative">
             <button onClick={() => setContactModal(false)} className="absolute top-4 right-4 text-slate-400 hover:text-white">
               <X className="w-5 h-5" />
@@ -754,4 +750,5 @@ export const ApplicationDetails: React.FC = () => {
     </div>
   );
 };
+
 export default ApplicationDetails;

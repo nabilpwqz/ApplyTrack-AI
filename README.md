@@ -1,4 +1,4 @@
-# ApplyTrack AI 🚀 (Full-Stack TypeScript)
+# ApplyTrack AI 🚀 
 
 An AI-powered job application command center and MERN + TypeScript platform.
 

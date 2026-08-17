@@ -1,148 +1,85 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { applicationsAPI } from '../services/api.ts';
-import { Application } from '../types/index.ts';
+import { Application, ApplicationStatus } from '../types/index.ts';
 import { 
   DndContext, 
-  closestCenter,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-  DragEndEvent,
+  useSensor, 
+  useSensors, 
+  PointerSensor, 
+  DragEndEvent 
 } from '@dnd-kit/core';
-import { 
-  SortableContext, 
-  sortableKeyboardCoordinates, 
-  verticalListSortingStrategy,
-  useSortable
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import { Link } from 'react-router-dom';
 import { 
   Plus, 
   Search, 
   LayoutGrid, 
   List, 
-  GripVertical,
-  ChevronRight,
-  X
+  X, 
+  DollarSign, 
+  MapPin, 
+  ArrowUpRight,
+  Filter
 } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
-// Sortable Kanban Card item
-interface KanbanCardProps {
-  app: Application;
-}
-
-const KanbanCard: React.FC<KanbanCardProps> = ({ app }) => {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: app._id });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    opacity: isDragging ? 0.4 : 1,
-  };
-
-  const getPriorityBadge = (p: string) => {
-    switch (p) {
-      case 'HIGH': return 'border-orange-500/40 text-orange-400 bg-orange-500/10';
-      case 'MEDIUM': return 'border-amber-500/40 text-amber-400 bg-amber-500/10';
-      case 'LOW': return 'border-slate-500/40 text-slate-400 bg-slate-500/10';
-      default: return 'border-slate-500/40 text-slate-400';
-    }
-  };
-
-  return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className="p-4 bg-neutral-900/50 rounded-xl border border-white/5 space-y-3 shadow-lg hover:border-amber-500/40 transition-all group"
-    >
-      <div className="flex items-start justify-between gap-2">
-        <div className="flex-1 min-w-0">
-          <span className={`text-[9px] uppercase font-bold px-1.5 py-0.5 rounded border ${getPriorityBadge(app.priority)}`}>
-            {app.priority}
-          </span>
-          <h4 className="font-bold text-white text-sm truncate pt-1.5 group-hover:text-amber-400 transition-colors">
-            {app.jobTitle}
-          </h4>
-          <p className="text-xs text-slate-400 font-medium truncate">
-            {app.companyId ? app.companyId.name : app.companyName || 'Company'}
-          </p>
-        </div>
-        <button 
-          {...attributes} 
-          {...listeners}
-          className="text-slate-600 hover:text-slate-400 cursor-grab active:cursor-grabbing p-1"
-          title="Drag to change stage"
-        >
-          <GripVertical className="w-4 h-4" />
-        </button>
-      </div>
-
-      <div className="flex items-center justify-between text-[10px] text-slate-500 pt-2 border-t border-white/5">
-        <span>{app.location || 'Remote'}</span>
-        <Link 
-          to={`/dashboard/applications/${app._id}`}
-          className="text-amber-400 font-semibold hover:underline flex items-center gap-0.5"
-        >
-          View <ChevronRight className="w-3 h-3" />
-        </Link>
-      </div>
-    </div>
-  );
-};
+const KANBAN_STAGES: { id: ApplicationStatus; title: string }[] = [
+  { id: 'SAVED', title: 'Saved' },
+  { id: 'APPLIED', title: 'Applied' },
+  { id: 'SCREENING', title: 'Screening' },
+  { id: 'ASSESSMENT', title: 'Assessment' },
+  { id: 'INTERVIEW', title: 'Interview Loop' },
+  { id: 'FINAL_INTERVIEW', title: 'Final Interview' },
+  { id: 'OFFER', title: 'Offer Received' },
+  { id: 'ACCEPTED', title: 'Accepted' },
+  { id: 'REJECTED', title: 'Rejected' },
+  { id: 'GHOSTED', title: 'Ghosted' },
+];
 
 export const Applications: React.FC = () => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
+
   const [viewMode, setViewMode] = useState<'KANBAN' | 'TABLE'>('KANBAN');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [statusFilter, setStatusFilter] = useState<string>('ALL');
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [selectedStatus, setSelectedStatus] = useState<string>('ALL');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  // New application form states
+  // New Application form state
   const [jobTitle, setJobTitle] = useState<string>('');
   const [companyName, setCompanyName] = useState<string>('');
+  const [status, setStatus] = useState<ApplicationStatus>('APPLIED');
+  const [priority, setPriority] = useState<string>('MEDIUM');
+  const [location, setLocation] = useState<string>('');
+  const [workMode, setWorkMode] = useState<string>('REMOTE');
   const [salaryMin, setSalaryMin] = useState<string>('');
   const [salaryMax, setSalaryMax] = useState<string>('');
-  const [location, setLocation] = useState<string>('');
-  const [workMode, setWorkMode] = useState<'REMOTE' | 'HYBRID' | 'ON_SITE'>('REMOTE');
-  const [priority, setPriority] = useState<'HIGH' | 'MEDIUM' | 'LOW'>('MEDIUM');
   const [source, setSource] = useState<string>('LinkedIn');
   const [notes, setNotes] = useState<string>('');
 
-  // Fetch applications list
+  // 1. Fetch Applications List
   const { data: appsData, isLoading } = useQuery({
-    queryKey: ['applicationsList'],
-    queryFn: () => applicationsAPI.getAll(),
+    queryKey: ['applicationsList', selectedStatus, searchQuery],
+    queryFn: () => applicationsAPI.getAll({ status: selectedStatus, search: searchQuery }),
   });
 
-  // Mutate: Update stage/status
-  const updateStatusMutation = useMutation({
-    mutationFn: ({ id, status }: { id: string; status: any }) => applicationsAPI.update(id, { status }),
+  // Mutate: Update Application Stage
+  const updateStageMutation = useMutation({
+    mutationFn: ({ id, newStatus }: { id: string; newStatus: ApplicationStatus }) =>
+      applicationsAPI.update(id, { status: newStatus }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['applicationsList'] });
-      queryClient.invalidateQueries({ queryKey: ['analyticsSummary'] });
-      toast.success('Updated application stage');
+      toast.success('Stage updated successfully!');
     },
   });
 
-  // Mutate: Create application
+  // Mutate: Create Application
   const createMutation = useMutation({
     mutationFn: (newAppData: any) => applicationsAPI.create(newAppData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['applicationsList'] });
-      queryClient.invalidateQueries({ queryKey: ['analyticsSummary'] });
       toast.success('Application created!');
-      setModalOpen(false);
+      setIsModalOpen(false);
       resetForm();
     },
   });
@@ -150,69 +87,38 @@ export const Applications: React.FC = () => {
   const resetForm = () => {
     setJobTitle('');
     setCompanyName('');
+    setStatus('APPLIED');
+    setPriority('MEDIUM');
+    setLocation('');
+    setWorkMode('REMOTE');
     setSalaryMin('');
     setSalaryMax('');
-    setLocation('');
+    setSource('LinkedIn');
     setNotes('');
   };
 
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
   );
-
-  if (isLoading) {
-    return (
-      <div className="flex flex-col justify-center items-center h-[60vh] gap-3">
-        <span className="loading loading-spinner loading-lg text-amber-500"></span>
-        <p className="text-slate-400 text-sm">Loading applications pipeline...</p>
-      </div>
-    );
-  }
-
-  const allApps: Application[] = appsData?.data || [];
-
-  // Filter applications
-  const filteredApps = allApps.filter((app) => {
-    const matchesSearch = app.jobTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (app.companyId?.name || app.companyName || '').toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus = statusFilter === 'ALL' || app.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
-
-  // Kanban Columns configuration
-  const kanbanColumns = [
-    { id: 'SAVED', title: 'Saved Jobs', color: 'border-slate-500' },
-    { id: 'APPLIED', title: 'Applied', color: 'border-amber-500' },
-    { id: 'SCREENING', title: 'Screening', color: 'border-amber-600' },
-    { id: 'ASSESSMENT', title: 'Assessment', color: 'border-orange-500' },
-    { id: 'INTERVIEW', title: 'Interview Loop', color: 'border-amber-400' },
-    { id: 'OFFER', title: 'Offer Received', color: 'border-yellow-400' },
-  ];
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over) return;
 
-    const activeId = active.id as string;
-    const overId = over.id as string;
+    const appId = active.id as string;
+    const newStage = over.id as ApplicationStatus;
 
-    const draggedApp = allApps.find(a => a._id === activeId);
-    if (!draggedApp) return;
-
-    // Determine target status column
-    let newStatus = overId;
-    if (!kanbanColumns.some(col => col.id === overId)) {
-      const overApp = allApps.find(a => a._id === overId);
-      if (overApp) newStatus = overApp.status;
-    }
-
-    if (draggedApp.status !== newStatus && kanbanColumns.some(col => col.id === newStatus)) {
-      updateStatusMutation.mutate({ id: activeId, status: newStatus });
+    const app = apps.find(a => a._id === appId);
+    if (app && app.status !== newStage) {
+      updateStageMutation.mutate({ id: appId, newStatus: newStage });
     }
   };
 
-  const handleCreateSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!jobTitle || !companyName) {
       return toast.error('Job Title and Company Name are required');
@@ -221,205 +127,270 @@ export const Applications: React.FC = () => {
     createMutation.mutate({
       jobTitle,
       companyName,
-      status: 'APPLIED',
+      status,
       priority,
+      location,
       workMode,
-      location: location || 'Remote',
-      source,
-      notes,
       salary: {
         min: salaryMin ? Number(salaryMin) : undefined,
         max: salaryMax ? Number(salaryMax) : undefined,
         currency: 'USD',
       },
+      source,
+      notes,
     });
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col justify-center items-center h-[70vh] gap-3">
+        <span className="loading loading-spinner loading-lg text-amber-500"></span>
+        <p className="text-slate-400 text-sm font-medium">Loading application matrix...</p>
+      </div>
+    );
+  }
+
+  const apps: Application[] = appsData?.data || [];
+
+  const getStatusBadge = (st: ApplicationStatus) => {
+    switch (st) {
+      case 'SAVED': return 'badge-neutral text-slate-300';
+      case 'APPLIED': return 'badge-primary text-slate-950 font-bold';
+      case 'SCREENING': return 'bg-amber-500/20 text-amber-400 border border-amber-500/30 font-bold';
+      case 'ASSESSMENT': return 'badge-warning text-slate-950 font-bold';
+      case 'INTERVIEW':
+      case 'FINAL_INTERVIEW': return 'badge-secondary text-white font-bold';
+      case 'OFFER': return 'badge-warning text-slate-950 font-bold animate-pulse';
+      case 'ACCEPTED': return 'bg-amber-400 text-slate-950 font-bold';
+      case 'REJECTED': return 'badge-error text-white font-bold';
+      case 'GHOSTED': return 'badge-ghost border border-white/10 text-slate-400';
+      default: return 'badge-neutral';
+    }
   };
 
   return (
     <div className="space-y-6 pb-12">
-      {/* Header controls */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      
+      {/* Top Header & View Controls */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold text-white tracking-tight">Applications Command Board</h1>
-          <p className="text-xs text-slate-400">Drag and drop cards across columns to update pipeline stage</p>
+          <p className="text-xs text-slate-400">Manage pipeline stages via drag-and-drop or table layout</p>
         </div>
 
-        <button 
-          onClick={() => setModalOpen(true)}
-          className="btn btn-primary text-slate-950 font-bold rounded-xl flex items-center gap-2 text-xs shadow-lg shadow-amber-500/20"
-        >
-          <Plus className="w-4 h-4" /> Log Application
-        </button>
-      </div>
-
-      {/* Filter and View Toggles */}
-      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 bg-neutral/20 border border-white/5 rounded-2xl p-3">
-        <div className="flex items-center gap-3 w-full sm:w-auto">
-          
-          {/* Search box */}
-          <div className="relative flex-1 sm:w-64">
-            <Search className="w-4 h-4 text-slate-500 absolute left-3 top-2.5" />
-            <input 
-              type="text" 
-              placeholder="Search company or title..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="input input-sm input-bordered bg-neutral/50 border-white/5 pl-9 text-xs text-white rounded-xl focus:outline-none focus:border-amber-500 w-full"
-            />
+        <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+          {/* View Toggle */}
+          <div className="join border border-white/10 bg-neutral-900/60 p-0.5 rounded-xl">
+            <button 
+              onClick={() => setViewMode('KANBAN')}
+              className={`join-item btn btn-xs border-none rounded-lg text-xs flex items-center gap-1 ${viewMode === 'KANBAN' ? 'bg-amber-500 text-slate-950 font-bold' : 'text-slate-400'}`}
+            >
+              <LayoutGrid className="w-3.5 h-3.5" /> Kanban
+            </button>
+            <button 
+              onClick={() => setViewMode('TABLE')}
+              className={`join-item btn btn-xs border-none rounded-lg text-xs flex items-center gap-1 ${viewMode === 'TABLE' ? 'bg-amber-500 text-slate-950 font-bold' : 'text-slate-400'}`}
+            >
+              <List className="w-3.5 h-3.5" /> Table
+            </button>
           </div>
 
-          {/* Status Select */}
-          <select 
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="select select-sm select-bordered bg-neutral/50 border-white/5 text-xs text-white rounded-xl focus:outline-none"
-          >
-            <option value="ALL">All Stages</option>
-            <option value="SAVED">Saved</option>
-            <option value="APPLIED">Applied</option>
-            <option value="SCREENING">Screening</option>
-            <option value="ASSESSMENT">Assessment</option>
-            <option value="INTERVIEW">Interview</option>
-            <option value="OFFER">Offer</option>
-            <option value="REJECTED">Rejected</option>
-            <option value="GHOSTED">Ghosted</option>
-          </select>
-        </div>
-
-        {/* View Mode Toggle */}
-        <div className="join bg-neutral/50 border border-white/5 p-1 rounded-xl">
           <button 
-            onClick={() => setViewMode('KANBAN')}
-            className={`btn btn-xs join-item rounded-lg ${viewMode === 'KANBAN' ? 'bg-amber-500 text-slate-950 font-bold' : 'text-slate-400'}`}
+            onClick={() => setIsModalOpen(true)}
+            className="btn btn-sm btn-primary text-slate-950 font-bold rounded-xl text-xs flex items-center gap-1.5 shadow-lg shadow-amber-500/20"
           >
-            <LayoutGrid className="w-3.5 h-3.5" /> Kanban
-          </button>
-          <button 
-            onClick={() => setViewMode('TABLE')}
-            className={`btn btn-xs join-item rounded-lg ${viewMode === 'TABLE' ? 'bg-amber-500 text-slate-950 font-bold' : 'text-slate-400'}`}
-          >
-            <List className="w-3.5 h-3.5" /> Table
+            <Plus className="w-4 h-4" /> Add Application
           </button>
         </div>
       </div>
 
-      {/* KANBAN BOARD VIEW */}
-      {viewMode === 'KANBAN' && (
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 overflow-x-auto pb-4">
-            {kanbanColumns.map((col) => {
-              const colApps = filteredApps.filter(a => a.status === col.id || (col.id === 'INTERVIEW' && a.status === 'FINAL_INTERVIEW'));
+      {/* Filter & Search Toolbar */}
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 bg-neutral-900/40 p-3 rounded-2xl border border-white/5">
+        <div className="relative w-full md:w-80">
+          <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-500" />
+          <input 
+            type="text"
+            placeholder="Search by job title or company..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="input input-sm w-full pl-9 bg-neutral-950 border-white/5 text-white text-xs rounded-xl focus:outline-none focus:border-amber-500"
+          />
+          {searchQuery && (
+            <button onClick={() => setSearchQuery('')} className="absolute right-3 top-2.5 text-slate-500 hover:text-white">
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
+
+        {/* Stage Filter Pills */}
+        <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 custom-scroll text-xs">
+          <button 
+            onClick={() => setSelectedStatus('ALL')}
+            className={`px-3 py-1 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors ${selectedStatus === 'ALL' ? 'bg-amber-500 text-slate-950 font-bold' : 'bg-neutral-800/60 text-slate-400 hover:text-white'}`}
+          >
+            All Stages ({apps.length})
+          </button>
+          {KANBAN_STAGES.map((stage) => {
+            const count = apps.filter(a => a.status === stage.id).length;
+            if (count === 0 && selectedStatus !== stage.id) return null;
+            return (
+              <button
+                key={stage.id}
+                onClick={() => setSelectedStatus(stage.id)}
+                className={`px-3 py-1 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors flex items-center gap-1.5 ${selectedStatus === stage.id ? 'bg-amber-500 text-slate-950 font-bold' : 'bg-neutral-800/60 text-slate-400 hover:text-white'}`}
+              >
+                <span>{stage.title}</span>
+                <span className="badge badge-ghost badge-xs text-[9px] px-1 font-bold">{count}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Main View Area */}
+      {viewMode === 'KANBAN' ? (
+        <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+          <div className="flex gap-4 overflow-x-auto pb-6 custom-scroll min-h-[600px]">
+            {KANBAN_STAGES.map((stage) => {
+              const stageApps = apps.filter(a => a.status === stage.id);
               
               return (
-                <div key={col.id} className="glass-panel rounded-2xl p-3 space-y-3 border-t-2 border border-white/5 flex flex-col justify-start min-w-64">
-                  <div className="flex justify-between items-center pb-2 border-b border-white/5">
-                    <h3 className="font-bold text-white text-xs">{col.title}</h3>
-                    <span className="badge badge-neutral badge-xs font-bold text-slate-400">
-                      {colApps.length}
+                <div 
+                  key={stage.id}
+                  id={stage.id}
+                  className="w-72 flex-shrink-0 bg-neutral-900/30 border border-white/5 rounded-2xl p-3 flex flex-col justify-between space-y-3"
+                >
+                  <div className="flex justify-between items-center px-1 pb-2 border-b border-white/5">
+                    <span className="font-bold text-white text-xs tracking-wide">{stage.title}</span>
+                    <span className="badge badge-warning badge-xs font-bold text-slate-950 px-1.5 py-0.5 rounded">
+                      {stageApps.length}
                     </span>
                   </div>
 
-                  <SortableContext items={colApps.map(a => a._id)} strategy={verticalListSortingStrategy}>
-                    <div className="space-y-3 min-h-48">
-                      {colApps.map((app) => (
-                        <KanbanCard key={app._id} app={app} />
-                      ))}
-                      {colApps.length === 0 && (
-                        <div className="h-32 border border-dashed border-white/5 rounded-xl flex items-center justify-center text-[10px] text-slate-600">
-                          Drop cards here
+                  <div className="flex-1 space-y-3 overflow-y-auto max-h-[65vh] custom-scroll pr-1">
+                    {stageApps.map((app) => (
+                      <div
+                        key={app._id}
+                        onClick={() => navigate(`/dashboard/applications/${app._id}`)}
+                        className="p-4 bg-neutral-900/70 border border-white/5 hover:border-amber-500/40 rounded-xl space-y-2 cursor-pointer transition-all hover:scale-[1.01] shadow-sm"
+                      >
+                        <div className="flex justify-between items-start">
+                          <h4 className="font-bold text-white text-xs leading-snug line-clamp-1">{app.jobTitle}</h4>
+                          <span className="text-[9px] bg-neutral/80 text-slate-400 px-1.5 py-0.5 rounded font-bold uppercase">
+                            {app.priority}
+                          </span>
                         </div>
-                      )}
-                    </div>
-                  </SortableContext>
+
+                        <p className="text-[10px] text-slate-400 font-semibold truncate">
+                          {app.companyId?.name || app.companyName || 'Company'}
+                        </p>
+
+                        <div className="flex justify-between items-center text-[10px] text-slate-500 pt-1 border-t border-white/5">
+                          <span className="flex items-center gap-1">
+                            <MapPin className="w-3 h-3 text-slate-500" /> {app.location || 'Remote'}
+                          </span>
+                          <span className="font-bold text-amber-400">
+                            {app.salary?.max ? `$${app.salary.max.toLocaleString()}` : ''}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+
+                    {stageApps.length === 0 && (
+                      <div className="text-center py-10 border border-dashed border-white/5 rounded-xl text-[10px] text-slate-600">
+                        Drop items here
+                      </div>
+                    )}
+                  </div>
                 </div>
               );
             })}
           </div>
         </DndContext>
-      )}
-
-      {/* TABLE VIEW */}
-      {viewMode === 'TABLE' && (
-        <div className="glass-card rounded-2xl p-6 overflow-x-auto border-white/5">
-          <table className="table w-full text-slate-300">
-            <thead>
-              <tr className="border-b border-white/5 text-slate-400 text-xs">
-                <th>Company</th>
-                <th>Role</th>
-                <th>Priority</th>
-                <th>Stage</th>
-                <th>Salary Range</th>
-                <th>Applied Date</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5 text-xs">
-              {filteredApps.map((app) => (
-                <tr key={app._id} className="hover:bg-neutral/20 border-none">
-                  <td className="font-semibold text-white">
-                    {app.companyId ? app.companyId.name : app.companyName}
-                  </td>
-                  <td>{app.jobTitle}</td>
-                  <td>
-                    <span className="badge badge-outline badge-xs font-semibold">
-                      {app.priority}
-                    </span>
-                  </td>
-                  <td>
-                    <span className="badge badge-primary badge-xs font-bold">
-                      {app.status}
-                    </span>
-                  </td>
-                  <td>
-                    {app.salary?.min ? `$${app.salary.min.toLocaleString()} - $${app.salary.max?.toLocaleString()}` : 'N/A'}
-                  </td>
-                  <td className="text-slate-400">
-                    {new Date(app.applicationDate).toLocaleDateString()}
-                  </td>
-                  <td className="text-right">
-                    <Link to={`/dashboard/applications/${app._id}`} className="btn btn-ghost btn-xs text-amber-400">
-                      Details
-                    </Link>
-                  </td>
+      ) : (
+        /* List Table View */
+        <div className="glass-card rounded-2xl overflow-hidden border border-white/5">
+          <div className="overflow-x-auto">
+            <table className="table w-full text-slate-300 text-xs">
+              <thead>
+                <tr className="border-b border-white/5 text-slate-400 uppercase text-[10px] tracking-wider">
+                  <th>Job Title & Company</th>
+                  <th>Stage</th>
+                  <th>Priority</th>
+                  <th>Location</th>
+                  <th>Applied Date</th>
+                  <th className="text-right">Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {apps.map((app) => (
+                  <tr key={app._id} className="hover:bg-neutral-900/40">
+                    <td>
+                      <div>
+                        <Link to={`/dashboard/applications/${app._id}`} className="font-bold text-white hover:text-amber-400">
+                          {app.jobTitle}
+                        </Link>
+                        <p className="text-[10px] text-slate-400">{app.companyId?.name || app.companyName}</p>
+                      </div>
+                    </td>
+                    <td>
+                      <span className={`badge ${getStatusBadge(app.status)} badge-xs font-bold uppercase`}>
+                        {app.status}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="text-[10px] text-slate-400 uppercase font-bold">
+                        {app.priority}
+                      </span>
+                    </td>
+                    <td>{app.location || 'Remote'}</td>
+                    <td>{new Date(app.applicationDate).toLocaleDateString()}</td>
+                    <td className="text-right">
+                      <Link 
+                        to={`/dashboard/applications/${app._id}`}
+                        className="btn btn-xs btn-ghost text-amber-400 hover:bg-amber-500/10"
+                      >
+                        Details &rarr;
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
-      {/* Create Application Modal */}
-      {modalOpen && (
-        <div className="fixed inset-0 z-50 bg-[#000]/70 flex items-center justify-center p-4 backdrop-blur-xs">
-          <div className="w-full max-w-lg bg-neutral border border-white/10 rounded-2xl p-6 space-y-4 shadow-2xl relative">
-            <button onClick={() => setModalOpen(false)} className="absolute top-4 right-4 text-slate-400 hover:text-white">
+      {/* Modal: New Application */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4 backdrop-blur-xs">
+          <div className="w-full max-w-lg bg-neutral-900 border border-white/10 rounded-2xl p-6 space-y-4 shadow-2xl relative">
+            <button onClick={() => setIsModalOpen(false)} className="absolute top-4 right-4 text-slate-400 hover:text-white">
               <X className="w-5 h-5" />
             </button>
-            
-            <h3 className="font-bold text-white text-lg">Log New Job Application</h3>
+            <h3 className="font-bold text-white text-base">Track New Job Application</h3>
 
-            <form onSubmit={handleCreateSubmit} className="space-y-4">
+            <form onSubmit={handleFormSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="form-control">
-                  <label className="label text-xs text-slate-400">Job Title *</label>
+                  <label className="label text-[10px] text-slate-400 font-bold uppercase py-0.5">Job Title *</label>
                   <input 
                     type="text" 
-                    placeholder="e.g. Frontend Engineer"
+                    placeholder="e.g. React Developer"
                     value={jobTitle}
                     onChange={(e) => setJobTitle(e.target.value)}
-                    className="input input-sm input-bordered bg-neutral-900 border-white/10 text-white rounded-lg text-xs"
+                    className="input input-sm input-bordered bg-neutral-950 border-white/5 text-white text-xs rounded-lg"
                     required
                   />
                 </div>
-
                 <div className="form-control">
-                  <label className="label text-xs text-slate-400">Company Name *</label>
+                  <label className="label text-[10px] text-slate-400 font-bold uppercase py-0.5">Company Name *</label>
                   <input 
                     type="text" 
-                    placeholder="e.g. Google"
+                    placeholder="e.g. OpenAI"
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
-                    className="input input-sm input-bordered bg-neutral-900 border-white/10 text-white rounded-lg text-xs"
+                    className="input input-sm input-bordered bg-neutral-950 border-white/5 text-white text-xs rounded-lg"
                     required
                   />
                 </div>
@@ -427,96 +398,60 @@ export const Applications: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="form-control">
-                  <label className="label text-xs text-slate-400">Location</label>
-                  <input 
-                    type="text" 
-                    placeholder="e.g. Remote / Austin, TX"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    className="input input-sm input-bordered bg-neutral-900 border-white/10 text-white rounded-lg text-xs"
-                  />
-                </div>
-
-                <div className="form-control">
-                  <label className="label text-xs text-slate-400">Work Mode</label>
+                  <label className="label text-[10px] text-slate-400 font-bold uppercase py-0.5">Current Stage</label>
                   <select 
-                    value={workMode}
-                    onChange={(e) => setWorkMode(e.target.value as any)}
-                    className="select select-sm select-bordered bg-neutral-900 border-white/10 text-white rounded-lg text-xs"
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value as ApplicationStatus)}
+                    className="select select-sm select-bordered bg-neutral-950 border-white/5 text-white text-xs rounded-lg"
                   >
-                    <option value="REMOTE">Remote</option>
-                    <option value="HYBRID">Hybrid</option>
-                    <option value="ON_SITE">On-Site</option>
+                    {KANBAN_STAGES.map(s => (
+                      <option key={s.id} value={s.id}>{s.title}</option>
+                    ))}
                   </select>
                 </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
                 <div className="form-control">
-                  <label className="label text-xs text-slate-400">Salary Min ($)</label>
-                  <input 
-                    type="number" 
-                    placeholder="80000"
-                    value={salaryMin}
-                    onChange={(e) => setSalaryMin(e.target.value)}
-                    className="input input-sm input-bordered bg-neutral-900 border-white/10 text-white rounded-lg text-xs"
-                  />
-                </div>
-
-                <div className="form-control">
-                  <label className="label text-xs text-slate-400">Salary Max ($)</label>
-                  <input 
-                    type="number" 
-                    placeholder="120000"
-                    value={salaryMax}
-                    onChange={(e) => setSalaryMax(e.target.value)}
-                    className="input input-sm input-bordered bg-neutral-900 border-white/10 text-white rounded-lg text-xs"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="form-control">
-                  <label className="label text-xs text-slate-400">Priority</label>
+                  <label className="label text-[10px] text-slate-400 font-bold uppercase py-0.5">Priority</label>
                   <select 
                     value={priority}
-                    onChange={(e) => setPriority(e.target.value as any)}
-                    className="select select-sm select-bordered bg-neutral-900 border-white/10 text-white rounded-lg text-xs"
+                    onChange={(e) => setPriority(e.target.value)}
+                    className="select select-sm select-bordered bg-neutral-950 border-white/5 text-white text-xs rounded-lg"
                   >
                     <option value="HIGH">High Priority</option>
                     <option value="MEDIUM">Medium Priority</option>
                     <option value="LOW">Low Priority</option>
                   </select>
                 </div>
+              </div>
 
+              <div className="grid grid-cols-2 gap-4">
                 <div className="form-control">
-                  <label className="label text-xs text-slate-400">Source</label>
+                  <label className="label text-[10px] text-slate-400 font-bold uppercase py-0.5">Location</label>
                   <input 
                     type="text" 
-                    placeholder="LinkedIn, Referral, etc."
-                    value={source}
-                    onChange={(e) => setSource(e.target.value)}
-                    className="input input-sm input-bordered bg-neutral-900 border-white/10 text-white rounded-lg text-xs"
+                    placeholder="e.g. Austin, TX"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    className="input input-sm input-bordered bg-neutral-950 border-white/5 text-white text-xs rounded-lg"
+                  />
+                </div>
+                <div className="form-control">
+                  <label className="label text-[10px] text-slate-400 font-bold uppercase py-0.5">Target Salary ($)</label>
+                  <input 
+                    type="number" 
+                    placeholder="e.g. 110000"
+                    value={salaryMax}
+                    onChange={(e) => setSalaryMax(e.target.value)}
+                    className="input input-sm input-bordered bg-neutral-950 border-white/5 text-white text-xs rounded-lg"
                   />
                 </div>
               </div>
 
-              <div className="form-control">
-                <label className="label text-xs text-slate-400">Notes / Details</label>
-                <textarea 
-                  placeholder="Paste job posting details or interview notes..."
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  className="textarea textarea-bordered bg-neutral-900 border-white/10 text-white text-xs rounded-lg h-20"
-                ></textarea>
-              </div>
-
               <button 
-                type="submit" 
+                type="submit"
                 className="btn btn-sm btn-primary text-slate-950 font-bold w-full rounded-xl"
                 disabled={createMutation.isPending}
               >
-                {createMutation.isPending ? 'Logging application...' : 'Save Application'}
+                {createMutation.isPending ? 'Logging Application...' : 'Save Job Dossier'}
               </button>
             </form>
           </div>
@@ -526,4 +461,5 @@ export const Applications: React.FC = () => {
     </div>
   );
 };
+
 export default Applications;

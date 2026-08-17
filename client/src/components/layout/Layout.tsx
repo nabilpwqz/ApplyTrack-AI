@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.tsx';
-import { emailAPI } from '../../services/api.ts';
-import { EmailEvent } from '../../types/index.ts';
 import { 
   LayoutDashboard, 
   Briefcase, 
@@ -12,300 +10,319 @@ import {
   Sparkles, 
   Settings as SettingsIcon, 
   LogOut, 
-  Bell, 
-  Menu, 
+  Search, 
+  Plus, 
+  Zap, 
+  ChevronRight,
   X,
-  MailWarning
+  Menu,
+  UserCheck
 } from 'lucide-react';
-import toast from 'react-hot-toast';
 
 export const Layout: React.FC = () => {
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
   const location = useLocation();
-  
-  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
-  const [unprocessedCount, setUnprocessedCount] = useState<number>(0);
-  const [notificationOpen, setNotificationOpen] = useState<boolean>(false);
-  const [pendingEmails, setPendingEmails] = useState<EmailEvent[]>([]);
+  const navigate = useNavigate();
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState<boolean>(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // Fetch pending parsed emails
-  const fetchPendingEmails = async () => {
-    const res = await emailAPI.getEvents();
-    if (res.success && res.data) {
-      setPendingEmails(res.data);
-      setUnprocessedCount(res.data.length);
-    }
-  };
-
+  // Global hotkey listener (Ctrl+K or /)
   useEffect(() => {
-    fetchPendingEmails();
-    const interval = setInterval(fetchPendingEmails, 45000);
-    return () => clearInterval(interval);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        setCommandPaletteOpen((prev) => !prev);
+      } else if (e.key === '/' && document.activeElement?.tagName !== 'INPUT' && document.activeElement?.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        setCommandPaletteOpen(true);
+      } else if (e.key === 'Escape') {
+        setCommandPaletteOpen(false);
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const handleSyncEmails = async () => {
-    toast.loading('Syncing recruiter emails...', { id: 'email-sync' });
-    const res = await emailAPI.sync();
-    if (res.success) {
-      toast.success(res.message || 'Synced successfully', { id: 'email-sync' });
-      fetchPendingEmails();
-    } else {
-      toast.error('Failed to sync emails', { id: 'email-sync' });
-    }
-  };
-
-  const handleProcessEmail = async (eventId: string, action: string, applicationId: string | null = null) => {
-    toast.loading('Processing action...', { id: 'email-process' });
-    const res = await emailAPI.process(eventId, action, applicationId);
-    if (res.success) {
-      toast.success('Successfully imported/updated application!', { id: 'email-process' });
-      fetchPendingEmails();
-      navigate('/dashboard/applications');
-    } else {
-      toast.error(res.message || 'Error processing email', { id: 'email-process' });
-    }
-  };
-
-  const handleLogout = () => {
-    logout();
-    toast.success('Logged out successfully');
-    navigate('/login');
-  };
-
   const navItems = [
-    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    { name: 'Applications', path: '/dashboard/applications', icon: Briefcase },
-    { name: 'Calendar', path: '/dashboard/calendar', icon: CalendarIcon },
-    { name: 'Analytics', path: '/dashboard/analytics', icon: BarChart3 },
-    { name: 'Companies', path: '/dashboard/companies', icon: Building2 },
-    { name: 'AI Command Center', path: '/dashboard/ai', icon: Sparkles },
-    { name: 'Settings', path: '/dashboard/settings', icon: SettingsIcon },
+    { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+    { label: 'Applications', path: '/dashboard/applications', icon: Briefcase },
+    { label: 'Calendar', path: '/dashboard/calendar', icon: CalendarIcon },
+    { label: 'Analytics', path: '/dashboard/analytics', icon: BarChart3 },
+    { label: 'Companies', path: '/dashboard/companies', icon: Building2 },
+    { label: 'AI Command Hub', path: '/dashboard/ai-hub', icon: Sparkles, badge: 'AI' },
+    { label: 'Settings', path: '/dashboard/settings', icon: SettingsIcon },
   ];
 
-  const activeClass = (path: string) => {
-    const isCurrent = location.pathname === path || (path !== '/dashboard' && location.pathname.startsWith(path));
-    return isCurrent
-      ? 'bg-amber-500 text-slate-950 font-bold shadow-lg shadow-amber-500/20'
-      : 'text-slate-400 hover:bg-neutral hover:text-white';
+  const handleCommandNavigate = (path: string) => {
+    setCommandPaletteOpen(false);
+    setMobileMenuOpen(false);
+    navigate(path);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-mesh flex flex-col">
-      {/* Top Navbar */}
-      <header className="sticky top-0 z-40 w-full glass-panel border-b border-white/5 px-4 lg:px-8 py-3 flex items-center justify-between">
+    <div className="min-h-screen bg-[#090d16] text-slate-100 flex flex-col font-sans selection:bg-amber-500 selection:text-slate-950">
+      
+      {/* Background Ambient Spotlights */}
+      <div className="fixed top-0 left-1/4 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-amber-500/5 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+      <div className="fixed bottom-0 right-1/4 w-[300px] sm:w-[400px] h-[300px] sm:h-[400px] bg-orange-500/5 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+
+      {/* Top Banner Status Bar */}
+      <div className="bg-neutral-900/90 border-b border-white/5 px-3 sm:px-4 py-1.5 text-[11px] text-slate-400 flex justify-between items-center z-20 backdrop-blur-md">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <span className="flex items-center gap-1.5 text-amber-400 font-bold uppercase tracking-wider text-[10px]">
+            <Zap className="w-3 h-3 text-amber-400 animate-pulse" /> ApplyTrack AI Engine
+          </span>
+          <span className="hidden sm:inline text-slate-600">|</span>
+          <span className="hidden sm:inline-flex items-center gap-1 text-slate-300">
+            <UserCheck className="w-3 h-3 text-amber-500" /> User: <strong className="text-white">{user?.name || 'Guest'}</strong>
+          </span>
+        </div>
         <div className="flex items-center gap-3">
           <button 
-            className="lg:hidden text-slate-300 hover:text-white"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
+            onClick={() => setCommandPaletteOpen(true)}
+            className="inline-flex md:hidden items-center gap-1 text-amber-400 text-[10px] font-bold"
           >
-            <Menu className="w-6 h-6" />
+            <Search className="w-3 h-3" /> Search
           </button>
-          
-          <Link to="/dashboard" className="flex items-center gap-2">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/20">
-              <Sparkles className="w-4 h-4 text-white" />
-            </span>
-            <span className="text-xl font-bold tracking-tight text-white hidden sm:inline-block">
-              ApplyTrack <span className="text-amber-400">AI</span>
-            </span>
-          </Link>
+          <span className="hidden md:inline-flex items-center gap-1.5 text-slate-400">
+            <kbd className="px-1.5 py-0.5 text-[9px] font-mono bg-neutral-800 border border-white/10 rounded text-amber-400">Ctrl+K</kbd> Quick Search
+          </span>
+          <span className="badge badge-warning badge-xs font-bold text-slate-950 uppercase px-2 py-0.5">Standalone Mode</span>
         </div>
+      </div>
 
-        {/* Header Right Actions */}
-        <div className="flex items-center gap-4">
-          <button 
-            onClick={handleSyncEmails}
-            className="btn btn-sm btn-outline border-amber-500/40 text-amber-400 hover:bg-amber-500/10 hover:border-amber-500 rounded-lg flex items-center gap-2 text-xs font-bold"
-          >
-            <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-            Sync Emails
-          </button>
+      {/* Mobile Top Header */}
+      <div className="md:hidden bg-neutral-950 border-b border-white/5 px-4 py-3 flex items-center justify-between z-20">
+        <Link to="/dashboard" className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-slate-950 font-black text-sm">
+            A
+          </div>
+          <span className="font-extrabold text-base tracking-tight text-white">
+            ApplyTrack<span className="text-amber-400">.AI</span>
+          </span>
+        </Link>
 
-          {/* Notifications Dropdown */}
-          <div className="relative">
-            <button 
-              onClick={() => setNotificationOpen(!notificationOpen)}
-              className="relative p-2 text-slate-400 hover:text-white rounded-lg hover:bg-neutral"
-            >
-              <Bell className="w-5 h-5" />
-              {unprocessedCount > 0 && (
-                <span className="absolute top-1 right-1 w-5 h-5 rounded-full bg-amber-500 text-slate-950 font-bold text-[10px] flex items-center justify-center animate-pulse">
-                  {unprocessedCount}
+        <button 
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="p-2 text-slate-300 hover:text-white rounded-xl bg-neutral-900 border border-white/10"
+        >
+          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
+      </div>
+
+      <div className="flex-1 flex overflow-hidden relative">
+        
+        {/* Desktop Sidebar Navigation */}
+        <aside className="w-64 bg-neutral-950/70 border-r border-white/5 flex-col justify-between hidden md:flex z-10 backdrop-blur-md">
+          <div className="p-5 space-y-6">
+            
+            {/* App Logo */}
+            <Link to="/dashboard" className="flex items-center gap-3 px-2 group">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-slate-950 font-black text-lg shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+                A
+              </div>
+              <div>
+                <span className="font-extrabold text-base tracking-tight text-white block leading-none">
+                  ApplyTrack<span className="text-amber-400">.AI</span>
                 </span>
-              )}
+                <span className="text-[10px] text-slate-400 font-medium tracking-wider uppercase">Job Tracker</span>
+              </div>
+            </Link>
+
+            {/* Quick Action Button */}
+            <button 
+              onClick={() => navigate('/dashboard/applications')}
+              className="btn btn-sm btn-primary text-slate-950 font-bold w-full rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 hover:scale-[1.02] transition-transform"
+            >
+              <Plus className="w-4 h-4" /> Track New Application
             </button>
 
-            {/* Notification Pane */}
-            {notificationOpen && (
-              <div className="absolute right-0 mt-3 w-80 sm:w-96 glass-panel border border-white/10 rounded-xl p-4 shadow-2xl z-50">
-                <div className="flex items-center justify-between border-b border-white/5 pb-2 mb-3">
-                  <h3 className="font-semibold text-white flex items-center gap-2">
-                    <MailWarning className="w-4 h-4 text-amber-400" />
-                    Review Synced Emails
-                  </h3>
-                  <button 
-                    onClick={() => setNotificationOpen(false)}
-                    className="text-slate-400 hover:text-white"
+            {/* Nav List */}
+            <nav className="space-y-1">
+              <span className="px-3 text-[10px] font-extrabold text-slate-500 uppercase tracking-widest block mb-2">Main Menu</span>
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = location.pathname === item.path;
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`
+                      flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-all duration-200
+                      ${isActive 
+                        ? 'nav-link-active' 
+                        : 'text-slate-400 hover:text-white hover:bg-neutral-900/60'
+                      }
+                    `}
                   >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-
-                <div className="max-h-80 overflow-y-auto space-y-3">
-                  {pendingEmails.length === 0 ? (
-                    <div className="text-center py-6 text-slate-500 text-sm">
-                      No new job emails to review.
+                    <div className="flex items-center gap-3">
+                      <Icon className={`w-4 h-4 ${isActive ? 'text-amber-400' : 'text-slate-500'}`} />
+                      <span>{item.label}</span>
                     </div>
-                  ) : (
-                    pendingEmails.map((email) => (
-                      <div key={email._id} className="p-3 bg-neutral/40 rounded-lg border border-white/5 space-y-2">
-                        <div className="flex items-start justify-between">
-                          <div>
-                            <span className="text-[10px] uppercase font-bold text-amber-400 tracking-wide">
-                              {email.extractedData.applicationStatus} Detected
-                            </span>
-                            <h4 className="font-semibold text-white text-sm">
-                              {email.extractedData.jobTitle}
-                            </h4>
-                            <p className="text-xs text-slate-400">
-                              {email.extractedData.company} • {email.sender}
-                            </p>
-                          </div>
-                          <span className="text-[10px] text-slate-500">
-                            {new Date(email.receivedAt).toLocaleDateString()}
-                          </span>
-                        </div>
-                        
-                        <p className="text-xs text-slate-300 italic border-l-2 border-amber-500/40 pl-2 line-clamp-2">
-                          "{email.bodyPreview}"
-                        </p>
+                    {item.badge && (
+                      <span className="badge badge-warning badge-xs font-bold text-slate-950 px-1.5 py-0.5 rounded">
+                        {item.badge}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
+            </nav>
 
-                        <div className="flex gap-2 pt-1">
-                          <button 
-                            onClick={() => handleProcessEmail(email._id, 'CREATE')}
-                            className="btn btn-xs bg-amber-500 text-slate-950 font-bold rounded hover:bg-amber-600 border-none"
-                          >
-                            Add as New
-                          </button>
-                          <button 
-                            onClick={() => handleProcessEmail(email._id, 'DISMISS')}
-                            className="btn btn-xs btn-outline rounded text-slate-400 border-white/10 hover:border-amber-500 hover:text-amber-400"
-                          >
-                            Dismiss
-                          </button>
-                        </div>
-                      </div>
-                    ))
-                  )}
+          </div>
+
+          {/* User Footer Profile Card */}
+          <div className="p-4 border-t border-white/5 bg-neutral-900/40">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2.5 overflow-hidden">
+                <div className="w-8 h-8 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold text-xs">
+                  {user?.name ? user.name.charAt(0).toUpperCase() : 'G'}
+                </div>
+                <div className="truncate">
+                  <p className="text-xs font-bold text-white truncate">{user?.name || 'Guest'}</p>
+                  <p className="text-[10px] text-slate-400 truncate">{user?.email || 'guest@applytrack.ai'}</p>
                 </div>
               </div>
-            )}
-          </div>
-
-          {/* Profile Widget */}
-          <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar placeholder">
-              <div className="bg-amber-500/20 text-amber-400 rounded-full w-9">
-                <span className="text-sm font-semibold">{user?.name ? user.name[0].toUpperCase() : 'G'}</span>
-              </div>
-            </div>
-            <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow-2xl menu menu-sm dropdown-content bg-neutral border border-white/5 rounded-box w-52">
-              <li className="px-4 py-2 border-b border-white/5">
-                <p className="font-semibold text-white">{user?.name || 'Guest'}</p>
-                <p className="text-xs text-slate-500 truncate">{user?.email}</p>
-              </li>
-              <li><Link to="/dashboard/settings" className="py-2 text-slate-300 hover:text-white">Settings</Link></li>
-              <li>
-                <button onClick={handleLogout} className="py-2 text-error hover:bg-error/10">
-                  <LogOut className="w-4 h-4" />
-                  Logout
-                </button>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Container */}
-      <div className="flex flex-1 relative">
-        {/* Sidebar Navigation */}
-        <aside className={`
-          fixed inset-y-0 left-0 z-30 w-64 glass-panel border-r border-white/5 p-4 flex flex-col justify-between transform transition-transform duration-300 lg:static lg:translate-x-0
-          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-        `}>
-          <div className="space-y-6">
-            <div className="flex lg:hidden justify-between items-center pb-2 border-b border-white/5">
-              <span className="font-bold text-white text-sm">Navigation</span>
-              <button onClick={() => setSidebarOpen(false)} className="text-slate-400 hover:text-white">
-                <X className="w-5 h-5" />
+              
+              <button 
+                onClick={logout}
+                title="Log Out"
+                className="p-1.5 text-slate-500 hover:text-amber-400 hover:bg-neutral-800 rounded-lg transition-colors"
+              >
+                <LogOut className="w-4 h-4" />
               </button>
             </div>
-
-            <nav className="space-y-1">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  onClick={() => setSidebarOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${activeClass(item.path)}`}
-                >
-                  <item.icon className="w-5 h-5" />
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
-          </div>
-
-          <div className="pt-4 border-t border-white/5">
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-3 w-full px-4 py-3 text-slate-400 hover:bg-error/10 hover:text-error rounded-xl text-sm font-medium transition-colors"
-            >
-              <LogOut className="w-5 h-5" />
-              Log Out
-            </button>
           </div>
         </aside>
 
-        {/* Content Panel */}
-        <main className="flex-1 overflow-x-hidden overflow-y-auto px-4 py-6 md:p-8 pb-24 lg:pb-8">
-          <Outlet />
+        {/* Mobile Slide-Out Drawer Navigation */}
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 z-40 md:hidden flex">
+            <div className="fixed inset-0 bg-black/70 backdrop-blur-xs" onClick={() => setMobileMenuOpen(false)}></div>
+            <div className="relative w-4/5 max-w-xs bg-neutral-950 border-r border-white/10 p-5 flex flex-col justify-between z-50 h-full">
+              <div className="space-y-6">
+                <div className="flex items-center justify-between border-b border-white/5 pb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-slate-950 font-black text-sm">
+                      A
+                    </div>
+                    <span className="font-extrabold text-base text-white">ApplyTrack<span className="text-amber-400">.AI</span></span>
+                  </div>
+                  <button onClick={() => setMobileMenuOpen(false)} className="text-slate-400 hover:text-white p-1">
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <nav className="space-y-1">
+                  {navItems.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = location.pathname === item.path;
+                    return (
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={`
+                          flex items-center justify-between px-3 py-3 rounded-xl text-xs font-semibold transition-all
+                          ${isActive ? 'bg-amber-500 text-slate-950 font-bold' : 'text-slate-300 hover:bg-neutral-900'}
+                        `}
+                      >
+                        <div className="flex items-center gap-3">
+                          <Icon className={`w-4 h-4 ${isActive ? 'text-slate-950' : 'text-amber-400'}`} />
+                          <span>{item.label}</span>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </div>
+
+              <div className="pt-4 border-t border-white/5 space-y-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold text-xs">
+                    {user?.name ? user.name.charAt(0).toUpperCase() : 'G'}
+                  </div>
+                  <div className="truncate">
+                    <p className="text-xs font-bold text-white truncate">{user?.name || 'Guest'}</p>
+                    <p className="text-[10px] text-slate-400 truncate">{user?.email || 'guest@applytrack.ai'}</p>
+                  </div>
+                </div>
+                <button 
+                  onClick={logout}
+                  className="btn btn-xs btn-outline border-error/30 text-error hover:bg-error/10 w-full rounded-lg text-xs"
+                >
+                  Log Out
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Main Content Viewport */}
+        <main className="flex-1 overflow-y-auto custom-scroll p-4 sm:p-6 md:p-8">
+          <div className="max-w-7xl mx-auto">
+            <Outlet />
+          </div>
         </main>
+
       </div>
 
-      {/* Mobile Bottom Navigation Bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-30 glass-panel border-t border-white/5 px-2 py-2 flex items-center justify-around">
-        <Link to="/dashboard" className="flex flex-col items-center gap-0.5 text-slate-400 hover:text-amber-400">
-          <LayoutDashboard className="w-5 h-5" />
-          <span className="text-[10px]">Home</span>
-        </Link>
-        <Link to="/dashboard/applications" className="flex flex-col items-center gap-0.5 text-slate-400 hover:text-amber-400">
-          <Briefcase className="w-5 h-5" />
-          <span className="text-[10px]">Jobs</span>
-        </Link>
-        <Link to="/dashboard/calendar" className="flex flex-col items-center gap-0.5 text-slate-400 hover:text-amber-400">
-          <CalendarIcon className="w-5 h-5" />
-          <span className="text-[10px]">Calendar</span>
-        </Link>
-        <Link to="/dashboard/ai" className="flex flex-col items-center gap-0.5 text-amber-400">
-          <Sparkles className="w-5 h-5 text-amber-400" />
-          <span className="text-[10px] text-amber-400 font-semibold">AI Hub</span>
-        </Link>
-        
-        <div className="dropdown dropdown-top dropdown-end">
-          <div tabIndex={0} role="button" className="flex flex-col items-center gap-0.5 text-slate-400 hover:text-amber-400">
-            <Menu className="w-5 h-5" />
-            <span className="text-[10px]">More</span>
+      {/* Global Command Palette Modal (Ctrl+K) */}
+      {commandPaletteOpen && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-start justify-center pt-16 sm:pt-20 p-4">
+          <div className="w-full max-w-lg bg-neutral-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden space-y-3 p-4 relative animate-in fade-in zoom-in-95 duration-150">
+            
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <div className="flex items-center gap-2 text-amber-400 font-bold text-xs sm:text-sm">
+                <Search className="w-4 h-4" />
+                <span>Command Launcher & Navigation</span>
+              </div>
+              <button 
+                onClick={() => setCommandPaletteOpen(false)}
+                className="text-slate-500 hover:text-white p-1 rounded-lg"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <input 
+              type="text" 
+              placeholder="Type to filter pages or actions..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="input input-sm w-full bg-neutral-950 border-white/10 text-white rounded-xl text-xs focus:outline-none focus:border-amber-500"
+              autoFocus
+            />
+
+            <div className="space-y-1 max-h-60 overflow-y-auto pt-1 custom-scroll">
+              {navItems
+                .filter(item => item.label.toLowerCase().includes(searchQuery.toLowerCase()))
+                .map(item => {
+                  const Icon = item.icon;
+                  return (
+                    <button
+                      key={item.path}
+                      onClick={() => handleCommandNavigate(item.path)}
+                      className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-neutral-800 transition-colors"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Icon className="w-4 h-4 text-amber-400" />
+                        <span>{item.label}</span>
+                      </div>
+                      <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+                    </button>
+                  );
+                })}
+            </div>
+
           </div>
-          <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow-2xl bg-neutral border border-white/5 rounded-box w-40 mb-2">
-            <li><Link to="/dashboard/analytics"><BarChart3 className="w-4 h-4" />Analytics</Link></li>
-            <li><Link to="/dashboard/companies"><Building2 className="w-4 h-4" />Companies</Link></li>
-            <li><Link to="/dashboard/settings"><SettingsIcon className="w-4 h-4" />Settings</Link></li>
-          </ul>
         </div>
-      </div>
+      )}
+
     </div>
   );
 };
+
 export default Layout;

@@ -3,219 +3,186 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.tsx';
 import { 
   Sparkles, 
-  MailCheck, 
-  FileCheck, 
+  Target, 
+  Mail, 
   TrendingUp, 
-  ShieldAlert, 
+  Building2, 
   DollarSign, 
-  ArrowRight,
-  ChevronRight,
-  CheckCircle2
+  ArrowRight, 
+  CheckCircle2, 
+  UserCheck
 } from 'lucide-react';
-import toast from 'react-hot-toast';
 
 export const Landing: React.FC = () => {
   const { loginDemo } = useAuth();
   const navigate = useNavigate();
 
   const handleDemoAccess = async () => {
-    toast.loading('Initializing demo session and seeding database...', { id: 'demo' });
-    const res = await loginDemo();
-    if (res.success) {
-      toast.success('Access granted! Welcome to ApplyTrack AI, Guest.', { id: 'demo' });
+    const success = await loginDemo();
+    if (success) {
       navigate('/dashboard');
-    } else {
-      toast.error('Failed to start demo session', { id: 'demo' });
     }
   };
 
-  const features = [
-    {
-      title: 'Automatic Email Import',
-      desc: 'Parses job receipts and scheduling emails from your inbox automatically. Review extracted events before confirming modifications.',
-      icon: MailCheck,
-      color: 'text-amber-400'
-    },
-    {
-      title: 'AI Follow-Up Assistant',
-      desc: 'Drafts tailored emails to recruiters based on response days and previous communication in Professional, Friendly, or Confident tones.',
-      icon: Sparkles,
-      color: 'text-orange-400'
-    },
-    {
-      title: 'Interview Success Probability',
-      desc: 'Weights profile skills, experience, and job descriptions using a calibration score model to predict outcomes and suggest target study topics.',
-      icon: FileCheck,
-      color: 'text-yellow-400'
-    },
-    {
-      title: 'Company Health & Layoff Risk',
-      desc: 'Gathers indicators on headcount trends, seed funding, and industry stability to rate overall corporate health and estimate layoff risk.',
-      icon: ShieldAlert,
-      color: 'text-amber-500'
-    },
-    {
-      title: 'Salary Negotiation Advisor',
-      desc: 'Compares offers against market ranges in your region and builds negotiation leverage talking points along with recruiter message scripts.',
-      icon: DollarSign,
-      color: 'text-amber-300'
-    },
-    {
-      title: 'Funnel & Source Analytics',
-      desc: 'Uncovers conversion efficiency from screening to offer stages, compares rates by company tier, and identifies top performing sourcing channels.',
-      icon: TrendingUp,
-      color: 'text-orange-300'
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-gradient-mesh text-slate-100 flex flex-col justify-between">
-      {/* Header */}
-      <header className="px-6 lg:px-12 py-6 flex items-center justify-between border-b border-white/5">
-        <div className="flex items-center gap-2">
-          <span className="w-8 h-8 rounded-lg bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/20">
-            <Sparkles className="w-4 h-4 text-white" />
-          </span>
-          <span className="text-xl font-bold tracking-tight text-white">
-            ApplyTrack <span className="text-primary">AI</span>
-          </span>
-        </div>
-        <div className="flex items-center gap-4">
-          <Link to="/login" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
-            Log In
-          </Link>
-          <Link to="/register" className="btn btn-sm btn-primary rounded-lg text-slate-950 font-bold">
-            Sign Up
-          </Link>
+    <div className="min-h-screen bg-[#090d16] text-slate-100 flex flex-col font-sans selection:bg-amber-500 selection:text-slate-950 overflow-x-hidden">
+      
+      {/* Top Header Navbar */}
+      <header className="border-b border-white/5 bg-neutral-950/80 backdrop-blur-md sticky top-0 z-30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-slate-950 font-black text-base sm:text-lg shadow-lg shadow-amber-500/20">
+              A
+            </div>
+            <span className="font-extrabold text-lg sm:text-xl tracking-tight text-white">
+              ApplyTrack<span className="text-amber-400">.AI</span>
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button 
+              onClick={handleDemoAccess}
+              className="btn btn-xs sm:btn-sm btn-ghost text-amber-400 hover:bg-amber-500/10 rounded-xl text-xs flex items-center gap-1 sm:gap-1.5"
+            >
+              <UserCheck className="w-3.5 h-3.5" /> <span className="hidden xs:inline">Guest Demo</span>
+            </button>
+            <Link 
+              to="/login"
+              className="btn btn-xs sm:btn-sm btn-outline border-white/10 text-slate-200 hover:bg-white/5 rounded-xl text-xs"
+            >
+              Sign In
+            </Link>
+            <Link 
+              to="/register"
+              className="btn btn-xs sm:btn-sm btn-primary text-slate-950 font-bold rounded-xl text-xs shadow-lg shadow-amber-500/20"
+            >
+              Get Started
+            </Link>
+          </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <main className="flex-1 max-w-7xl mx-auto px-6 lg:px-12 py-16 md:py-24 grid md:grid-cols-12 gap-12 items-center">
-        <div className="md:col-span-7 space-y-8 text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-xs font-semibold text-amber-400 animate-pulse">
-            <Sparkles className="w-3.5 h-3.5" />
-            AI-Powered Career OS
-          </div>
+      <section className="relative pt-12 sm:pt-20 pb-12 sm:pb-16 px-4 sm:px-6 overflow-hidden">
+        <div className="max-w-5xl mx-auto text-center space-y-5 sm:space-y-6">
           
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight">
-            Never lose track of another <span className="text-gradient">job application</span>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-tight">
+            Stop losing job applications. <br />
+            <span className="text-gradient">Track, Predict & Negotiate with AI.</span>
           </h1>
-          
-          <p className="text-base sm:text-lg text-slate-400 max-w-2xl leading-relaxed">
-            Turn scattered sheets and recruiter emails into an automated, measurable pipeline. Track statuses, auto-parse inbox updates, evaluate layoff risks, and negotiate compensation packages.
+
+          <p className="text-slate-400 text-xs sm:text-base max-w-2xl mx-auto leading-relaxed px-2">
+            The all-in-one candidate command center that automatically parses recruiter emails, predicts interview probabilities, checks company stability, and drafts follow-up pitches.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 pt-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-4 w-full max-w-md mx-auto sm:max-w-none">
             <button 
               onClick={handleDemoAccess}
-              className="btn btn-primary btn-md rounded-xl text-slate-950 font-bold shadow-lg shadow-amber-500/20 flex items-center gap-2 hover:scale-[1.02] transition-transform"
+              className="btn btn-md sm:btn-lg btn-primary text-slate-950 font-extrabold rounded-2xl text-xs sm:text-sm w-full sm:w-auto px-6 sm:px-8 shadow-xl shadow-amber-500/25 flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform"
             >
-              Access Demo Session (42 Apps Seeding)
-              <ArrowRight className="w-4 h-4" />
+              Access Demo Session (42 Apps Seeding) <ArrowRight className="w-4 h-4" />
             </button>
+            
             <Link 
-              to="/register" 
-              className="btn btn-outline border-white/10 text-slate-200 hover:bg-white/5 rounded-xl flex items-center gap-2"
+              to="/register"
+              className="btn btn-md sm:btn-lg btn-outline border-white/10 text-slate-200 hover:bg-white/5 rounded-2xl text-xs sm:text-sm w-full sm:w-auto px-6 sm:px-8"
             >
-              Create Account
-              <ChevronRight className="w-4 h-4" />
+              Create Free Account
             </Link>
           </div>
 
-          <div className="flex items-center gap-6 pt-4 border-t border-white/5 text-xs text-slate-500">
-            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-amber-500" /> $0 Host Setup</span>
-            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-amber-500" /> Gemini-Powered Models</span>
-            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-amber-500" /> Inbox Parser Included</span>
+          <div className="pt-6 sm:pt-8 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-[11px] sm:text-xs text-slate-500 font-semibold">
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-amber-500" /> No credit card required</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-amber-500" /> Full TypeScript engine</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-amber-500" /> Standalone offline demo ready</span>
           </div>
+
         </div>
-
-        {/* Hero Dashboard Preview */}
-        <div className="md:col-span-5 relative w-full flex items-center justify-center animate-float">
-          <div className="absolute inset-0 bg-amber-500/10 rounded-3xl filter blur-3xl -z-10"></div>
-          
-          <div className="w-full glass-panel border border-white/10 rounded-2xl p-5 shadow-2xl space-y-4">
-            <div className="flex justify-between items-center pb-3 border-b border-white/5">
-              <div className="flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-error"></span>
-                <span className="w-2.5 h-2.5 rounded-full bg-warning"></span>
-                <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-              </div>
-              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Candidate Workspace</span>
-            </div>
-
-            {/* Quick Stats Mockup */}
-            <div className="grid grid-cols-3 gap-3">
-              <div className="bg-neutral/40 rounded-lg p-2 border border-white/5 text-center">
-                <p className="text-lg font-bold text-white">42</p>
-                <p className="text-[9px] text-slate-400">Total Apps</p>
-              </div>
-              <div className="bg-neutral/40 rounded-lg p-2 border border-white/5 text-center">
-                <p className="text-lg font-bold text-amber-400">8</p>
-                <p className="text-[9px] text-slate-400">Interviews</p>
-              </div>
-              <div className="bg-neutral/40 rounded-lg p-2 border border-white/5 text-center">
-                <p className="text-lg font-bold text-orange-400">2</p>
-                <p className="text-[9px] text-slate-400">Offers</p>
-              </div>
-            </div>
-
-            {/* Inbox Parser Event Mockup */}
-            <div className="bg-amber-500/5 rounded-lg p-3 border border-amber-500/20 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-[9px] uppercase font-bold text-amber-400 tracking-wide">Recruiter Mail Detected</span>
-                <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 text-[8px] font-bold">Confidence: 96%</span>
-              </div>
-              <div className="space-y-1">
-                <h4 className="text-xs font-semibold text-white">Hiring Update: Google Frontend Engineer</h4>
-                <p className="text-[10px] text-slate-400 italic">"We would love to schedule a panel loop this Thursday..."</p>
-              </div>
-              <div className="flex gap-2 pt-1">
-                <div className="px-2 py-0.5 bg-amber-500 text-slate-950 rounded text-[9px] font-bold">Confirm Stage update to INTERVIEW</div>
-              </div>
-            </div>
-
-            {/* Inactivity warning */}
-            <div className="bg-warning/5 rounded-lg p-3 border border-warning/20 flex items-center justify-between">
-              <div className="space-y-0.5">
-                <h4 className="text-xs font-semibold text-warning">Application At Risk</h4>
-                <p className="text-[10px] text-slate-400">Microsoft SWE: No contact for 12 days.</p>
-              </div>
-              <span className="text-[9px] text-slate-400 underline cursor-pointer">Draft Follow-Up</span>
-            </div>
-          </div>
-        </div>
-      </main>
+      </section>
 
       {/* Feature Grid */}
-      <section className="bg-neutral/20 border-t border-white/5 py-20 px-6 lg:px-12 w-full">
-        <div className="max-w-7xl mx-auto space-y-12">
-          <div className="text-center space-y-4">
-            <h2 className="text-3xl font-bold text-white">Command center tools</h2>
-            <p className="text-slate-400 max-w-xl mx-auto">
-              Equipped with intelligent career modules that shift you from a passive job tracker into an active market negotiator.
-            </p>
+      <section className="py-12 sm:py-16 px-4 sm:px-6 border-t border-white/5 bg-neutral-950/40">
+        <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12">
+          
+          <div className="text-center space-y-2">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Built for modern job seekers</h2>
+            <p className="text-slate-400 text-xs sm:text-sm">Five core AI layers designed to boost interview responses and offer values.</p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((f, idx) => (
-              <div key={idx} className="glass-card rounded-2xl p-6 space-y-4">
-                <span className={`w-10 h-10 rounded-xl bg-neutral flex items-center justify-center border border-white/5 ${f.color}`}>
-                  <f.icon className="w-5 h-5" />
-                </span>
-                <h3 className="text-lg font-bold text-white">{f.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{f.desc}</p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            
+            <div className="glass-card rounded-2xl p-5 sm:p-6 space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400">
+                <Target className="w-5 h-5" />
               </div>
-            ))}
+              <h3 className="font-bold text-white text-sm sm:text-base">Kanban Stage Tracker</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Drag-and-drop pipeline management with status auditing from Saved to Offer Received.
+              </p>
+            </div>
+
+            <div className="glass-card rounded-2xl p-5 sm:p-6 space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-400">
+                <Mail className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-white text-base">Recruiter Email Auto-Parser</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Automatically extracts recruiter emails, updates stages, and logs interview invitations.
+              </p>
+            </div>
+
+            <div className="glass-card rounded-2xl p-5 sm:p-6 space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-600/10 flex items-center justify-center text-amber-500">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-white text-base">Interview Probability AI</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Scores candidate-job match percentages (0-100%) and provides top expected interview questions.
+              </p>
+            </div>
+
+            <div className="glass-card rounded-2xl p-5 sm:p-6 space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-400">
+                <Building2 className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-white text-base">Layoff Risk & Health Audit</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Monitors corporate stability indices, hiring volumes, and estimated lay-off risk indicators.
+              </p>
+            </div>
+
+            <div className="glass-card rounded-2xl p-5 sm:p-6 space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400">
+                <DollarSign className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-white text-base">Salary Negotiation Advisor</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Benchmarks compensation packages, calculates counter-offer targets, and drafts negotiation pitches.
+              </p>
+            </div>
+
+            <div className="glass-card rounded-2xl p-5 sm:p-6 space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-400">
+                <TrendingUp className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-white text-base">Funnel Conversion Analytics</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Visualizes weekly application rates, response frequencies, and sourcing channel performance.
+              </p>
+            </div>
+
           </div>
+
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="px-6 py-6 border-t border-white/5 text-center text-xs text-slate-600">
-        &copy; {new Date().getFullYear()} ApplyTrack AI. All rights reserved. Open-source MERN platform.
+      <footer className="border-t border-white/5 py-8 px-4 sm:px-6 text-center text-xs text-slate-500">
+        <p>© 2026 ApplyTrack AI. Built with MERN + TypeScript.</p>
       </footer>
+
     </div>
   );
 };
+
 export default Landing;
