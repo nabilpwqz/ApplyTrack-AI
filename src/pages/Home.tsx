@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { WhyChooseUs } from '../components/WhyChooseUs';
 
 export const Home: React.FC = () => {
   const { isAuthenticated } = useAuth();
@@ -48,6 +49,8 @@ export const Home: React.FC = () => {
           <p>Get automated alerts so you never miss a submission or interview date.</p>
         </div>
       </section>
+
+      <WhyChooseUs />
 
       <section className="job-types-section">
         <h2>Find Your Next Career Move</h2>
