@@ -9,7 +9,7 @@ import { aiService } from '../services/ai.service';
 export const getApplications = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     if (!isMongoConnected) {
-      res.status(200).json({ success: true, data: [] });
+      res.status(200).json({ success: true, data: []});
       return;
     }
 
@@ -76,7 +76,7 @@ export const getApplicationById = async (req: AuthenticatedRequest, res: Respons
 
 export const createApplication = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { jobTitle, companyName, status, priority, location, workMode, salary, source, notes } = req.body;
+    const { jobTitle, companyName, status, priority, location, workMode, salary, source, notes, deadline } = req.body;
 
     if (!jobTitle || !companyName) {
       res.status(400);
@@ -112,6 +112,7 @@ export const createApplication = async (req: AuthenticatedRequest, res: Response
       location: location || 'Remote',
       workMode: workMode || 'REMOTE',
       salary,
+      deadline,
       source: source || 'Website',
       notes: notes || '',
       applicationDate: new Date(),
@@ -139,7 +140,7 @@ export const createApplication = async (req: AuthenticatedRequest, res: Response
 export const updateApplication = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     if (!isMongoConnected) {
-      res.status(200).json({ success: true, message: 'Application updated' });
+      res.status(200).json({ success: true, message:'Application updated' });
       return;
     }
 
@@ -153,7 +154,7 @@ export const updateApplication = async (req: AuthenticatedRequest, res: Response
       throw new Error('Application not found');
     }
 
-    const { status, priority, notes, contacts } = req.body;
+    const { status, priority, notes, contacts, deadline } = req.body;
 
     if (status && status !== application.status) {
       application.timeline.push({
@@ -169,6 +170,7 @@ export const updateApplication = async (req: AuthenticatedRequest, res: Response
     if (priority) application.priority = priority;
     if (notes !== undefined) application.notes = notes;
     if (contacts) application.contacts = contacts;
+    if (deadline) application.deadline = new Date(deadline);
 
     const updated = await application.save();
 
@@ -185,7 +187,7 @@ export const updateApplication = async (req: AuthenticatedRequest, res: Response
 export const deleteApplication = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     if (!isMongoConnected) {
-      res.status(200).json({ success: true, message: 'Application deleted' });
+      res.status(200).json({ success: true, message:'Application deleted' });
       return;
     }
 
@@ -213,7 +215,7 @@ export const addTimelineEvent = async (req: AuthenticatedRequest, res: Response,
     const { type, title, description, occurredAt } = req.body;
 
     if (!isMongoConnected) {
-      res.status(200).json({ success: true, message: 'Timeline event added' });
+      res.status(200).json({ success: true, message:'Timeline event added' });
       return;
     }
 

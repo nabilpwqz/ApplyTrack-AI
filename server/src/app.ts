@@ -10,7 +10,6 @@ import { connectDB } from './config/db';
 import { errorHandler } from './middleware/errorHandler';
 import { initCronJobs } from './services/cron';
 
-
 // Route Handlers
 import authRoutes from './routes/auth.routes';
 import applicationRoutes from './routes/application.routes';
