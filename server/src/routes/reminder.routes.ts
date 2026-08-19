@@ -3,6 +3,7 @@ import {
   getReminders,
   createReminder,
   toggleReminderComplete,
+  dismissReminder,
   deleteReminder
 } from '../controllers/reminder.controller';
 import { protect } from '../middleware/auth';
@@ -16,6 +17,7 @@ router.route('/')
   .post(createReminder);
 
 router.patch('/:id/complete', toggleReminderComplete);
+router.patch('/:id/dismiss', dismissReminder);
 router.delete('/:id', deleteReminder);
 
 export default router;
