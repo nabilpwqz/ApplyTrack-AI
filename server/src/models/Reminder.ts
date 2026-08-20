@@ -7,6 +7,7 @@ export interface IReminder extends Document {
   description?: string;
   dueAt: Date;
   completed: boolean;
+  isDismissed: boolean;
   type: 'FOLLOW_UP' | 'INTERVIEW_PREP' | 'THANK_YOU_EMAIL' | 'OFFER_DEADLINE';
   createdAt: Date;
   updatedAt: Date;
@@ -20,6 +21,7 @@ const ReminderSchema = new Schema<IReminder>(
     description: { type: String },
     dueAt: { type: Date, required: true },
     completed: { type: Boolean, default: false },
+    isDismissed: { type: Boolean, default: false },
     type: {
       type: String,
       enum: ['FOLLOW_UP', 'INTERVIEW_PREP', 'THANK_YOU_EMAIL', 'OFFER_DEADLINE'],
