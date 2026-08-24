@@ -71,7 +71,7 @@ export const Dashboard: React.FC = () => {
   if (appsLoading || remindersLoading || emailLoading) {
     return (
       <div className="flex flex-col justify-center items-center h-[70vh] gap-3">
-        <span className="loading loading-spinner loading-lg text-amber-500"></span>
+        <span className="loading loading-spinner loading-lg text-brand-500"></span>
         <p className="text-slate-400 text-sm font-medium">Initializing AI Career Dashboard...</p>
       </div>
     );
@@ -93,7 +93,7 @@ export const Dashboard: React.FC = () => {
       <div className="glass-card rounded-3xl p-6 md:p-8 border border-white/10 relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div className="space-y-2 z-10">
           <div className="flex items-center gap-2">
-            <span className="badge badge-warning badge-sm uppercase font-bold tracking-wider">
+            <span className="badge badge-primary badge-sm uppercase font-bold tracking-wider">
               {user?.name === 'Guest' ? 'Guest Demo Session' : 'Active Account'}
             </span>
             <span className="text-xs text-slate-400 font-semibold">• 42 Pre-Seeded Applications Active</span>
@@ -113,13 +113,13 @@ export const Dashboard: React.FC = () => {
             disabled={syncingEmails}
             className="btn btn-sm btn-outline border-white/10 text-slate-200 hover:bg-white/5 rounded-xl text-xs flex items-center gap-2"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${syncingEmails ? 'animate-spin text-amber-400' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${syncingEmails ? 'animate-spin text-brand-400' : ''}`} />
             {syncingEmails ? 'Scanning...' : 'Sync Emails'}
           </button>
           
           <button 
             onClick={() => navigate('/dashboard/applications')}
-            className="btn btn-sm btn-primary text-slate-950 font-bold rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-amber-500/20"
+            className="btn btn-sm btn-primary text-slate-950 font-bold rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-brand-500/20"
           >
             <Plus className="w-4 h-4" /> Add Application
           </button>
@@ -129,39 +129,39 @@ export const Dashboard: React.FC = () => {
       {/* Stats Counter Bar */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         
-        <div className="bg-neutral-900/40 border border-white/5 rounded-2xl p-5 space-y-2 relative overflow-hidden group hover:border-amber-500/30 transition-all">
+        <div className="bg-neutral-900/40 border border-white/5 rounded-2xl p-5 space-y-2 relative overflow-hidden group hover:border-brand-500/30 transition-all">
           <div className="flex justify-between items-center text-slate-400 text-xs font-semibold">
             <span>Total Logged</span>
-            <Briefcase className="w-4 h-4 text-amber-400" />
+            <Briefcase className="w-4 h-4 text-brand-400" />
           </div>
           <div className="text-3xl font-black text-white">{totalApps}</div>
           <p className="text-[10px] text-slate-500 uppercase font-bold">Applications in pipeline</p>
         </div>
 
-        <div className="bg-neutral-900/40 border border-white/5 rounded-2xl p-5 space-y-2 relative overflow-hidden group hover:border-amber-500/30 transition-all">
+        <div className="bg-neutral-900/40 border border-white/5 rounded-2xl p-5 space-y-2 relative overflow-hidden group hover:border-brand-500/30 transition-all">
           <div className="flex justify-between items-center text-slate-400 text-xs font-semibold">
             <span>Active Progress</span>
-            <TrendingUp className="w-4 h-4 text-orange-400" />
+            <TrendingUp className="w-4 h-4 text-teal-400" />
           </div>
-          <div className="text-3xl font-black text-amber-400">{activeApps}</div>
+          <div className="text-3xl font-black text-brand-400">{activeApps}</div>
           <p className="text-[10px] text-slate-500 uppercase font-bold">In Active Stages</p>
         </div>
 
-        <div className="bg-neutral-900/40 border border-white/5 rounded-2xl p-5 space-y-2 relative overflow-hidden group hover:border-amber-500/30 transition-all">
+        <div className="bg-neutral-900/40 border border-white/5 rounded-2xl p-5 space-y-2 relative overflow-hidden group hover:border-brand-500/30 transition-all">
           <div className="flex justify-between items-center text-slate-400 text-xs font-semibold">
             <span>Interviews</span>
-            <CalendarIcon className="w-4 h-4 text-amber-500" />
+            <CalendarIcon className="w-4 h-4 text-brand-500" />
           </div>
           <div className="text-3xl font-black text-white">{interviewsCount}</div>
           <p className="text-[10px] text-slate-500 uppercase font-bold">Scheduled / Completed</p>
         </div>
 
-        <div className="bg-neutral-900/40 border border-white/5 rounded-2xl p-5 space-y-2 relative overflow-hidden group hover:border-amber-500/30 transition-all">
+        <div className="bg-neutral-900/40 border border-white/5 rounded-2xl p-5 space-y-2 relative overflow-hidden group hover:border-brand-500/30 transition-all">
           <div className="flex justify-between items-center text-slate-400 text-xs font-semibold">
             <span>Offers Secured</span>
-            <Award className="w-4 h-4 text-amber-400" />
+            <Award className="w-4 h-4 text-brand-400" />
           </div>
-          <div className="text-3xl font-black text-amber-400">{offersCount}</div>
+          <div className="text-3xl font-black text-brand-400">{offersCount}</div>
           <p className="text-[10px] text-slate-500 uppercase font-bold">Pending Decision</p>
         </div>
 
@@ -170,15 +170,15 @@ export const Dashboard: React.FC = () => {
       {/* AI Quick Launcher Suites */}
       <div className="space-y-3">
         <h3 className="text-xs uppercase font-extrabold text-slate-400 tracking-wider flex items-center gap-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" /> AI Intelligence Tools
+          <Sparkles className="w-3.5 h-3.5 text-brand-400 animate-pulse" /> AI Intelligence Tools
         </h3>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <Link 
             to="/dashboard/ai-hub" 
-            className="p-4 bg-neutral-900/40 border border-white/5 rounded-2xl hover:border-amber-500/40 hover:bg-neutral-900/80 transition-all space-y-2 group"
+            className="p-4 bg-neutral-900/40 border border-white/5 rounded-2xl hover:border-brand-500/40 hover:bg-neutral-900/80 transition-all space-y-2 group"
           >
-            <div className="w-8 h-8 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
+            <div className="w-8 h-8 rounded-xl bg-brand-500/10 flex items-center justify-center text-brand-400 group-hover:scale-110 transition-transform">
               <Sparkles className="w-4 h-4" />
             </div>
             <h4 className="font-bold text-white text-xs">Job Match Score</h4>
@@ -187,9 +187,9 @@ export const Dashboard: React.FC = () => {
 
           <Link 
             to="/dashboard/ai-hub" 
-            className="p-4 bg-neutral-900/40 border border-white/5 rounded-2xl hover:border-amber-500/40 hover:bg-neutral-900/80 transition-all space-y-2 group"
+            className="p-4 bg-neutral-900/40 border border-white/5 rounded-2xl hover:border-brand-500/40 hover:bg-neutral-900/80 transition-all space-y-2 group"
           >
-            <div className="w-8 h-8 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-400 group-hover:scale-110 transition-transform">
+            <div className="w-8 h-8 rounded-xl bg-teal-500/10 flex items-center justify-center text-teal-400 group-hover:scale-110 transition-transform">
               <Send className="w-4 h-4" />
             </div>
             <h4 className="font-bold text-white text-xs">AI Email Drafter</h4>
@@ -198,9 +198,9 @@ export const Dashboard: React.FC = () => {
 
           <Link 
             to="/dashboard/companies" 
-            className="p-4 bg-neutral-900/40 border border-white/5 rounded-2xl hover:border-amber-500/40 hover:bg-neutral-900/80 transition-all space-y-2 group"
+            className="p-4 bg-neutral-900/40 border border-white/5 rounded-2xl hover:border-brand-500/40 hover:bg-neutral-900/80 transition-all space-y-2 group"
           >
-            <div className="w-8 h-8 rounded-xl bg-amber-600/10 flex items-center justify-center text-amber-500 group-hover:scale-110 transition-transform">
+            <div className="w-8 h-8 rounded-xl bg-brand-600/10 flex items-center justify-center text-brand-500 group-hover:scale-110 transition-transform">
               <Building2 className="w-4 h-4" />
             </div>
             <h4 className="font-bold text-white text-xs">Layoff Risk Predictor</h4>
@@ -209,9 +209,9 @@ export const Dashboard: React.FC = () => {
 
           <Link 
             to="/dashboard/analytics" 
-            className="p-4 bg-neutral-900/40 border border-white/5 rounded-2xl hover:border-amber-500/40 hover:bg-neutral-900/80 transition-all space-y-2 group"
+            className="p-4 bg-neutral-900/40 border border-white/5 rounded-2xl hover:border-brand-500/40 hover:bg-neutral-900/80 transition-all space-y-2 group"
           >
-            <div className="w-8 h-8 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-400 group-hover:scale-110 transition-transform">
+            <div className="w-8 h-8 rounded-xl bg-teal-500/10 flex items-center justify-center text-teal-400 group-hover:scale-110 transition-transform">
               <TrendingUp className="w-4 h-4" />
             </div>
             <h4 className="font-bold text-white text-xs">Funnel Conversion</h4>
@@ -228,10 +228,10 @@ export const Dashboard: React.FC = () => {
           
           {/* Email Sync Scanner Feed */}
           {emailEvents.length > 0 && (
-            <div className="glass-card rounded-2xl p-6 border border-amber-500/20 space-y-4">
+            <div className="glass-card rounded-2xl p-6 border border-brand-500/20 space-y-4">
               <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <div className="flex items-center gap-2">
-                  <Mail className="w-5 h-5 text-amber-400 animate-pulse" />
+                  <Mail className="w-5 h-5 text-brand-400 animate-pulse" />
                   <div>
                     <h3 className="font-bold text-white text-sm">Recruiter Email Auto-Parser</h3>
                     <p className="text-[10px] text-slate-400">Extracted updates needing your confirmation</p>
@@ -248,7 +248,7 @@ export const Dashboard: React.FC = () => {
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
                         <span className="font-bold text-white text-xs">{evt.extractedData?.company || 'Company'}</span>
-                        <span className="badge badge-outline border-amber-500/30 text-amber-400 text-[9px] uppercase font-bold">
+                        <span className="badge badge-outline border-brand-500/30 text-brand-400 text-[9px] uppercase font-bold">
                           {evt.extractedData?.applicationStatus || 'UPDATE'}
                         </span>
                       </div>
@@ -283,7 +283,7 @@ export const Dashboard: React.FC = () => {
                 <h3 className="font-bold text-white text-base">Recent Active Applications</h3>
                 <p className="text-xs text-slate-400">Track and jump directly into job dossiers</p>
               </div>
-              <Link to="/dashboard/applications" className="text-xs text-amber-400 hover:underline font-bold">
+              <Link to="/dashboard/applications" className="text-xs text-brand-400 hover:underline font-bold">
                 View Kanban Board &rarr;
               </Link>
             </div>
@@ -293,7 +293,7 @@ export const Dashboard: React.FC = () => {
                 <div 
                   key={app._id}
                   onClick={() => navigate(`/dashboard/applications/${app._id}`)}
-                  className="p-4 bg-neutral-900/30 rounded-xl border border-white/5 hover:border-amber-500/30 cursor-pointer transition-all flex items-center justify-between gap-4"
+                  className="p-4 bg-neutral-900/30 rounded-xl border border-white/5 hover:border-brand-500/30 cursor-pointer transition-all flex items-center justify-between gap-4"
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
@@ -311,7 +311,7 @@ export const Dashboard: React.FC = () => {
                     <span className="text-[10px] text-slate-500 block font-bold">
                       {new Date(app.applicationDate).toLocaleDateString()}
                     </span>
-                    <span className="text-xs text-amber-400 hover:underline flex items-center gap-1 font-bold">
+                    <span className="text-xs text-brand-400 hover:underline flex items-center gap-1 font-bold">
                       Open dossier <ArrowUpRight className="w-3 h-3" />
                     </span>
                   </div>
@@ -348,7 +348,7 @@ export const Dashboard: React.FC = () => {
                 <div key={rem._id} className="p-3 bg-neutral-900/40 rounded-xl border border-white/5 space-y-1">
                   <div className="flex justify-between items-start">
                     <h4 className="font-bold text-white text-xs">{rem.title}</h4>
-                    <span className="text-[9px] text-amber-400 font-bold flex items-center gap-1">
+                    <span className="text-[9px] text-brand-400 font-bold flex items-center gap-1">
                       <Clock className="w-3 h-3" /> {new Date(rem.dueAt).toLocaleDateString()}
                     </span>
                   </div>
@@ -365,9 +365,9 @@ export const Dashboard: React.FC = () => {
           </div>
 
           {/* AI Quick Advisor Card */}
-          <div className="glass-card rounded-2xl p-6 border border-amber-500/20 space-y-3">
+          <div className="glass-card rounded-2xl p-6 border border-brand-500/20 space-y-3">
             <div className="flex items-center gap-2">
-              <Zap className="w-5 h-5 text-amber-400" />
+              <Zap className="w-5 h-5 text-brand-400" />
               <h3 className="font-bold text-white text-sm">Career Advice Tip</h3>
             </div>
             <p className="text-xs text-slate-300 leading-relaxed">

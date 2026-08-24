@@ -54,7 +54,7 @@ export const Settings: React.FC = () => {
       <form onSubmit={handleSave} className="space-y-6">
         <div className="glass-card rounded-2xl p-6 border-white/5 space-y-4">
           <h3 className="font-bold text-white text-base border-b border-white/5 pb-2 flex items-center gap-2">
-            <UserIcon className="w-4 h-4 text-amber-400" />
+            <UserIcon className="w-4 h-4 text-brand-400" />
             Profile Credentials
           </h3>
 
@@ -115,7 +115,7 @@ export const Settings: React.FC = () => {
 
         <div className="glass-card rounded-2xl p-6 border-white/5 space-y-4">
           <h3 className="font-bold text-white text-base border-b border-white/5 pb-2 flex items-center gap-2">
-            <Bell className="w-4 h-4 text-amber-400" />
+            <Bell className="w-4 h-4 text-brand-400" />
             Automation & Scanners
           </h3>
 
@@ -150,7 +150,7 @@ export const Settings: React.FC = () => {
 
         <button 
           type="submit"
-          className="btn btn-primary text-slate-950 font-bold px-8 rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-amber-500/20"
+          className="btn btn-primary text-slate-950 font-bold px-8 rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-brand-500/20"
           disabled={saving}
         >
           {saving ? (

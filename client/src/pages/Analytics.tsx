@@ -26,7 +26,7 @@ export const Analytics: React.FC = () => {
   if (isLoading) {
     return (
       <div className="flex flex-col justify-center items-center h-[60vh] gap-3">
-        <span className="loading loading-spinner loading-lg text-amber-500"></span>
+        <span className="loading loading-spinner loading-lg text-brand-500"></span>
         <p className="text-slate-400 text-sm">Aggregating historical metrics...</p>
       </div>
     );
@@ -81,7 +81,7 @@ export const Analytics: React.FC = () => {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-neutral/20 border border-white/5 rounded-2xl p-4 flex items-center gap-3">
-          <span className="w-9 h-9 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400">
+          <span className="w-9 h-9 rounded-lg bg-brand-500/10 flex items-center justify-center text-brand-400">
             <Percent className="w-4 h-4" />
           </span>
           <div>
@@ -91,7 +91,7 @@ export const Analytics: React.FC = () => {
         </div>
 
         <div className="bg-neutral/20 border border-white/5 rounded-2xl p-4 flex items-center gap-3">
-          <span className="w-9 h-9 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-400">
+          <span className="w-9 h-9 rounded-lg bg-teal-500/10 flex items-center justify-center text-teal-400">
             <Activity className="w-4 h-4" />
           </span>
           <div>
@@ -101,7 +101,7 @@ export const Analytics: React.FC = () => {
         </div>
 
         <div className="bg-neutral/20 border border-white/5 rounded-2xl p-4 flex items-center gap-3">
-          <span className="w-9 h-9 rounded-lg bg-yellow-500/10 flex items-center justify-center text-yellow-400">
+          <span className="w-9 h-9 rounded-lg bg-teal-500/10 flex items-center justify-center text-teal-400">
             <Percent className="w-4 h-4" />
           </span>
           <div>
@@ -111,7 +111,7 @@ export const Analytics: React.FC = () => {
         </div>
 
         <div className="bg-neutral/20 border border-white/5 rounded-2xl p-4 flex items-center gap-3">
-          <span className="w-9 h-9 rounded-lg bg-amber-600/10 flex items-center justify-center text-amber-500">
+          <span className="w-9 h-9 rounded-lg bg-brand-600/10 flex items-center justify-center text-brand-500">
             <Calendar className="w-4 h-4" />
           </span>
           <div>
@@ -223,7 +223,7 @@ export const Analytics: React.FC = () => {
                     <td>{src.applications}</td>
                     <td>{src.responseRate}%</td>
                     <td>
-                      <span className="text-amber-400 font-bold">{src.interviewRate}%</span>
+                      <span className="text-brand-400 font-bold">{src.interviewRate}%</span>
                     </td>
                   </tr>
                 ))}

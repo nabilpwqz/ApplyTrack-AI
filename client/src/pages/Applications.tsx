@@ -144,7 +144,7 @@ export const Applications: React.FC = () => {
   if (isLoading) {
     return (
       <div className="flex flex-col justify-center items-center h-[70vh] gap-3">
-        <span className="loading loading-spinner loading-lg text-amber-500"></span>
+        <span className="loading loading-spinner loading-lg text-brand-500"></span>
         <p className="text-slate-400 text-sm font-medium">Loading application matrix...</p>
       </div>
     );
@@ -156,12 +156,12 @@ export const Applications: React.FC = () => {
     switch (st) {
       case 'SAVED': return 'badge-neutral text-slate-300';
       case 'APPLIED': return 'badge-primary text-slate-950 font-bold';
-      case 'SCREENING': return 'bg-amber-500/20 text-amber-400 border border-amber-500/30 font-bold';
+      case 'SCREENING': return 'bg-brand-500/20 text-brand-400 border border-brand-500/30 font-bold';
       case 'ASSESSMENT': return 'badge-warning text-slate-950 font-bold';
       case 'INTERVIEW':
       case 'FINAL_INTERVIEW': return 'badge-secondary text-white font-bold';
       case 'OFFER': return 'badge-warning text-slate-950 font-bold animate-pulse';
-      case 'ACCEPTED': return 'bg-amber-400 text-slate-950 font-bold';
+      case 'ACCEPTED': return 'bg-brand-400 text-slate-950 font-bold';
       case 'REJECTED': return 'badge-error text-white font-bold';
       case 'GHOSTED': return 'badge-ghost border border-white/10 text-slate-400';
       default: return 'badge-neutral';
@@ -183,13 +183,13 @@ export const Applications: React.FC = () => {
           <div className="join border border-white/10 bg-neutral-900/60 p-0.5 rounded-xl">
             <button 
               onClick={() => setViewMode('KANBAN')}
-              className={`join-item btn btn-xs border-none rounded-lg text-xs flex items-center gap-1 ${viewMode === 'KANBAN' ? 'bg-amber-500 text-slate-950 font-bold' : 'text-slate-400'}`}
+              className={`join-item btn btn-xs border-none rounded-lg text-xs flex items-center gap-1 ${viewMode === 'KANBAN' ? 'bg-brand-500 text-slate-950 font-bold' : 'text-slate-400'}`}
             >
               <LayoutGrid className="w-3.5 h-3.5" /> Kanban
             </button>
             <button 
               onClick={() => setViewMode('TABLE')}
-              className={`join-item btn btn-xs border-none rounded-lg text-xs flex items-center gap-1 ${viewMode === 'TABLE' ? 'bg-amber-500 text-slate-950 font-bold' : 'text-slate-400'}`}
+              className={`join-item btn btn-xs border-none rounded-lg text-xs flex items-center gap-1 ${viewMode === 'TABLE' ? 'bg-brand-500 text-slate-950 font-bold' : 'text-slate-400'}`}
             >
               <List className="w-3.5 h-3.5" /> Table
             </button>
@@ -197,7 +197,7 @@ export const Applications: React.FC = () => {
 
           <button 
             onClick={() => setIsModalOpen(true)}
-            className="btn btn-sm btn-primary text-slate-950 font-bold rounded-xl text-xs flex items-center gap-1.5 shadow-lg shadow-amber-500/20"
+            className="btn btn-sm btn-primary text-slate-950 font-bold rounded-xl text-xs flex items-center gap-1.5 shadow-lg shadow-brand-500/20"
           >
             <Plus className="w-4 h-4" /> Add Application
           </button>
@@ -213,7 +213,7 @@ export const Applications: React.FC = () => {
             placeholder="Search by job title or company..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="input input-sm w-full pl-9 bg-neutral-950 border-white/5 text-white text-xs rounded-xl focus:outline-none focus:border-amber-500"
+            className="input input-sm w-full pl-9 bg-neutral-950 border-white/5 text-white text-xs rounded-xl focus:outline-none focus:border-brand-500"
           />
           {searchQuery && (
             <button onClick={() => setSearchQuery('')} className="absolute right-3 top-2.5 text-slate-500 hover:text-white">
@@ -226,7 +226,7 @@ export const Applications: React.FC = () => {
         <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 custom-scroll text-xs">
           <button 
             onClick={() => setSelectedStatus('ALL')}
-            className={`px-3 py-1 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors ${selectedStatus === 'ALL' ? 'bg-amber-500 text-slate-950 font-bold' : 'bg-neutral-800/60 text-slate-400 hover:text-white'}`}
+            className={`px-3 py-1 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors ${selectedStatus === 'ALL' ? 'bg-brand-500 text-slate-950 font-bold' : 'bg-neutral-800/60 text-slate-400 hover:text-white'}`}
           >
             All Stages ({apps.length})
           </button>
@@ -237,7 +237,7 @@ export const Applications: React.FC = () => {
               <button
                 key={stage.id}
                 onClick={() => setSelectedStatus(stage.id)}
-                className={`px-3 py-1 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors flex items-center gap-1.5 ${selectedStatus === stage.id ? 'bg-amber-500 text-slate-950 font-bold' : 'bg-neutral-800/60 text-slate-400 hover:text-white'}`}
+                className={`px-3 py-1 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors flex items-center gap-1.5 ${selectedStatus === stage.id ? 'bg-brand-500 text-slate-950 font-bold' : 'bg-neutral-800/60 text-slate-400 hover:text-white'}`}
               >
                 <span>{stage.title}</span>
                 <span className="badge badge-ghost badge-xs text-[9px] px-1 font-bold">{count}</span>
@@ -272,7 +272,7 @@ export const Applications: React.FC = () => {
                       <div
                         key={app._id}
                         onClick={() => navigate(`/dashboard/applications/${app._id}`)}
-                        className="p-4 bg-neutral-900/70 border border-white/5 hover:border-amber-500/40 rounded-xl space-y-2 cursor-pointer transition-all hover:scale-[1.01] shadow-sm"
+                        className="p-4 bg-neutral-900/70 border border-white/5 hover:border-brand-500/40 rounded-xl space-y-2 cursor-pointer transition-all hover:scale-[1.01] shadow-sm"
                       >
                         <div className="flex justify-between items-start">
                           <h4 className="font-bold text-white text-xs leading-snug line-clamp-1">{app.jobTitle}</h4>
@@ -289,7 +289,7 @@ export const Applications: React.FC = () => {
                           <span className="flex items-center gap-1">
                             <MapPin className="w-3 h-3 text-slate-500" /> {app.location || 'Remote'}
                           </span>
-                          <span className="font-bold text-amber-400">
+                          <span className="font-bold text-brand-400">
                             {app.salary?.max ? `$${app.salary.max.toLocaleString()}` : ''}
                           </span>
                         </div>
@@ -327,7 +327,7 @@ export const Applications: React.FC = () => {
                   <tr key={app._id} className="hover:bg-neutral-900/40">
                     <td>
                       <div>
-                        <Link to={`/dashboard/applications/${app._id}`} className="font-bold text-white hover:text-amber-400">
+                        <Link to={`/dashboard/applications/${app._id}`} className="font-bold text-white hover:text-brand-400">
                           {app.jobTitle}
                         </Link>
                         <p className="text-[10px] text-slate-400">{app.companyId?.name || app.companyName}</p>
@@ -348,7 +348,7 @@ export const Applications: React.FC = () => {
                     <td className="text-right">
                       <Link 
                         to={`/dashboard/applications/${app._id}`}
-                        className="btn btn-xs btn-ghost text-amber-400 hover:bg-amber-500/10"
+                        className="btn btn-xs btn-ghost text-brand-400 hover:bg-brand-500/10"
                       >
                         Details &rarr;
                       </Link>

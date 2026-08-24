@@ -37,7 +37,7 @@ export const Companies: React.FC = () => {
   if (isLoading) {
     return (
       <div className="flex flex-col justify-center items-center h-[60vh] gap-3">
-        <span className="loading loading-spinner loading-lg text-amber-500"></span>
+        <span className="loading loading-spinner loading-lg text-brand-500"></span>
         <p className="text-slate-400 text-sm">Evaluating company credentials...</p>
       </div>
     );
@@ -94,14 +94,14 @@ export const Companies: React.FC = () => {
                 <div className="grid grid-cols-2 gap-3 pt-2">
                   <div className="bg-neutral-900/40 rounded-xl p-2.5 border border-white/5 text-center space-y-0.5">
                     <span className="text-[9px] text-slate-500 uppercase font-bold">Health Score</span>
-                    <div className={`text-xl font-extrabold ${isHealthy ? 'text-amber-400' : 'text-slate-300'}`}>
+                    <div className={`text-xl font-extrabold ${isHealthy ? 'text-brand-400' : 'text-slate-300'}`}>
                       {healthScore}/100
                     </div>
                   </div>
 
                   <div className="bg-neutral-900/40 rounded-xl p-2.5 border border-white/5 text-center space-y-0.5">
                     <span className="text-[9px] text-slate-500 uppercase font-bold">Layoff Risk</span>
-                    <div className={`text-xl font-extrabold ${isHighRisk ? 'text-error animate-pulse' : 'text-amber-500'}`}>
+                    <div className={`text-xl font-extrabold ${isHighRisk ? 'text-error animate-pulse' : 'text-brand-500'}`}>
                       {layoffRisk}%
                     </div>
                   </div>
