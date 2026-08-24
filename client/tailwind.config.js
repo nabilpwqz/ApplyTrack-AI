@@ -9,8 +9,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Outfit', 'Inter', 'sans-serif'],
-      },
+  sans: ['Inter', 'system-ui', 'sans-serif'],
+},
       colors: {
         brand: {
           300: '#a5b4fc',
