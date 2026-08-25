@@ -4,6 +4,8 @@ export interface IUser extends Document {
   name: string;
   email: string;
   passwordHash: string;
+  avatar?: string;
+  isActive: boolean;
   profile?: {
     headline?: string;
     location?: string;
@@ -30,6 +32,8 @@ const UserSchema = new Schema<IUser>(
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
     passwordHash: { type: String, required: true },
+    avatar: { type: String, default: '' },
+    isActive: { type: Boolean, default: true },
     profile: {
       headline: { type: String, default: '' },
       location: { type: String, default: '' },

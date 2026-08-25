@@ -173,7 +173,6 @@ export const updateProfile = async (req: AuthenticatedRequest, res: Response, ne
     }
 
     const { name, profile, preferences } = req.body;
-
     if (name) user.name = name;
     if (profile) user.profile = { ...user.profile, ...profile };
     if (preferences) user.preferences = { ...user.preferences, ...preferences };
@@ -239,7 +238,7 @@ export const loginDemoAccount = async (req: AuthenticatedRequest, res: Response,
         });
         return;
       } catch (dbErr: any) {
-        console.warn('⚠️ DB Seeding error, switching to Standalone Demo response:', dbErr.message);
+        console.warn('DB Seeding error, switching to Standalone Demo response:', dbErr.message);
       }
     }
 
@@ -258,6 +257,108 @@ export const loginDemoAccount = async (req: AuthenticatedRequest, res: Response,
           skills: ['React', 'JavaScript', 'TypeScript', 'Node.js', 'Express', 'MongoDB'],
         },
       },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const changePassword = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      res.status(400);
+      throw new Error('Current password and new password are required');
+    }
+
+    if (newPassword.length < 6) {
+      res.status(400);
+      throw new Error('New password must be at least 6 characters');
+    }
+
+    if (!isMongoConnected) {
+      res.status(200).json({ success: true, message: 'Password changed successfully (Standalone Mode)' });
+      return;
+    }
+
+    const user = await User.findById(req.user!.id);
+    if (!user) {
+      res.status(404);
+      throw new Error('User not found');
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.passwordHash);
+    if (!isMatch) {
+      res.status(401);
+      throw new Error('Current password is incorrect');
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    user.passwordHash = await bcrypt.hash(newPassword, salt);
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Password changed successfully'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateAvatar = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { avatar } = req.body;
+
+    if (!avatar) {
+      res.status(400);
+      throw new Error('Avatar image data is required');
+    }
+
+    if (!isMongoConnected) {
+      res.status(200).json({ success: true, message: 'Avatar updated (Standalone Mode)', data: { avatar } });
+      return;
+    }
+
+    const user = await User.findById(req.user!.id);
+    if (!user) {
+      res.status(404);
+      throw new Error('User not found');
+    }
+
+    user.avatar = avatar;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Profile picture updated successfully',
+      data: { avatar: user.avatar }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deactivateAccount = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    if (!isMongoConnected) {
+      res.status(200).json({ success: true, message: 'Account deactivated (Standalone Mode)' });
+      return;
+    }
+
+    const user = await User.findById(req.user!.id);
+    if (!user) {
+      res.status(404);
+      throw new Error('User not found');
+    }
+
+    user.isActive = false;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Account deactivated successfully'
     });
   } catch (error) {
     next(error);
