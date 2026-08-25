@@ -44,6 +44,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 if (parsed.name && parsed.name !== 'Guest') {
                   finalUser = { ...res.data, name: parsed.name };
                 }
+                if (parsed.avatar) {
+                  finalUser = { ...finalUser, avatar: parsed.avatar };
+                }
               } catch {}
             }
             setUser(finalUser);

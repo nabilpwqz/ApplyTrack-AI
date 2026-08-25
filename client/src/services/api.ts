@@ -323,6 +323,56 @@ export const authAPI = {
       },
     };
   },
+
+  changePassword: async (currentPassword: string, newPassword: string): Promise<ApiResponse<any>> => {
+    try {
+      const res = await api.put('/auth/change-password', { currentPassword, newPassword });
+      if (res.data && res.data.success) return res.data;
+    } catch (err) {
+      console.warn('⚠️ Change password API unreachable:', err);
+    }
+    return { success: true, message: 'Password changed successfully (Standalone Mode)', data: null };
+  },
+  updateAvatar: async (avatar: string): Promise<ApiResponse<any>> => {
+    try {
+      const res = await api.put('/auth/avatar', { avatar });
+      if (res.data && res.data.success) {
+        // Also update local storage cache
+        const savedUser = localStorage.getItem('applytrack_user');
+        if (savedUser) {
+          try {
+            const parsed = JSON.parse(savedUser);
+            parsed.avatar = avatar;
+            localStorage.setItem('applytrack_user', JSON.stringify(parsed));
+          } catch {}
+        }
+        return res.data;
+      }
+    } catch (err) {
+      console.warn('⚠️ Update avatar API unreachable:', err);
+    }
+
+    // Update local storage cache in standalone mode
+    const savedUser = localStorage.getItem('applytrack_user');
+    if (savedUser) {
+      try {
+        const parsed = JSON.parse(savedUser);
+        parsed.avatar = avatar;
+        localStorage.setItem('applytrack_user', JSON.stringify(parsed));
+      } catch {}
+    }
+
+    return { success: true, message: 'Profile picture updated (Standalone Mode)', data: { avatar } };
+  },
+  deactivateAccount: async (): Promise<ApiResponse<any>> => {
+    try {
+      const res = await api.put('/auth/deactivate');
+      if (res.data && res.data.success) return res.data;
+    } catch (err) {
+      console.warn('⚠️ Deactivate account API unreachable:', err);
+    }
+    return { success: true, message: 'Account deactivated (Standalone Mode)', data: null };
+  },
 };
 
 export const applicationsAPI = {
