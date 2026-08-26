@@ -373,6 +373,24 @@ export const authAPI = {
     }
     return { success: true, message: 'Account deactivated (Standalone Mode)', data: null };
   },
+    forgotPassword: async (email: string): Promise<ApiResponse<any>> => {
+    try {
+      const res = await api.post('/auth/forgot-password', { email });
+      return res.data;
+    } catch (err) {
+      console.warn('⚠️ Forgot password API unreachable:', err);
+      return { success: false, message: 'Unable to process request. Please try again.', data: null };
+    }
+  },
+  resetPassword: async (resetToken: string, newPassword: string): Promise<ApiResponse<any>> => {
+    try {
+      const res = await api.post('/auth/reset-password', { resetToken, newPassword });
+      return res.data;
+    } catch (err) {
+      console.warn('⚠️ Reset password API unreachable:', err);
+      return { success: false, message: 'Unable to reset password. Please try again.', data: null };
+    }
+  },
 };
 
 export const applicationsAPI = {

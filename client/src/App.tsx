@@ -8,6 +8,7 @@ import Layout from './components/layout/Layout.tsx';
 import Landing from './pages/Landing.tsx';
 import Login from './pages/Login.tsx';
 import Register from './pages/Register.tsx';
+import ForgotPassword from './pages/ForgotPassword.tsx';
 import Dashboard from './pages/Dashboard.tsx';
 import Applications from './pages/Applications.tsx';
 import ApplicationDetails from './pages/ApplicationDetails.tsx';
@@ -101,6 +102,15 @@ export const App: React.FC = () => {
               element={
                 <PublicOnlyRoute>
                   <Register />
+                </PublicOnlyRoute>
+              } 
+            />
+
+                        <Route 
+              path="/forgot-password" 
+              element={
+                <PublicOnlyRoute>
+                  <ForgotPassword />
                 </PublicOnlyRoute>
               } 
             />
