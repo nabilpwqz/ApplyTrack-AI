@@ -6,6 +6,8 @@ export interface IUser extends Document {
   passwordHash: string;
   avatar?: string;
   isActive: boolean;
+  resetPasswordToken?: string;
+  resetPasswordExpires?: Date;
   profile?: {
     headline?: string;
     location?: string;
@@ -34,6 +36,8 @@ const UserSchema = new Schema<IUser>(
     passwordHash: { type: String, required: true },
     avatar: { type: String, default: '' },
     isActive: { type: Boolean, default: true },
+    resetPasswordToken: { type: String, default: undefined },
+    resetPasswordExpires: { type: Date, default: undefined },
     profile: {
       headline: { type: String, default: '' },
       location: { type: String, default: '' },

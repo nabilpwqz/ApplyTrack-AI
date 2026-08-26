@@ -364,3 +364,92 @@ export const deactivateAccount = async (req: AuthenticatedRequest, res: Response
     next(error);
   }
 };
+
+
+export const forgotPassword = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      res.status(400);
+      throw new Error('Email is required');
+    }
+
+    if (!isMongoConnected) {
+      res.status(200).json({
+        success: true,
+        message: 'Password reset token generated (Standalone Mode)',
+        data: { resetToken: 'demo_reset_token_123' }
+      });
+      return;
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      res.status(200).json({
+        success: true,
+        message: 'If an account with that email exists, a reset link has been generated.'
+      });
+      return;
+    }
+
+    const resetToken = Math.random().toString(36).slice(2) + Date.now().toString(36);
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = new Date(Date.now() + 30 * 60 * 1000);
+    await user.save();
+
+    console.log(`🔑 Password reset token for ${email}: ${resetToken}`);
+
+    res.status(200).json({
+      success: true,
+      message: 'Password reset token generated. Check server console (demo mode - no email service connected).',
+      data: { resetToken }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const resetPassword = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { resetToken, newPassword } = req.body;
+
+    if (!resetToken || !newPassword) {
+      res.status(400);
+      throw new Error('Reset token and new password are required');
+    }
+
+    if (newPassword.length < 6) {
+      res.status(400);
+      throw new Error('New password must be at least 6 characters');
+    }
+
+    if (!isMongoConnected) {
+      res.status(200).json({ success: true, message: 'Password reset successfully (Standalone Mode)' });
+      return;
+    }
+
+    const user = await User.findOne({
+      resetPasswordToken: resetToken,
+      resetPasswordExpires: { $gt: new Date() }
+    });
+
+    if (!user) {
+      res.status(400);
+      throw new Error('Reset token is invalid or has expired');
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    user.passwordHash = await bcrypt.hash(newPassword, salt);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Password reset successfully. You can now log in with your new password.'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
