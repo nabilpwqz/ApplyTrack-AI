@@ -16,7 +16,8 @@ import {
   ChevronRight,
   X,
   Menu,
-  UserCheck
+  UserCheck,
+  Shield
 } from 'lucide-react';
 
 export const Layout: React.FC = () => {
@@ -54,6 +55,10 @@ export const Layout: React.FC = () => {
     { label: 'AI Command Hub', path: '/dashboard/ai-hub', icon: Sparkles, badge: 'AI' },
     { label: 'Settings', path: '/dashboard/settings', icon: SettingsIcon },
   ];
+
+  if (user?.role === 'ADMIN') {
+    navItems.push({ label: 'Admin Panel', path: '/dashboard/admin', icon: Shield, badge: 'Admin' });
+  }
 
   const handleCommandNavigate = (path: string) => {
     setCommandPaletteOpen(false);

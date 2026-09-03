@@ -4,6 +4,8 @@ import { useAuth } from '../context/AuthContext.tsx';
 import { applicationsAPI, emailAPI, remindersAPI } from '../services/api.ts';
 import { Application, EmailEvent, Reminder } from '../types/index.ts';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { AnimatedPage } from '../components/layout/AnimatedPage.tsx';
 import { 
   Briefcase, 
   Sparkles, 
@@ -87,7 +89,7 @@ export const Dashboard: React.FC = () => {
   const offersCount = apps.filter(a => ['OFFER', 'ACCEPTED'].includes(a.status)).length;
 
   return (
-    <div className="space-y-8 pb-12">
+    <AnimatedPage className="space-y-8 pb-12">
       
       {/* Top Welcome Banner */}
       <div className="glass-card rounded-3xl p-6 md:p-8 border border-white/10 relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -385,7 +387,7 @@ export const Dashboard: React.FC = () => {
 
       </div>
 
-    </div>
+    </AnimatedPage>
   );
 };
 

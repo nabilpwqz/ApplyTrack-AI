@@ -9,6 +9,7 @@ import {
   BookOpen
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { AnimatedPage } from '../components/layout/AnimatedPage.tsx';
 
 export const AIHub: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'MATCH' | 'SALARY'>('MATCH');
@@ -77,7 +78,7 @@ export const AIHub: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 pb-12">
+    <AnimatedPage className="space-y-6 pb-12">
       <div>
         <h1 className="text-2xl font-bold text-white tracking-tight">AI Career Command Hub</h1>
         <p className="text-xs text-slate-400">Evaluate posting matching percentages, review salary benchmarks, and draft scripts</p>
@@ -364,7 +365,7 @@ export const AIHub: React.FC = () => {
           )}
         </div>
       </div>
-    </div>
+    </AnimatedPage>
   );
 };
 export default AIHub;

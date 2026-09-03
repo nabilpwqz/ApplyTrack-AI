@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { AnimatedPage } from '../components/layout/AnimatedPage.tsx';
 
 const KANBAN_STAGES: { id: ApplicationStatus; title: string }[] = [
   { id: 'SAVED', title: 'Saved' },
@@ -169,7 +170,7 @@ export const Applications: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 pb-12">
+    <AnimatedPage className="space-y-6 pb-12">
       
       {/* Top Header & View Controls */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -458,7 +459,7 @@ export const Applications: React.FC = () => {
         </div>
       )}
 
-    </div>
+    </AnimatedPage>
   );
 };
 

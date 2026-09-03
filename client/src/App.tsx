@@ -17,6 +17,7 @@ import Analytics from './pages/Analytics.tsx';
 import Companies from './pages/Companies.tsx';
 import AIHub from './pages/AIHub.tsx';
 import Settings from './pages/Settings.tsx';
+import AdminDashboard from './pages/AdminDashboard.tsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -131,6 +132,7 @@ export const App: React.FC = () => {
               <Route path="companies" element={<Companies />} />
               <Route path="ai-hub" element={<AIHub />} />
               <Route path="settings" element={<Settings />} />
+              <Route path="admin" element={<AdminDashboard />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" replace />} />

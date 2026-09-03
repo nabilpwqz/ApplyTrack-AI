@@ -151,6 +151,7 @@ export interface User {
   name: string;
   email: string;
   avatar?: string;
+  role?: 'USER' | 'ADMIN';
   profile?: UserProfile;
   preferences?: UserPreferences;
   token?: string;
