@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Application {
+  id          String   @id @default(uuid())
+  userId      String
+
+  company     String
+  jobTitle    String
+  location    String?
+  salary      String?
+  jobUrl      String?
+  description String?
+
+  status      ApplicationStatus @default(APPLIED)
+  priority    Priority          @default(MEDIUM)
+
+  tags        String[]
+
+  appliedAt   DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  timeline    Timeline[]
+}
+
+model Timeline {
+  id            String   @id @default(uuid())
+  applicationId String
+
+  event         String
+  description   String?
+
+  createdAt     DateTime @default(now())
+
+  application Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+}
+
+enum ApplicationStatus {
+  APPLIED
+  INTERVIEW
+  OFFER
+  REJECTED
+  WITHDRAWN
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
