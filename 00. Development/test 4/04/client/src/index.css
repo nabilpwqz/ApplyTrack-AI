@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #0a0e1a;
+    color: #f8fafc;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* Glassmorphism Cards & Glow utilities */
+.glass-card {
+  background: rgba(21, 27, 46, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 12px 40px -10px rgba(99, 102, 241, 0.15);
+}
+
+.glass-panel {
+  background: rgba(15, 20, 35, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Text Gradient Utilities */
+.text-gradient {
+  background: linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #14b8a6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #818cf8 0%, #4f46e5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Keyframe Animations */
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.45);
+  }
+}
+
+.animate-glow {
+  animation: glowPulse 3s infinite ease-in-out;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(10, 14, 26, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.6);
+}
+
+/* Indigo/Teal Global Theme Overrides */
+.btn-primary,
+.btn-info {
+  background-color: #6366f1 !important;
+  border-color: #4f46e5 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.btn-primary:hover,
+.btn-info:hover {
+  background-color: #4f46e5 !important;
+  border-color: #4338ca !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px -2px rgba(99, 102, 241, 0.4) !important;
+}
+
+.btn-secondary {
+  background-color: #3b82f6 !important;
+  border-color: #2563eb !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.btn-secondary:hover {
+  background-color: #2563eb !important;
+  border-color: #1d4ed8 !important;
+  transform: translateY(-1px);
+}
+
+.btn-accent,
+.btn-success {
+  background-color: #14b8a6 !important;
+  border-color: #0d9488 !important;
+  color: #0a0e1a !important;
+  font-weight: 700 !important;
+}
+
+.btn-accent:hover,
+.btn-success:hover {
+  background-color: #0d9488 !important;
+  border-color: #0f766e !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px -2px rgba(20, 184, 166, 0.4) !important;
+}
+
+.btn-warning {
+  background-color: #f59e0b !important;
+  border-color: #d97706 !important;
+  color: #0a0e1a !important;
+  font-weight: 700 !important;
+}
+
+.btn-outline {
+  border-color: rgba(99, 102, 241, 0.4) !important;
+  color: #818cf8 !important;
+  background-color: transparent !important;
+}
+
+.btn-outline:hover {
+  background-color: rgba(99, 102, 241, 0.15) !important;
+  border-color: #6366f1 !important;
+  color: #a5b4fc !important;
+}
+
+.badge-primary,
+.badge-info {
+  background-color: #6366f1 !important;
+  border-color: #4f46e5 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.badge-secondary {
+  background-color: #3b82f6 !important;
+  border-color: #2563eb !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.badge-accent,
+.badge-success {
+  background-color: #14b8a6 !important;
+  border-color: #0d9488 !important;
+  color: #0a0e1a !important;
+  font-weight: 700 !important;
+}
+
+.badge-warning {
+  background-color: #f59e0b !important;
+  border-color: #d97706 !important;
+  color: #0a0e1a !important;
+  font-weight: 700 !important;
+}
+
+/* Active Nav Glow */
+.nav-link-active {
+  background: linear-gradient(90deg, rgba(99, 102, 241, 0.15) 0%, rgba(99, 102, 241, 0.02) 100%);
+  border-left: 3px solid #6366f1;
+  color: #a5b4fc !important;
+  font-weight: 700 !important;
+}
