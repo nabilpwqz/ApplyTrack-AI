@@ -1,0 +1,56 @@
+"use client";
+
+import React, { useState } from "react";
+import FeatureHeader from "./FeatureHeader";
+import FeatureCard from "./FeatureCard";
+import FeatureTooltipModal from "./FeatureTooltipModal";
+import { featureItems } from "./featureData";
+import { GridPattern } from "@/src/registry/magicui/grid-pattern";
+
+export default function FeaturesSection() {
+  const [activeId, setActiveId] = useState<string | null>(null);
+
+  const handleCardClick = (id: string) => {
+    // Toggle modal on mobile/tablet click
+    setActiveId((prev) => (prev === id ? null : id));
+  };
+
+  return (
+    <section className="section-pad relative w-full overflow-hidden px-4 sm:px-8 md:px-12">
+        <GridPattern
+                width={45}
+                height={45}
+                x={-1}
+                y={-1}
+                className="[mask-image:linear-gradient(to_bottom,white,transparent,transparent)] opacity-40 dark:opacity-20"
+              />
+      <div className="global-pos relative z-20">
+        <FeatureHeader />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch relative">
+          {featureItems.map((item, index) => {
+            const isActive = activeId === item.id;
+            const tooltipPosition = index === featureItems.length - 1 ? "left" : "right";
+
+            return (
+              <div
+                key={item.id}
+                className="relative flex flex-col cursor-pointer"
+                onMouseEnter={() => setActiveId(item.id)}
+                onMouseLeave={() => setActiveId(null)}
+                onClick={() => handleCardClick(item.id)}
+              >
+                <FeatureCard feature={item} />
+                <FeatureTooltipModal
+                  feature={isActive ? item : null}
+                  position={tooltipPosition}
+                  onClose={() => setActiveId(null)}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
