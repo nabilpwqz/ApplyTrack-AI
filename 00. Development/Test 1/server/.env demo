@@ -1,0 +1,7 @@
+PORT=5000
+MONGODB_URI=mongodb://127.0.0.1:27017/applytrack
+JWT_SECRET=applytrack-super-secret-key-12345
+NODE_ENV=development
+
+# Optional: Add your Google Gemini API key to enable live AI generation
+GEMINI_API_KEY=
