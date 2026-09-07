@@ -17,7 +17,8 @@ import {
   X,
   Menu,
   UserCheck,
-  Shield
+  Shield,
+  Mic
 } from 'lucide-react';
 
 export const Layout: React.FC = () => {
@@ -52,7 +53,8 @@ export const Layout: React.FC = () => {
     { label: 'Calendar', path: '/dashboard/calendar', icon: CalendarIcon },
     { label: 'Analytics', path: '/dashboard/analytics', icon: BarChart3 },
     { label: 'Companies', path: '/dashboard/companies', icon: Building2 },
-    { label: 'AI Command Hub', path: '/dashboard/ai-hub', icon: Sparkles, badge: 'AI' },
+    { label: 'AI Hub', path: '/dashboard/ai-hub', icon: Sparkles, badge: 'AI' },
+    { label: 'Mock Interview', path: '/dashboard/mock-interview', icon: Mic },
     { label: 'Settings', path: '/dashboard/settings', icon: SettingsIcon },
   ];
 

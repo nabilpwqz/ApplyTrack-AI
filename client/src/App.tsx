@@ -16,6 +16,7 @@ import Calendar from './pages/Calendar.tsx';
 import Analytics from './pages/Analytics.tsx';
 import Companies from './pages/Companies.tsx';
 import AIHub from './pages/AIHub.tsx';
+import MockInterview from './pages/MockInterview.tsx';
 import Settings from './pages/Settings.tsx';
 import AdminDashboard from './pages/AdminDashboard.tsx';
 
@@ -131,6 +132,7 @@ export const App: React.FC = () => {
               <Route path="analytics" element={<Analytics />} />
               <Route path="companies" element={<Companies />} />
               <Route path="ai-hub" element={<AIHub />} />
+              <Route path="mock-interview" element={<MockInterview />} />
               <Route path="settings" element={<Settings />} />
               <Route path="admin" element={<AdminDashboard />} />
             </Route>

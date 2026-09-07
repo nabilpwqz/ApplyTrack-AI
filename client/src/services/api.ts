@@ -555,6 +555,10 @@ export const applicationsAPI = {
       data: null,
     };
   },
+  extractFromUrl: async (url: string): Promise<ApiResponse<any>> => {
+    const res = await api.post(`/applications/extract-url`, { url });
+    return res.data;
+  },
 };
 
 export const companiesAPI = {

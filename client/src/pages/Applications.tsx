@@ -57,6 +57,9 @@ export const Applications: React.FC = () => {
   const [salaryMax, setSalaryMax] = useState<string>('');
   const [source, setSource] = useState<string>('LinkedIn');
   const [notes, setNotes] = useState<string>('');
+  
+  const [magicUrl, setMagicUrl] = useState<string>('');
+  const [isExtracting, setIsExtracting] = useState<boolean>(false);
 
   // 1. Fetch Applications List
   const { data: appsData, isLoading } = useQuery({
@@ -140,6 +143,28 @@ export const Applications: React.FC = () => {
       source,
       notes,
     });
+  };
+
+  const handleExtractUrl = async () => {
+    if (!magicUrl) return toast.error('Please enter a Job URL first');
+    try {
+      setIsExtracting(true);
+      const res = await applicationsAPI.extractFromUrl(magicUrl);
+      if (res?.success && res.data) {
+        if (res.data.jobTitle) setJobTitle(res.data.jobTitle);
+        if (res.data.companyName) setCompanyName(res.data.companyName);
+        if (res.data.location) setLocation(res.data.location);
+        if (res.data.workMode) setWorkMode(res.data.workMode);
+        if (res.data.salaryMin) setSalaryMin(res.data.salaryMin.toString());
+        if (res.data.salaryMax) setSalaryMax(res.data.salaryMax.toString());
+        if (res.data.description) setNotes(`Extracted Description:\n\n${res.data.description}`);
+        toast.success('Magic Extract complete!');
+      }
+    } catch (err) {
+      toast.error('Could not extract data. URL might be protected.');
+    } finally {
+      setIsExtracting(false);
+    }
   };
 
   if (isLoading) {
@@ -370,6 +395,31 @@ export const Applications: React.FC = () => {
               <X className="w-5 h-5" />
             </button>
             <h3 className="font-bold text-white text-base">Track New Job Application</h3>
+            
+            <div className="bg-brand-500/10 border border-brand-500/20 p-3 rounded-xl flex items-end gap-2">
+              <div className="form-control flex-1">
+                <label className="label text-[10px] text-brand-400 font-bold uppercase py-0.5 tracking-wider">
+                  ✨ Magic URL Auto-Fill
+                </label>
+                <input 
+                  type="url" 
+                  placeholder="Paste Job URL (e.g. LinkedIn, Indeed)..."
+                  value={magicUrl}
+                  onChange={(e) => setMagicUrl(e.target.value)}
+                  className="input input-sm input-bordered bg-neutral-950/50 border-brand-500/30 text-white text-xs rounded-lg w-full focus:border-brand-500"
+                />
+              </div>
+              <button 
+                type="button"
+                onClick={handleExtractUrl}
+                disabled={isExtracting}
+                className="btn btn-sm bg-brand-500 text-slate-950 hover:bg-brand-400 border-none rounded-lg text-xs font-bold"
+              >
+                {isExtracting ? <span className="loading loading-spinner loading-xs"></span> : 'Extract'}
+              </button>
+            </div>
+            
+            <div className="divider text-[10px] text-slate-500 uppercase font-semibold m-0">OR ENTER MANUALLY</div>
 
             <form onSubmit={handleFormSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">

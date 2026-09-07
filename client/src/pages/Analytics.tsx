@@ -9,7 +9,10 @@ import {
   YAxis, 
   Tooltip, 
   ResponsiveContainer, 
-  Cell 
+  Cell,
+  ComposedChart,
+  Line,
+  CartesianGrid
 } from 'recharts';
 import { 
   Percent, 
@@ -72,6 +75,14 @@ export const Analytics: React.FC = () => {
     { stage: 'Offer', count: funnel.OFFER + funnel.ACCEPTED },
   ];
 
+  // Mock data for new Weekly Activity Trend chart
+  const weeklyTrendData = [
+    { week: 'W1', applications: 12, interviews: 1 },
+    { week: 'W2', applications: 15, interviews: 2 },
+    { week: 'W3', applications: 8, interviews: 3 },
+    { week: 'W4', applications: 20, interviews: 5 },
+  ];
+
   return (
     <div className="space-y-6 pb-12">
       <div>
@@ -122,6 +133,33 @@ export const Analytics: React.FC = () => {
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
+        {/* New Advanced Weekly Trend Chart */}
+        <div className="glass-card rounded-2xl p-6 space-y-4">
+          <div>
+            <h3 className="font-bold text-white text-base">Weekly Activity Trend</h3>
+            <p className="text-xs text-slate-400">Applications added vs Interviews scheduled</p>
+          </div>
+
+          <div className="h-60 w-full text-xs">
+            <ResponsiveContainer width="100%" height="100%">
+              <ComposedChart
+                data={weeklyTrendData}
+                margin={{ top: 10, right: 10, left: -20, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                <XAxis dataKey="week" stroke="#64748b" />
+                <YAxis yAxisId="left" stroke="#64748b" />
+                <YAxis yAxisId="right" orientation="right" stroke="#64748b" />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#182030', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '8px', color: '#fff' }}
+                  cursor={{ fill: 'rgba(255, 255, 255, 0.02)' }}
+                />
+                <Bar yAxisId="left" dataKey="applications" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                <Line yAxisId="right" type="monotone" dataKey="interviews" stroke="#10b981" strokeWidth={3} dot={{ r: 4, fill: '#10b981' }} />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
         <div className="glass-card rounded-2xl p-6 space-y-4">
           <div>
             <h3 className="font-bold text-white text-base">Funnel Conversion Rate</h3>
