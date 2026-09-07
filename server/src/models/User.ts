@@ -6,6 +6,7 @@ export interface IUser extends Document {
   passwordHash: string;
   avatar?: string;
   isActive: boolean;
+  role: 'USER' | 'ADMIN';
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
   profile?: {
@@ -36,6 +37,7 @@ const UserSchema = new Schema<IUser>(
     passwordHash: { type: String, required: true },
     avatar: { type: String, default: '' },
     isActive: { type: Boolean, default: true },
+    role: { type: String, enum: ['USER', 'ADMIN'], default: 'USER' },
     resetPasswordToken: { type: String, default: undefined },
     resetPasswordExpires: { type: Date, default: undefined },
     profile: {

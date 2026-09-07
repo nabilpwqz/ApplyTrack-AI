@@ -453,3 +453,65 @@ export const resetPassword = async (req: AuthenticatedRequest, res: Response, ne
     next(error);
   }
 };
+
+
+export const loginDemoAdmin = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const demoEmail = 'admin@applytrack.ai';
+    const mockId = 'demo_admin_88';
+
+    if (isMongoConnected) {
+      try {
+        let admin = await User.findOne({ email: demoEmail });
+
+        if (!admin) {
+          const salt = await bcrypt.genSalt(10);
+          const passwordHash = await bcrypt.hash('demoadmin123', salt);
+
+          admin = await User.create({
+            name: 'Admin',
+            email: demoEmail,
+            passwordHash,
+            role: 'ADMIN',
+            profile: {
+              headline: 'System Administrator',
+              location: 'HQ',
+            },
+          });
+        } else if (admin.role !== 'ADMIN') {
+          admin.role = 'ADMIN';
+          await admin.save();
+        }
+
+        res.status(200).json({
+          success: true,
+          message: 'Demo admin login successful',
+          data: {
+            _id: admin._id,
+            name: admin.name,
+            email: admin.email,
+            role: admin.role,
+            token: generateToken(admin._id.toString(), admin.email),
+          },
+        });
+        return;
+      } catch (dbErr: any) {
+        console.warn('Demo admin DB error, switching to Standalone response:', dbErr.message);
+      }
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Demo admin login successful (Standalone Mode)',
+      data: {
+        _id: mockId,
+        name: 'Admin',
+        email: demoEmail,
+        role: 'ADMIN',
+        token: generateToken(mockId, demoEmail),
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};

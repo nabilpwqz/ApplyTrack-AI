@@ -19,6 +19,7 @@ import reminderRoutes from './routes/reminder.routes';
 import analyticsRoutes from './routes/analytics.routes';
 import aiRoutes from './routes/ai.routes';
 import emailRoutes from './routes/email.routes';
+import adminRoutes from './routes/admin.routes';
 
 const app: Application = express();
 
@@ -67,6 +68,7 @@ app.use('/api/reminders', reminderRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/email', emailRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Global Error Handler
 app.use(errorHandler);

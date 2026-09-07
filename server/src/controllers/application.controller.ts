@@ -5,6 +5,8 @@ import AIAnalysis from '../models/AIAnalysis';
 import { AuthenticatedRequest } from '../middleware/auth';
 import { isMongoConnected } from '../config/db';
 import { aiService } from '../services/ai.service';
+import axios from 'axios';
+import * as cheerio from 'cheerio';
 
 export const getApplications = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -243,6 +245,42 @@ export const addTimelineEvent = async (req: AuthenticatedRequest, res: Response,
       success: true,
       message: 'Timeline event logged successfully',
       data: application.timeline
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const extractFromUrl = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { url } = req.body;
+    if (!url) {
+      res.status(400);
+      throw new Error('URL is required');
+    }
+
+    let htmlText = '';
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+          'Accept': 'text/html'
+        },
+        timeout: 8000
+      });
+      const $ = cheerio.load(response.data);
+      $('script, style, nav, footer, header').remove();
+      htmlText = $('body').text().replace(/\s+/g, ' ').trim();
+    } catch (err: any) {
+      console.warn('URL Fetch failed:', err.message);
+      htmlText = url;
+    }
+
+    const extractedData = await aiService.extractJobDetailsFromHtml(htmlText);
+
+    res.status(200).json({
+      success: true,
+      data: extractedData
     });
   } catch (error) {
     next(error);
