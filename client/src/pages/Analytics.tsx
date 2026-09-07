@@ -9,7 +9,10 @@ import {
   YAxis, 
   Tooltip, 
   ResponsiveContainer, 
-  Cell 
+  Cell,
+  ComposedChart,
+  Line,
+  CartesianGrid
 } from 'recharts';
 import { 
   Percent, 
@@ -26,7 +29,7 @@ export const Analytics: React.FC = () => {
   if (isLoading) {
     return (
       <div className="flex flex-col justify-center items-center h-[60vh] gap-3">
-        <span className="loading loading-spinner loading-lg text-amber-500"></span>
+        <span className="loading loading-spinner loading-lg text-brand-500"></span>
         <p className="text-slate-400 text-sm">Aggregating historical metrics...</p>
       </div>
     );
@@ -72,6 +75,14 @@ export const Analytics: React.FC = () => {
     { stage: 'Offer', count: funnel.OFFER + funnel.ACCEPTED },
   ];
 
+  // Mock data for new Weekly Activity Trend chart
+  const weeklyTrendData = [
+    { week: 'W1', applications: 12, interviews: 1 },
+    { week: 'W2', applications: 15, interviews: 2 },
+    { week: 'W3', applications: 8, interviews: 3 },
+    { week: 'W4', applications: 20, interviews: 5 },
+  ];
+
   return (
     <div className="space-y-6 pb-12">
       <div>
@@ -81,7 +92,7 @@ export const Analytics: React.FC = () => {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-neutral/20 border border-white/5 rounded-2xl p-4 flex items-center gap-3">
-          <span className="w-9 h-9 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400">
+          <span className="w-9 h-9 rounded-lg bg-brand-500/10 flex items-center justify-center text-brand-400">
             <Percent className="w-4 h-4" />
           </span>
           <div>
@@ -91,7 +102,7 @@ export const Analytics: React.FC = () => {
         </div>
 
         <div className="bg-neutral/20 border border-white/5 rounded-2xl p-4 flex items-center gap-3">
-          <span className="w-9 h-9 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-400">
+          <span className="w-9 h-9 rounded-lg bg-teal-500/10 flex items-center justify-center text-teal-400">
             <Activity className="w-4 h-4" />
           </span>
           <div>
@@ -101,7 +112,7 @@ export const Analytics: React.FC = () => {
         </div>
 
         <div className="bg-neutral/20 border border-white/5 rounded-2xl p-4 flex items-center gap-3">
-          <span className="w-9 h-9 rounded-lg bg-yellow-500/10 flex items-center justify-center text-yellow-400">
+          <span className="w-9 h-9 rounded-lg bg-teal-500/10 flex items-center justify-center text-teal-400">
             <Percent className="w-4 h-4" />
           </span>
           <div>
@@ -111,7 +122,7 @@ export const Analytics: React.FC = () => {
         </div>
 
         <div className="bg-neutral/20 border border-white/5 rounded-2xl p-4 flex items-center gap-3">
-          <span className="w-9 h-9 rounded-lg bg-amber-600/10 flex items-center justify-center text-amber-500">
+          <span className="w-9 h-9 rounded-lg bg-brand-600/10 flex items-center justify-center text-brand-500">
             <Calendar className="w-4 h-4" />
           </span>
           <div>
@@ -122,6 +133,33 @@ export const Analytics: React.FC = () => {
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
+        {/* New Advanced Weekly Trend Chart */}
+        <div className="glass-card rounded-2xl p-6 space-y-4">
+          <div>
+            <h3 className="font-bold text-white text-base">Weekly Activity Trend</h3>
+            <p className="text-xs text-slate-400">Applications added vs Interviews scheduled</p>
+          </div>
+
+          <div className="h-60 w-full text-xs">
+            <ResponsiveContainer width="100%" height="100%">
+              <ComposedChart
+                data={weeklyTrendData}
+                margin={{ top: 10, right: 10, left: -20, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                <XAxis dataKey="week" stroke="#64748b" />
+                <YAxis yAxisId="left" stroke="#64748b" />
+                <YAxis yAxisId="right" orientation="right" stroke="#64748b" />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#182030', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '8px', color: '#fff' }}
+                  cursor={{ fill: 'rgba(255, 255, 255, 0.02)' }}
+                />
+                <Bar yAxisId="left" dataKey="applications" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                <Line yAxisId="right" type="monotone" dataKey="interviews" stroke="#10b981" strokeWidth={3} dot={{ r: 4, fill: '#10b981' }} />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
         <div className="glass-card rounded-2xl p-6 space-y-4">
           <div>
             <h3 className="font-bold text-white text-base">Funnel Conversion Rate</h3>
@@ -223,7 +261,7 @@ export const Analytics: React.FC = () => {
                     <td>{src.applications}</td>
                     <td>{src.responseRate}%</td>
                     <td>
-                      <span className="text-amber-400 font-bold">{src.interviewRate}%</span>
+                      <span className="text-brand-400 font-bold">{src.interviewRate}%</span>
                     </td>
                   </tr>
                 ))}

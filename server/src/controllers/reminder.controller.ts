@@ -11,7 +11,7 @@ export const getReminders = async (req: AuthenticatedRequest, res: Response, nex
     }
 
     const { completed } = req.query;
-    const filter: any = { userId: req.user!.id };
+    const filter: any = { userId: req.user!.id, isDismissed: false };
     if (completed !== undefined) filter.completed = completed === 'true';
 
     const reminders = await Reminder.find(filter)
@@ -84,6 +84,32 @@ export const toggleReminderComplete = async (req: AuthenticatedRequest, res: Res
     res.status(200).json({
       success: true,
       message: `Task marked as ${reminder.completed ? 'completed' : 'pending'}`,
+      data: reminder
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const dismissReminder = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    if (!isMongoConnected) {
+      res.status(200).json({ success: true, message: 'Reminder dismissed' });
+      return;
+    }
+
+    const reminder = await Reminder.findOne({ _id: req.params.id, userId: req.user!.id });
+    if (!reminder) {
+      res.status(404);
+      throw new Error('Reminder not found');
+    }
+
+    reminder.isDismissed = true;
+    await reminder.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Reminder dismissed successfully',
       data: reminder
     });
   } catch (error) {

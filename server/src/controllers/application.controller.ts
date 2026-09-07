@@ -5,11 +5,13 @@ import AIAnalysis from '../models/AIAnalysis';
 import { AuthenticatedRequest } from '../middleware/auth';
 import { isMongoConnected } from '../config/db';
 import { aiService } from '../services/ai.service';
+import axios from 'axios';
+import * as cheerio from 'cheerio';
 
 export const getApplications = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     if (!isMongoConnected) {
-      res.status(200).json({ success: true, data: [] });
+      res.status(200).json({ success: true, data: []});
       return;
     }
 
@@ -76,7 +78,7 @@ export const getApplicationById = async (req: AuthenticatedRequest, res: Respons
 
 export const createApplication = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const { jobTitle, companyName, status, priority, location, workMode, salary, source, notes } = req.body;
+    const { jobTitle, companyName, status, priority, location, workMode, salary, source, notes, deadline } = req.body;
 
     if (!jobTitle || !companyName) {
       res.status(400);
@@ -112,6 +114,7 @@ export const createApplication = async (req: AuthenticatedRequest, res: Response
       location: location || 'Remote',
       workMode: workMode || 'REMOTE',
       salary,
+      deadline,
       source: source || 'Website',
       notes: notes || '',
       applicationDate: new Date(),
@@ -139,7 +142,7 @@ export const createApplication = async (req: AuthenticatedRequest, res: Response
 export const updateApplication = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     if (!isMongoConnected) {
-      res.status(200).json({ success: true, message: 'Application updated' });
+      res.status(200).json({ success: true, message:'Application updated' });
       return;
     }
 
@@ -153,7 +156,7 @@ export const updateApplication = async (req: AuthenticatedRequest, res: Response
       throw new Error('Application not found');
     }
 
-    const { status, priority, notes, contacts } = req.body;
+    const { status, priority, notes, contacts, deadline } = req.body;
 
     if (status && status !== application.status) {
       application.timeline.push({
@@ -169,6 +172,7 @@ export const updateApplication = async (req: AuthenticatedRequest, res: Response
     if (priority) application.priority = priority;
     if (notes !== undefined) application.notes = notes;
     if (contacts) application.contacts = contacts;
+    if (deadline) application.deadline = new Date(deadline);
 
     const updated = await application.save();
 
@@ -185,7 +189,7 @@ export const updateApplication = async (req: AuthenticatedRequest, res: Response
 export const deleteApplication = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     if (!isMongoConnected) {
-      res.status(200).json({ success: true, message: 'Application deleted' });
+      res.status(200).json({ success: true, message:'Application deleted' });
       return;
     }
 
@@ -213,7 +217,7 @@ export const addTimelineEvent = async (req: AuthenticatedRequest, res: Response,
     const { type, title, description, occurredAt } = req.body;
 
     if (!isMongoConnected) {
-      res.status(200).json({ success: true, message: 'Timeline event added' });
+      res.status(200).json({ success: true, message:'Timeline event added' });
       return;
     }
 
@@ -241,6 +245,42 @@ export const addTimelineEvent = async (req: AuthenticatedRequest, res: Response,
       success: true,
       message: 'Timeline event logged successfully',
       data: application.timeline
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const extractFromUrl = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { url } = req.body;
+    if (!url) {
+      res.status(400);
+      throw new Error('URL is required');
+    }
+
+    let htmlText = '';
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+          'Accept': 'text/html'
+        },
+        timeout: 8000
+      });
+      const $ = cheerio.load(response.data);
+      $('script, style, nav, footer, header').remove();
+      htmlText = $('body').text().replace(/\s+/g, ' ').trim();
+    } catch (err: any) {
+      console.warn('URL Fetch failed:', err.message);
+      htmlText = url;
+    }
+
+    const extractedData = await aiService.extractJobDetailsFromHtml(htmlText);
+
+    res.status(200).json({
+      success: true,
+      data: extractedData
     });
   } catch (error) {
     next(error);

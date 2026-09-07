@@ -25,24 +25,24 @@ export const Landing: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-slate-100 flex flex-col font-sans selection:bg-amber-500 selection:text-slate-950 overflow-x-hidden">
+    <div className="min-h-screen bg-[#090d16] text-slate-100 flex flex-col font-sans selection:bg-brand-500 selection:text-slate-950 overflow-x-hidden">
       
       {/* Top Header Navbar */}
       <header className="border-b border-white/5 bg-neutral-950/80 backdrop-blur-md sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-slate-950 font-black text-base sm:text-lg shadow-lg shadow-amber-500/20">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-brand-500 to-teal-500 flex items-center justify-center text-slate-950 font-black text-base sm:text-lg shadow-lg shadow-brand-500/20">
               A
             </div>
             <span className="font-extrabold text-lg sm:text-xl tracking-tight text-white">
-              ApplyTrack<span className="text-amber-400">.AI</span>
+              ApplyTrack<span className="text-brand-400">.AI</span>
             </span>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
             <button 
               onClick={handleDemoAccess}
-              className="btn btn-xs sm:btn-sm btn-ghost text-amber-400 hover:bg-amber-500/10 rounded-xl text-xs flex items-center gap-1 sm:gap-1.5"
+              className="btn btn-xs sm:btn-sm btn-ghost text-brand-400 hover:bg-brand-500/10 rounded-xl text-xs flex items-center gap-1 sm:gap-1.5"
             >
               <UserCheck className="w-3.5 h-3.5" /> <span className="hidden xs:inline">Guest Demo</span>
             </button>
@@ -54,7 +54,7 @@ export const Landing: React.FC = () => {
             </Link>
             <Link 
               to="/register"
-              className="btn btn-xs sm:btn-sm btn-primary text-slate-950 font-bold rounded-xl text-xs shadow-lg shadow-amber-500/20"
+              className="btn btn-xs sm:btn-sm btn-primary text-slate-950 font-bold rounded-xl text-xs shadow-lg shadow-brand-500/20"
             >
               Get Started
             </Link>
@@ -78,7 +78,7 @@ export const Landing: React.FC = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-4 w-full max-w-md mx-auto sm:max-w-none">
             <button 
               onClick={handleDemoAccess}
-              className="btn btn-md sm:btn-lg btn-primary text-slate-950 font-extrabold rounded-2xl text-xs sm:text-sm w-full sm:w-auto px-6 sm:px-8 shadow-xl shadow-amber-500/25 flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform"
+              className="btn btn-md sm:btn-lg btn-primary text-slate-950 font-extrabold rounded-2xl text-xs sm:text-sm w-full sm:w-auto px-6 sm:px-8 shadow-xl shadow-brand-500/25 flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform"
             >
               Access Demo Session (42 Apps Seeding) <ArrowRight className="w-4 h-4" />
             </button>
@@ -92,9 +92,9 @@ export const Landing: React.FC = () => {
           </div>
 
           <div className="pt-6 sm:pt-8 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-[11px] sm:text-xs text-slate-500 font-semibold">
-            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-amber-500" /> No credit card required</span>
-            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-amber-500" /> Full TypeScript engine</span>
-            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-amber-500" /> Standalone offline demo ready</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand-500" /> No credit card required</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand-500" /> Full TypeScript engine</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-brand-500" /> Standalone offline demo ready</span>
           </div>
 
         </div>
@@ -112,7 +112,7 @@ export const Landing: React.FC = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             
             <div className="glass-card rounded-2xl p-5 sm:p-6 space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400">
+              <div className="w-10 h-10 rounded-xl bg-brand-500/10 flex items-center justify-center text-brand-400">
                 <Target className="w-5 h-5" />
               </div>
               <h3 className="font-bold text-white text-sm sm:text-base">Kanban Stage Tracker</h3>
@@ -122,7 +122,7 @@ export const Landing: React.FC = () => {
             </div>
 
             <div className="glass-card rounded-2xl p-5 sm:p-6 space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-400">
+              <div className="w-10 h-10 rounded-xl bg-teal-500/10 flex items-center justify-center text-teal-400">
                 <Mail className="w-5 h-5" />
               </div>
               <h3 className="font-bold text-white text-base">Recruiter Email Auto-Parser</h3>
@@ -132,7 +132,7 @@ export const Landing: React.FC = () => {
             </div>
 
             <div className="glass-card rounded-2xl p-5 sm:p-6 space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-600/10 flex items-center justify-center text-amber-500">
+              <div className="w-10 h-10 rounded-xl bg-brand-600/10 flex items-center justify-center text-brand-500">
                 <Sparkles className="w-5 h-5" />
               </div>
               <h3 className="font-bold text-white text-base">Interview Probability AI</h3>
@@ -142,7 +142,7 @@ export const Landing: React.FC = () => {
             </div>
 
             <div className="glass-card rounded-2xl p-5 sm:p-6 space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-400">
+              <div className="w-10 h-10 rounded-xl bg-teal-500/10 flex items-center justify-center text-teal-400">
                 <Building2 className="w-5 h-5" />
               </div>
               <h3 className="font-bold text-white text-base">Layoff Risk & Health Audit</h3>
@@ -152,7 +152,7 @@ export const Landing: React.FC = () => {
             </div>
 
             <div className="glass-card rounded-2xl p-5 sm:p-6 space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400">
+              <div className="w-10 h-10 rounded-xl bg-brand-500/10 flex items-center justify-center text-brand-400">
                 <DollarSign className="w-5 h-5" />
               </div>
               <h3 className="font-bold text-white text-base">Salary Negotiation Advisor</h3>
@@ -162,7 +162,7 @@ export const Landing: React.FC = () => {
             </div>
 
             <div className="glass-card rounded-2xl p-5 sm:p-6 space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-400">
+              <div className="w-10 h-10 rounded-xl bg-teal-500/10 flex items-center justify-center text-teal-400">
                 <TrendingUp className="w-5 h-5" />
               </div>
               <h3 className="font-bold text-white text-base">Funnel Conversion Analytics</h3>

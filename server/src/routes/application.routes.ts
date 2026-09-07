@@ -5,13 +5,16 @@ import {
   createApplication,
   updateApplication,
   deleteApplication,
-  addTimelineEvent
+  addTimelineEvent,
+  extractFromUrl
 } from '../controllers/application.controller';
 import { protect } from '../middleware/auth';
 
 const router = Router();
 
 router.use(protect);
+
+router.post('/extract-url', extractFromUrl);
 
 router.route('/')
   .get(getApplications)

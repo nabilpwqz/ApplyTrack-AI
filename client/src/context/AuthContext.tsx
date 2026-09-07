@@ -10,6 +10,7 @@ interface AuthContextType {
   login: (email: string, password?: string) => Promise<boolean>;
   register: (name: string, email: string, password?: string) => Promise<boolean>;
   loginDemo: () => Promise<boolean>;
+  loginDemoAdmin: () => Promise<boolean>;
   logout: () => void;
   updateProfile: (name?: string, profile?: UserProfile, preferences?: UserPreferences) => Promise<boolean>;
 }
@@ -35,7 +36,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         try {
           const res = await authAPI.getProfile();
           if (res.success && res.data) {
-            // Keep local user name if backend fallback is generic
             const savedLocal = localStorage.getItem('applytrack_user');
             let finalUser = res.data;
             if (savedLocal) {
@@ -43,6 +43,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 const parsed = JSON.parse(savedLocal);
                 if (parsed.name && parsed.name !== 'Guest') {
                   finalUser = { ...res.data, name: parsed.name };
+                }
+                if (parsed.avatar) {
+                  finalUser = { ...finalUser, avatar: parsed.avatar };
+                }
+                if (parsed.role) {
+                  finalUser = { ...finalUser, role: parsed.role };
                 }
               } catch {}
             }
@@ -146,6 +152,37 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
+  const loginDemoAdmin = async (): Promise<boolean> => {
+    try {
+      const res = await authAPI.loginDemoAdmin();
+      if (res.success && res.data) {
+        const adminUser: User = {
+          _id: res.data._id || 'demo_admin_id',
+          name: res.data.name || 'Admin',
+          email: res.data.email || 'admin@applytrack.ai',
+          role: res.data.role || 'ADMIN',
+          token: res.data.token || 'mock_admin_jwt_token_2026',
+        };
+        saveUserSession(adminUser);
+        toast.success('Accessed Demo Admin Session!');
+        return true;
+      }
+      toast.error('Failed to start admin session');
+      return false;
+    } catch {
+      const adminUser: User = {
+        _id: 'demo_admin_fallback',
+        name: 'Admin',
+        email: 'admin@applytrack.ai',
+        role: 'ADMIN',
+        token: 'mock_admin_jwt_token_2026',
+      };
+      saveUserSession(adminUser);
+      toast.success('Accessed Demo Admin Session!');
+      return true;
+    }
+  };
+
   const logout = () => {
     setUser(null);
     setToken(null);
@@ -180,6 +217,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         login,
         register,
         loginDemo,
+        loginDemoAdmin,
         logout,
         updateProfile,
       }}

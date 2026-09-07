@@ -36,25 +36,25 @@ export const Register: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-slate-100 flex items-center justify-center p-4 selection:bg-amber-500 selection:text-slate-950">
+    <div className="min-h-screen bg-[#090d16] text-slate-100 flex items-center justify-center p-4 selection:bg-brand-500 selection:text-slate-950">
       <div className="w-full max-w-md space-y-6">
         
         {/* Header Logo */}
         <div className="text-center space-y-2">
           <Link to="/" className="inline-flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-500 to-teal-500 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
               A
             </div>
             <span className="font-extrabold text-2xl tracking-tight text-white">
-              ApplyTrack<span className="text-amber-400">.AI</span>
+              ApplyTrack<span className="text-brand-400">.AI</span>
             </span>
           </Link>
           <h2 className="text-lg font-bold text-white">Create your free account</h2>
         </div>
 
         {/* Demo Fast Pass Card */}
-        <div className="glass-card p-4 rounded-2xl border border-amber-500/20 space-y-2.5 text-center">
-          <div className="flex items-center justify-center gap-1.5 text-amber-400 font-bold text-xs">
+        <div className="glass-card p-4 rounded-2xl border border-brand-500/20 space-y-2.5 text-center">
+          <div className="flex items-center justify-center gap-1.5 text-brand-400 font-bold text-xs">
             <Sparkles className="w-4 h-4 animate-pulse" /> Instant Demo Access
           </div>
           <p className="text-[10px] text-slate-300 leading-relaxed">
@@ -63,7 +63,7 @@ export const Register: React.FC = () => {
           <button 
             onClick={handleDemoLogin}
             disabled={submitting}
-            className="btn btn-sm btn-primary text-slate-950 font-bold w-full rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20"
+            className="btn btn-sm btn-primary text-slate-950 font-bold w-full rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-brand-500/20"
           >
             <UserCheck className="w-4 h-4" /> Access Demo Session (Guest)
           </button>
@@ -82,7 +82,7 @@ export const Register: React.FC = () => {
                   placeholder="Jane Smith"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="input input-bordered w-full pl-9 bg-neutral-900 border-white/5 text-white text-xs rounded-xl focus:outline-none focus:border-amber-500"
+                  className="input input-bordered w-full pl-9 bg-neutral-900 border-white/5 text-white text-xs rounded-xl focus:outline-none focus:border-brand-500"
                   required
                 />
               </div>
@@ -97,7 +97,7 @@ export const Register: React.FC = () => {
                   placeholder="name@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="input input-bordered w-full pl-9 bg-neutral-900 border-white/5 text-white text-xs rounded-xl focus:outline-none focus:border-amber-500"
+                  className="input input-bordered w-full pl-9 bg-neutral-900 border-white/5 text-white text-xs rounded-xl focus:outline-none focus:border-brand-500"
                   required
                 />
               </div>
@@ -112,7 +112,7 @@ export const Register: React.FC = () => {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="input input-bordered w-full pl-9 bg-neutral-900 border-white/5 text-white text-xs rounded-xl focus:outline-none focus:border-amber-500"
+                  className="input input-bordered w-full pl-9 bg-neutral-900 border-white/5 text-white text-xs rounded-xl focus:outline-none focus:border-brand-500"
                   required
                 />
               </div>
@@ -121,7 +121,7 @@ export const Register: React.FC = () => {
             <button 
               type="submit"
               disabled={submitting}
-              className="btn btn-sm btn-outline border-amber-500/40 text-amber-400 hover:bg-amber-500/15 w-full rounded-xl text-xs flex items-center justify-center gap-1.5"
+              className="btn btn-sm btn-outline border-brand-500/40 text-brand-400 hover:bg-brand-500/15 w-full rounded-xl text-xs flex items-center justify-center gap-1.5"
             >
               {submitting ? (
                 <span className="loading loading-spinner loading-xs"></span>
@@ -135,7 +135,7 @@ export const Register: React.FC = () => {
 
           <div className="text-center text-xs text-slate-400 pt-2 border-t border-white/5">
             Already have an account?{' '}
-            <Link to="/login" className="text-amber-400 font-bold hover:underline">
+            <Link to="/login" className="text-brand-400 font-bold hover:underline">
               Sign in
             </Link>
           </div>

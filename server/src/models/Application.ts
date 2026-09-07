@@ -9,6 +9,7 @@ export interface IApplication extends Document {
   priority: 'HIGH' | 'MEDIUM' | 'LOW';
   applicationDate: Date;
   lastActivityAt: Date;
+  healthStatus: 'ACTIVE' | 'NEEDS_ATTENTION' | 'AT_RISK' | 'GHOSTED';
   deadline?: Date;
   location?: string;
   workMode?: 'REMOTE' | 'HYBRID' | 'ON_SITE';
@@ -62,6 +63,11 @@ const ApplicationSchema = new Schema<IApplication>(
     priority: { type: String, enum: ['HIGH', 'MEDIUM', 'LOW'], default: 'MEDIUM' },
     applicationDate: { type: Date, default: Date.now },
     lastActivityAt: { type: Date, default: Date.now },
+    healthStatus: {
+      type: String,
+      enum: ['ACTIVE', 'NEEDS_ATTENTION', 'AT_RISK', 'GHOSTED'],
+      default: 'ACTIVE'
+    },
     deadline: { type: Date },
     location: { type: String, default: 'Remote' },
     workMode: { type: String, enum: ['REMOTE', 'HYBRID', 'ON_SITE'], default: 'REMOTE' },

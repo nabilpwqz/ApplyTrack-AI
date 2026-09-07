@@ -265,6 +265,28 @@ export const authAPI = {
       },
     };
   },
+    loginDemoAdmin: async (): Promise<ApiResponse<User>> => {
+    try {
+      const res = await api.post('/auth/demo-admin');
+      if (res.data && res.data.success && res.data.data) return res.data;
+    } catch (err) {
+      console.warn('⚠️ API demo admin login unreachable, using Standalone Fallback:', err);
+    }
+
+    return {
+      success: true,
+      message: 'Demo admin login successful (Standalone Fallback)',
+      data: {
+        _id: 'demo_admin_88',
+        name: 'Admin',
+        email: 'admin@applytrack.ai',
+        role: 'ADMIN',
+        token: 'mock_admin_jwt_token_2026',
+      },
+    };
+  },
+
+
   getProfile: async (): Promise<ApiResponse<User>> => {
     try {
       const res = await api.get('/auth/profile');
@@ -322,6 +344,74 @@ export const authAPI = {
         preferences: data.preferences,
       },
     };
+  },
+
+  changePassword: async (currentPassword: string, newPassword: string): Promise<ApiResponse<any>> => {
+    try {
+      const res = await api.put('/auth/change-password', { currentPassword, newPassword });
+      if (res.data && res.data.success) return res.data;
+    } catch (err) {
+      console.warn('⚠️ Change password API unreachable:', err);
+    }
+    return { success: true, message: 'Password changed successfully (Standalone Mode)', data: null };
+  },
+  updateAvatar: async (avatar: string): Promise<ApiResponse<any>> => {
+    try {
+      const res = await api.put('/auth/avatar', { avatar });
+      if (res.data && res.data.success) {
+        // Also update local storage cache
+        const savedUser = localStorage.getItem('applytrack_user');
+        if (savedUser) {
+          try {
+            const parsed = JSON.parse(savedUser);
+            parsed.avatar = avatar;
+            localStorage.setItem('applytrack_user', JSON.stringify(parsed));
+          } catch {}
+        }
+        return res.data;
+      }
+    } catch (err) {
+      console.warn('⚠️ Update avatar API unreachable:', err);
+    }
+
+    // Update local storage cache in standalone mode
+    const savedUser = localStorage.getItem('applytrack_user');
+    if (savedUser) {
+      try {
+        const parsed = JSON.parse(savedUser);
+        parsed.avatar = avatar;
+        localStorage.setItem('applytrack_user', JSON.stringify(parsed));
+      } catch {}
+    }
+
+    return { success: true, message: 'Profile picture updated (Standalone Mode)', data: { avatar } };
+  },
+  deactivateAccount: async (): Promise<ApiResponse<any>> => {
+    try {
+      const res = await api.put('/auth/deactivate');
+      if (res.data && res.data.success) return res.data;
+    } catch (err) {
+      console.warn('⚠️ Deactivate account API unreachable:', err);
+    }
+    return { success: true, message: 'Account deactivated (Standalone Mode)', data: null };
+  },
+    forgotPassword: async (email: string): Promise<ApiResponse<any>> => {
+    try {
+      const res = await api.post('/auth/forgot-password', { email });
+      return res.data;
+    } catch (err) {
+      console.warn('⚠️ Forgot password API unreachable:', err);
+      return { success: false, message: 'Unable to process request. Please try again.', data: null };
+    }
+  },
+  resetPassword: async (resetToken: string, newPassword: string): Promise<ApiResponse<any>> => {
+    try {
+      const res = await api.post('/auth/reset-password', { resetToken, newPassword });
+      return res.data;
+    } catch (err) {
+      console.warn('⚠️ Reset password API unreachable:', err);
+      return { success: false, message: 'Unable to reset password. Please try again.', data: null };
+    }
   },
 };
 
@@ -464,6 +554,10 @@ export const applicationsAPI = {
       message: 'Timeline event added',
       data: null,
     };
+  },
+  extractFromUrl: async (url: string): Promise<ApiResponse<any>> => {
+    const res = await api.post(`/applications/extract-url`, { url });
+    return res.data;
   },
 };
 
@@ -890,4 +984,37 @@ export const emailAPI = {
       return { success: true, message: 'Email update processed', data: null };
     }
   },
+};
+
+export const adminAPI = {
+  getStats: async (): Promise<ApiResponse<any>> => {
+    try {
+      const res = await api.get('/admin/stats');
+      return res.data;
+    } catch (err) {
+      console.warn('⚠️ Admin Stats API unreachable:', err);
+      return { success: false, message: 'Failed to load stats', data: null };
+    }
+  },
+  getUsers: async (): Promise<ApiResponse<any>> => {
+    try {
+      const res = await api.get('/admin/users');
+      return res.data;
+    } catch (err) {
+      console.warn('⚠️ Admin Users API unreachable:', err);
+      return { success: false, message: 'Failed to load users', data: [] };
+    }
+  },
+  toggleUserStatus: async (id: string): Promise<ApiResponse<any>> => {
+    const res = await api.patch(`/admin/users/${id}/toggle-status`);
+    return res.data;
+  },
+  updateUserRole: async (id: string, role: string): Promise<ApiResponse<any>> => {
+    const res = await api.patch(`/admin/users/${id}/role`, { role });
+    return res.data;
+  },
+  deleteUser: async (id: string): Promise<ApiResponse<any>> => {
+    const res = await api.delete(`/admin/users/${id}`);
+    return res.data;
+  }
 };

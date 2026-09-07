@@ -1,129 +1,78 @@
 import { Response, NextFunction } from 'express';
-import Interview from '../models/Interview';
-import Application from '../models/Application';
 import { AuthenticatedRequest } from '../middleware/auth';
-import { isMongoConnected } from '../config/db';
+import { aiService } from '../services/ai.service';
+import Application from '../models/Application';
 
-export const getInterviews = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+export const startOrContinueMockInterview = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
-    if (!isMongoConnected) {
-      res.status(200).json({ success: true, data: [] });
-      return;
-    }
-
-    const interviews = await Interview.find({ userId: req.user!.id })
-      .populate({
-        path: 'applicationId',
-        populate: { path: 'companyId' }
-      })
-      .sort({ scheduledAt: 1 });
-
-    res.status(200).json({
-      success: true,
-      count: interviews.length,
-      data: interviews
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const createInterview = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
-  try {
-    const { applicationId, type, scheduledAt, duration, interviewer, meetingUrl, location, notes } = req.body;
-
-    if (!applicationId || !scheduledAt) {
+    const { applicationId, chatHistory } = req.body;
+    
+    if (!applicationId) {
       res.status(400);
-      throw new Error('Application ID and Scheduled Date/Time are required');
+      throw new Error('Application ID is required');
     }
 
-    if (!isMongoConnected) {
-      res.status(201).json({ success: true, message: 'Interview scheduled' });
-      return;
-    }
+    const application = await Application.findOne({
+      _id: applicationId,
+      userId: req.user!.id
+    }).populate('companyId');
 
-    const application = await Application.findOne({ _id: applicationId, userId: req.user!.id });
     if (!application) {
       res.status(404);
       throw new Error('Application not found');
     }
 
-    const interview = await Interview.create({
-      applicationId,
-      userId: req.user!.id,
-      type: type || 'TECHNICAL',
-      scheduledAt: new Date(scheduledAt),
-      duration: duration || 45,
-      interviewer,
-      meetingUrl,
-      location: location || 'Google Meet',
-      notes
-    });
+    const companyName = typeof application.companyId === 'object' ? (application.companyId as any).name : 'the company';
+    const jobTitle = application.jobTitle;
 
-    application.status = 'INTERVIEW';
-    application.lastActivityAt = new Date();
-    application.timeline.push({
-      type: 'INTERVIEW_SCHEDULED',
-      title: `${type || 'Technical'} Interview Scheduled`,
-      description: `Interview scheduled for ${new Date(scheduledAt).toLocaleString()}`,
-      occurredAt: new Date()
-    });
-    await application.save();
+    // We will formulate a prompt with the chat history for Gemini.
+    // To implement this, we need a method in aiService or we can construct the prompt here and use generateJSON.
+    
+    // Fallback Mock Response logic if no API key is present
+    if (!process.env.GEMINI_API_KEY) {
+      setTimeout(() => {
+        let responseMessage = '';
+        let score = null;
+        let feedback = null;
 
-    res.status(201).json({
-      success: true,
-      message: 'Interview scheduled successfully',
-      data: interview
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+        if (!chatHistory || chatHistory.length === 0) {
+          responseMessage = `Welcome! I see you are interviewing for ${jobTitle} at ${companyName}. Can you tell me about a challenging project you've worked on recently?`;
+        } else if (chatHistory.length === 1 || chatHistory.length === 2) {
+          responseMessage = "That sounds like a great experience. What was the most difficult technical hurdle you faced during that project, and how did you overcome it?";
+          score = 7;
+          feedback = "Good start, but try to use the STAR method (Situation, Task, Action, Result) to structure your answer better.";
+        } else if (chatHistory.length === 3 || chatHistory.length === 4) {
+          responseMessage = "Interesting approach. How did you ensure the quality and scalability of your solution?";
+          score = 8;
+          feedback = "Much better! You clearly explained the actions you took.";
+        } else {
+          responseMessage = "Thank you for sharing that. Do you have any questions for me about the role or the company?";
+          score = 9;
+          feedback = "Excellent technical depth in your explanation.";
+        }
 
-export const updateInterview = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
-  try {
-    if (!isMongoConnected) {
-      res.status(200).json({ success: true, message: 'Interview updated' });
+        res.status(200).json({
+          success: true,
+          data: {
+            message: responseMessage,
+            score: score,
+            feedback: feedback
+          }
+        });
+      }, 1500);
       return;
     }
 
-    const interview = await Interview.findOneAndUpdate(
-      { _id: req.params.id, userId: req.user!.id },
-      req.body,
-      { new: true }
-    );
-
-    if (!interview) {
-      res.status(404);
-      throw new Error('Interview not found');
-    }
-
-    res.status(200).json({
-      success: true,
-      message: 'Interview updated successfully',
-      data: interview
+    // Call the actual AI service
+    const aiResponse = await aiService.generateMockInterviewResponse({
+      jobTitle,
+      companyName,
+      chatHistory
     });
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const deleteInterview = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
-  try {
-    if (!isMongoConnected) {
-      res.status(200).json({ success: true, message: 'Interview deleted' });
-      return;
-    }
-
-    const interview = await Interview.findOneAndDelete({ _id: req.params.id, userId: req.user!.id });
-    if (!interview) {
-      res.status(404);
-      throw new Error('Interview not found');
-    }
 
     res.status(200).json({
       success: true,
-      message: 'Interview deleted successfully'
+      data: aiResponse
     });
   } catch (error) {
     next(error);

@@ -9,20 +9,27 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Outfit', 'Inter', 'sans-serif'],
-      },
+  sans: ['Inter', 'system-ui', 'sans-serif'],
+},
       colors: {
-        gold: {
-          300: '#fde047',
-          400: '#fbbf24',
-          500: '#f59e0b',
-          600: '#d97706',
-          700: '#b45309',
+        brand: {
+          300: '#a5b4fc',
+          400: '#818cf8',
+          500: '#6366f1',
+          600: '#4f46e5',
+          700: '#4338ca',
+        },
+        teal: {
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#14b8a6',
+          600: '#0d9488',
+          700: '#0f766e',
         }
       },
       boxShadow: {
         'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
-        'glass-hover': '0 8px 32px 0 rgba(245, 158, 11, 0.15)',
+        'glass-hover': '0 8px 32px 0 rgba(99, 102, 241, 0.15)',
       },
       backdropBlur: {
         'xs': '2px',
@@ -35,15 +42,15 @@ export default {
     themes: [
       {
         dark: {
-          "primary": "#f59e0b",        // Warm Amber / Gold
-          "secondary": "#d97706",      // Deep Gold / Bronze
-          "accent": "#f97316",         // Warm Orange
-          "neutral": "#182030",        // Deep Charcoal
-          "base-100": "#090d16",       // Obsidian Black/Slate
-          "info": "#f59e0b",           // Amber
-          "success": "#d97706",        // Gold
-          "warning": "#f97316",        // Warm Orange
-          "error": "#dc2626",          // Crimson
+          "primary": "#6366f1",        // Indigo
+          "secondary": "#3b82f6",      // Blue
+          "accent": "#14b8a6",         // Teal
+          "neutral": "#151b2e",        // Deep Slate Navy
+          "base-100": "#0a0e1a",       // Deep Navy Black
+          "info": "#3b82f6",           // Blue
+          "success": "#10b981",        // Emerald
+          "warning": "#f59e0b",        // Amber (used sparingly)
+          "error": "#ef4444",          // Red
         },
       },
     ],

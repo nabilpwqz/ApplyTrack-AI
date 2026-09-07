@@ -101,7 +101,7 @@ export const ApplicationDetails: React.FC = () => {
   if (isLoading) {
     return (
       <div className="flex flex-col justify-center items-center h-[70vh] gap-3">
-        <span className="loading loading-spinner loading-lg text-amber-500"></span>
+        <span className="loading loading-spinner loading-lg text-brand-500"></span>
         <p className="text-slate-400 text-sm">Opening job dossier...</p>
       </div>
     );
@@ -171,12 +171,12 @@ export const ApplicationDetails: React.FC = () => {
     switch (status) {
       case 'SAVED': return 'badge-neutral text-slate-300';
       case 'APPLIED': return 'badge-primary text-slate-950 font-bold';
-      case 'SCREENING': return 'bg-amber-500/20 text-amber-400 border border-amber-500/30';
+      case 'SCREENING': return 'bg-brand-500/20 text-brand-400 border border-brand-500/30';
       case 'ASSESSMENT': return 'badge-warning text-slate-950 font-bold';
       case 'INTERVIEW':
       case 'FINAL_INTERVIEW': return 'badge-secondary text-white font-bold';
       case 'OFFER': return 'badge-warning text-slate-950 font-bold animate-pulse';
-      case 'ACCEPTED': return 'bg-amber-400 text-slate-950 font-bold';
+      case 'ACCEPTED': return 'bg-brand-400 text-slate-950 font-bold';
       case 'REJECTED': return 'badge-error text-white font-bold';
       case 'GHOSTED': return 'badge-ghost border border-white/10 text-slate-400';
       default: return 'badge-neutral';
@@ -265,7 +265,7 @@ export const ApplicationDetails: React.FC = () => {
             <div className="text-center md:text-left space-y-1">
               <span className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Salary Range</span>
               <p className="text-sm font-bold text-white flex items-center justify-center md:justify-start">
-                <DollarSign className="w-3.5 h-3.5 text-amber-400" />
+                <DollarSign className="w-3.5 h-3.5 text-brand-400" />
                 {app.salary?.min ? `${app.salary.min.toLocaleString()} - ${app.salary.max?.toLocaleString()}` : 'Not Spec'}
               </p>
             </div>
@@ -299,7 +299,7 @@ export const ApplicationDetails: React.FC = () => {
             <div className="relative pl-6 space-y-6 border-l-2 border-white/5">
               {app.timeline && [...app.timeline].reverse().map((event, idx) => (
                 <div key={idx} className="relative space-y-1">
-                  <span className="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-amber-500 border-4 border-[#0f172a] shadow"></span>
+                  <span className="absolute -left-[31px] top-1.5 w-3 h-3 rounded-full bg-brand-500 border-4 border-[#0f172a] shadow"></span>
                   
                   <div className="flex justify-between items-center text-xs">
                     <span className="font-bold text-slate-200">{event.title}</span>
@@ -324,7 +324,7 @@ export const ApplicationDetails: React.FC = () => {
               </div>
               <button 
                 onClick={() => setContactModal(true)}
-                className="btn btn-xs btn-outline border-amber-500/30 text-amber-400 hover:bg-amber-500/10 rounded flex items-center gap-1"
+                className="btn btn-xs btn-outline border-brand-500/30 text-brand-400 hover:bg-brand-500/10 rounded flex items-center gap-1"
               >
                 <Plus className="w-3 h-3" /> Add contact
               </button>
@@ -336,7 +336,7 @@ export const ApplicationDetails: React.FC = () => {
                   <h4 className="font-semibold text-white text-xs">{contact.name}</h4>
                   <p className="text-[10px] text-slate-400">{contact.role}</p>
                   {contact.email && (
-                    <a href={`mailto:${contact.email}`} className="text-[10px] text-amber-400 hover:underline mt-1">
+                    <a href={`mailto:${contact.email}`} className="text-[10px] text-brand-400 hover:underline mt-1">
                       {contact.email}
                     </a>
                   )}
@@ -363,9 +363,9 @@ export const ApplicationDetails: React.FC = () => {
         {/* Right Side: AI Assistant Suites */}
         <div className="lg:col-span-5 space-y-6">
           
-          <div className="glass-card rounded-2xl p-5 border border-amber-500/10 space-y-4">
+          <div className="glass-card rounded-2xl p-5 border border-brand-500/10 space-y-4">
             <div className="flex items-center gap-2 border-b border-white/5 pb-3">
-              <Sparkles className="w-5 h-5 text-amber-400 animate-pulse" />
+              <Sparkles className="w-5 h-5 text-brand-400 animate-pulse" />
               <div>
                 <h3 className="font-bold text-white text-base">AI Career Intelligence</h3>
                 <p className="text-[10px] text-slate-400">Gemini-backed decision support engine</p>
@@ -375,25 +375,25 @@ export const ApplicationDetails: React.FC = () => {
             <div className="tabs tabs-boxed bg-neutral/60 border border-white/5 p-1 rounded-xl grid grid-cols-4 text-[10px] font-semibold">
               <button 
                 onClick={() => setActiveAITab('FOLLOWUP')}
-                className={`tab tab-xs rounded-lg py-1.5 ${activeAITab === 'FOLLOWUP' ? 'tab-active bg-amber-500 text-slate-950 font-bold' : 'text-slate-400'}`}
+                className={`tab tab-xs rounded-lg py-1.5 ${activeAITab === 'FOLLOWUP' ? 'tab-active bg-brand-500 text-slate-950 font-bold' : 'text-slate-400'}`}
               >
                 Follow-Up
               </button>
               <button 
                 onClick={() => setActiveAITab('PROBABILITY')}
-                className={`tab tab-xs rounded-lg py-1.5 ${activeAITab === 'PROBABILITY' ? 'tab-active bg-amber-500 text-slate-950 font-bold' : 'text-slate-400'}`}
+                className={`tab tab-xs rounded-lg py-1.5 ${activeAITab === 'PROBABILITY' ? 'tab-active bg-brand-500 text-slate-950 font-bold' : 'text-slate-400'}`}
               >
                 Probability
               </button>
               <button 
                 onClick={() => setActiveAITab('PREP')}
-                className={`tab tab-xs rounded-lg py-1.5 ${activeAITab === 'PREP' ? 'tab-active bg-amber-500 text-slate-950 font-bold' : 'text-slate-400'}`}
+                className={`tab tab-xs rounded-lg py-1.5 ${activeAITab === 'PREP' ? 'tab-active bg-brand-500 text-slate-950 font-bold' : 'text-slate-400'}`}
               >
                 Prep
               </button>
               <button 
                 onClick={() => setActiveAITab('SALARY')}
-                className={`tab tab-xs rounded-lg py-1.5 ${activeAITab === 'SALARY' ? 'tab-active bg-amber-500 text-slate-950 font-bold' : 'text-slate-400'}`}
+                className={`tab tab-xs rounded-lg py-1.5 ${activeAITab === 'SALARY' ? 'tab-active bg-brand-500 text-slate-950 font-bold' : 'text-slate-400'}`}
               >
                 Salary
               </button>
@@ -449,7 +449,7 @@ export const ApplicationDetails: React.FC = () => {
                         <span className="text-[10px] text-slate-400 font-bold uppercase">Email Draft</span>
                         <button 
                           onClick={() => handleCopy(generatedEmail.body)}
-                          className="btn btn-ghost btn-xs text-amber-400 hover:bg-amber-500/10 flex items-center gap-1"
+                          className="btn btn-ghost btn-xs text-brand-400 hover:bg-brand-500/10 flex items-center gap-1"
                         >
                           <Copy className="w-3 h-3" /> Copy
                         </button>
@@ -483,7 +483,7 @@ export const ApplicationDetails: React.FC = () => {
                           {probAnalysis.factors?.map((fact: string, i: number) => (
                             <p 
                               key={i} 
-                              className={`text-[10px] leading-relaxed flex items-start gap-1.5 ${fact.startsWith('✓') ? 'text-amber-400' : 'text-orange-400'}`}
+                              className={`text-[10px] leading-relaxed flex items-start gap-1.5 ${fact.startsWith('✓') ? 'text-brand-400' : 'text-teal-400'}`}
                             >
                               {fact}
                             </p>
@@ -496,7 +496,7 @@ export const ApplicationDetails: React.FC = () => {
                         <div className="space-y-1">
                           {probAnalysis.recommendations?.map((rec: string, i: number) => (
                             <p key={i} className="text-[10px] text-slate-300 flex items-start gap-1.5">
-                              <CheckCircle className="w-3.5 h-3.5 text-amber-500 flex-shrink-0 mt-0.5" />
+                              <CheckCircle className="w-3.5 h-3.5 text-brand-500 flex-shrink-0 mt-0.5" />
                               {rec}
                             </p>
                           ))}
@@ -515,7 +515,7 @@ export const ApplicationDetails: React.FC = () => {
                 <div className="space-y-4">
                   <div className="bg-neutral-900/40 rounded-xl p-3 border border-white/5 space-y-2.5">
                     <h4 className="text-[10px] uppercase font-bold text-slate-400 flex items-center gap-1">
-                      <HelpCircle className="w-4 h-4 text-amber-400" /> Expected Interview Questions
+                      <HelpCircle className="w-4 h-4 text-brand-400" /> Expected Interview Questions
                     </h4>
                     <div className="space-y-2 divide-y divide-white/5">
                       {[
@@ -549,7 +549,7 @@ export const ApplicationDetails: React.FC = () => {
 
                   <button 
                     onClick={handleBenchmarkSalary}
-                    className="btn btn-sm btn-outline border-amber-500/30 text-amber-400 hover:bg-amber-500/10 w-full rounded-lg text-xs"
+                    className="btn btn-sm btn-outline border-brand-500/30 text-brand-400 hover:bg-brand-500/10 w-full rounded-lg text-xs"
                     disabled={benchmarkingSalary}
                   >
                     {benchmarkingSalary ? (
@@ -572,7 +572,7 @@ export const ApplicationDetails: React.FC = () => {
                         </div>
                         <div className="flex justify-between items-center text-[10px] border-t border-white/5 pt-1.5">
                           <span className="text-slate-400">Counter Target:</span>
-                          <span className="font-bold text-amber-400">${salaryBenchmarked.targetSalary.toLocaleString()}</span>
+                          <span className="font-bold text-brand-400">${salaryBenchmarked.targetSalary.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between items-center text-[10px]">
                           <span className="text-slate-400">Acceptable Floor:</span>
@@ -585,7 +585,7 @@ export const ApplicationDetails: React.FC = () => {
                           <span className="text-[9px] text-slate-400 font-bold uppercase">Negotiation message</span>
                           <button 
                             onClick={() => handleCopy(salaryBenchmarked.negotiationEmail)}
-                            className="btn btn-ghost btn-xs text-amber-400 hover:bg-amber-500/10"
+                            className="btn btn-ghost btn-xs text-brand-400 hover:bg-brand-500/10"
                           >
                             <Copy className="w-3.5 h-3.5" />
                           </button>
@@ -611,7 +611,7 @@ export const ApplicationDetails: React.FC = () => {
                 </div>
                 <Link 
                   to="/dashboard/companies"
-                  className="text-xs text-amber-400 hover:underline font-bold"
+                  className="text-xs text-brand-400 hover:underline font-bold"
                 >
                   Full audit &rarr;
                 </Link>

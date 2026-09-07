@@ -35,7 +35,7 @@ export const Calendar: React.FC = () => {
   if (interviewsLoading || remindersLoading || appsLoading) {
     return (
       <div className="flex flex-col justify-center items-center h-[60vh] gap-3">
-        <span className="loading loading-spinner loading-lg text-amber-500"></span>
+        <span className="loading loading-spinner loading-lg text-brand-500"></span>
         <p className="text-slate-400 text-sm">Synchronizing schedule events...</p>
       </div>
     );
@@ -86,7 +86,7 @@ export const Calendar: React.FC = () => {
           type: 'INTERVIEW',
           title: `${interview.applicationId?.companyId?.name || 'Company'} Interview`,
           time: new Date(interview.scheduledAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          color: 'bg-amber-500/20 text-amber-400 border-amber-500/40 font-bold',
+          color: 'bg-brand-500/20 text-brand-400 border-brand-500/40 font-bold',
           path: `/dashboard/applications/${interview.applicationId?._id}`,
         });
       }
@@ -99,7 +99,7 @@ export const Calendar: React.FC = () => {
           type: 'REMINDER',
           title: reminder.title,
           time: new Date(reminder.dueAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          color: 'bg-orange-500/20 text-orange-400 border-orange-500/40 font-semibold',
+          color: 'bg-teal-500/20 text-teal-400 border-teal-500/40 font-semibold',
           path: `/dashboard/applications/${reminder.applicationId?._id}`,
         });
       }
@@ -132,13 +132,13 @@ export const Calendar: React.FC = () => {
 
         <div className="flex items-center gap-3">
           <div className="flex items-center bg-neutral/40 border border-white/5 rounded-xl p-1">
-            <button onClick={prevMonth} className="btn btn-ghost btn-xs text-slate-300 hover:text-amber-400 rounded-lg">
+            <button onClick={prevMonth} className="btn btn-ghost btn-xs text-slate-300 hover:text-brand-400 rounded-lg">
               <ChevronLeft className="w-4 h-4" />
             </button>
             <span className="text-xs font-bold text-white px-3 min-w-32 text-center">
               {monthNames[month]} {year}
             </span>
-            <button onClick={nextMonth} className="btn btn-ghost btn-xs text-slate-300 hover:text-amber-400 rounded-lg">
+            <button onClick={nextMonth} className="btn btn-ghost btn-xs text-slate-300 hover:text-brand-400 rounded-lg">
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
@@ -171,7 +171,7 @@ export const Calendar: React.FC = () => {
                 className={`
                   min-h-24 md:min-h-28 rounded-xl p-2 flex flex-col justify-between border transition-all duration-200
                   ${dateVal ? 'bg-neutral/20 border-white/5' : 'bg-transparent border-transparent'}
-                  ${isToday ? 'border-amber-500/50 shadow-lg shadow-amber-500/5 bg-amber-500/5' : ''}
+                  ${isToday ? 'border-brand-500/50 shadow-lg shadow-brand-500/5 bg-brand-500/5' : ''}
                 `}
               >
                 {dateVal ? (
@@ -179,7 +179,7 @@ export const Calendar: React.FC = () => {
                     <div className="flex justify-between items-center mb-1">
                       <span className={`
                         text-xs font-bold px-1.5 py-0.5 rounded
-                        ${isToday ? 'bg-amber-500 text-slate-950 font-bold' : 'text-slate-400'}
+                        ${isToday ? 'bg-brand-500 text-slate-950 font-bold' : 'text-slate-400'}
                       `}>
                         {dateVal.getDate()}
                       </span>
@@ -211,11 +211,11 @@ export const Calendar: React.FC = () => {
 
       <div className="flex flex-wrap items-center gap-6 justify-center text-[10px] text-slate-400 bg-neutral/10 py-3 rounded-2xl border border-white/5">
         <span className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded bg-amber-500/20 border border-amber-500/40"></span>
+          <span className="w-3 h-3 rounded bg-brand-500/20 border border-brand-500/40"></span>
           Recruiter Interviews
         </span>
         <span className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded bg-orange-500/20 border border-orange-500/40"></span>
+          <span className="w-3 h-3 rounded bg-teal-500/20 border border-teal-500/40"></span>
           Due Reminders
         </span>
         <span className="flex items-center gap-2">

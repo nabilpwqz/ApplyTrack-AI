@@ -8,6 +8,7 @@ import Layout from './components/layout/Layout.tsx';
 import Landing from './pages/Landing.tsx';
 import Login from './pages/Login.tsx';
 import Register from './pages/Register.tsx';
+import ForgotPassword from './pages/ForgotPassword.tsx';
 import Dashboard from './pages/Dashboard.tsx';
 import Applications from './pages/Applications.tsx';
 import ApplicationDetails from './pages/ApplicationDetails.tsx';
@@ -15,7 +16,9 @@ import Calendar from './pages/Calendar.tsx';
 import Analytics from './pages/Analytics.tsx';
 import Companies from './pages/Companies.tsx';
 import AIHub from './pages/AIHub.tsx';
+import MockInterview from './pages/MockInterview.tsx';
 import Settings from './pages/Settings.tsx';
+import AdminDashboard from './pages/AdminDashboard.tsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -105,6 +108,15 @@ export const App: React.FC = () => {
               } 
             />
 
+                        <Route 
+              path="/forgot-password" 
+              element={
+                <PublicOnlyRoute>
+                  <ForgotPassword />
+                </PublicOnlyRoute>
+              } 
+            />
+
             <Route 
               path="/dashboard" 
               element={
@@ -120,7 +132,9 @@ export const App: React.FC = () => {
               <Route path="analytics" element={<Analytics />} />
               <Route path="companies" element={<Companies />} />
               <Route path="ai-hub" element={<AIHub />} />
+              <Route path="mock-interview" element={<MockInterview />} />
               <Route path="settings" element={<Settings />} />
+              <Route path="admin" element={<AdminDashboard />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" replace />} />

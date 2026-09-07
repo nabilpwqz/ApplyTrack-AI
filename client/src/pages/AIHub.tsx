@@ -9,6 +9,7 @@ import {
   BookOpen
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { AnimatedPage } from '../components/layout/AnimatedPage.tsx';
 
 export const AIHub: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'MATCH' | 'SALARY'>('MATCH');
@@ -77,7 +78,7 @@ export const AIHub: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 pb-12">
+    <AnimatedPage className="space-y-6 pb-12">
       <div>
         <h1 className="text-2xl font-bold text-white tracking-tight">AI Career Command Hub</h1>
         <p className="text-xs text-slate-400">Evaluate posting matching percentages, review salary benchmarks, and draft scripts</p>
@@ -86,14 +87,14 @@ export const AIHub: React.FC = () => {
       <div className="tabs tabs-boxed bg-neutral/40 border border-white/5 p-1 rounded-2xl w-fit flex gap-2 text-xs font-semibold">
         <button 
           onClick={() => setActiveTab('MATCH')}
-          className={`tab px-5 py-2 rounded-xl flex items-center gap-2 ${activeTab === 'MATCH' ? 'tab-active bg-amber-500 text-slate-950 font-bold shadow-lg shadow-amber-500/20' : 'text-slate-400'}`}
+          className={`tab px-5 py-2 rounded-xl flex items-center gap-2 ${activeTab === 'MATCH' ? 'tab-active bg-brand-500 text-slate-950 font-bold shadow-lg shadow-brand-500/20' : 'text-slate-400'}`}
         >
           <FileSearch className="w-4 h-4" />
           Job Match Score
         </button>
         <button 
           onClick={() => setActiveTab('SALARY')}
-          className={`tab px-5 py-2 rounded-xl flex items-center gap-2 ${activeTab === 'SALARY' ? 'tab-active bg-amber-500 text-slate-950 font-bold shadow-lg shadow-amber-500/20' : 'text-slate-400'}`}
+          className={`tab px-5 py-2 rounded-xl flex items-center gap-2 ${activeTab === 'SALARY' ? 'tab-active bg-brand-500 text-slate-950 font-bold shadow-lg shadow-brand-500/20' : 'text-slate-400'}`}
         >
           <DollarSign className="w-4 h-4" />
           Salary Advisor
@@ -117,7 +118,7 @@ export const AIHub: React.FC = () => {
                     placeholder="e.g. React Developer"
                     value={matchRole}
                     onChange={(e) => setMatchRole(e.target.value)}
-                    className="input input-sm input-bordered bg-neutral-900 border-white/5 text-white text-xs rounded-lg focus:outline-none focus:border-amber-500"
+                    className="input input-sm input-bordered bg-neutral-900 border-white/5 text-white text-xs rounded-lg focus:outline-none focus:border-brand-500"
                     required
                   />
                 </div>
@@ -128,7 +129,7 @@ export const AIHub: React.FC = () => {
                     placeholder="e.g. OpenAI"
                     value={matchCompany}
                     onChange={(e) => setMatchCompany(e.target.value)}
-                    className="input input-sm input-bordered bg-neutral-900 border-white/5 text-white text-xs rounded-lg focus:outline-none focus:border-amber-500"
+                    className="input input-sm input-bordered bg-neutral-900 border-white/5 text-white text-xs rounded-lg focus:outline-none focus:border-brand-500"
                   />
                 </div>
               </div>
@@ -139,14 +140,14 @@ export const AIHub: React.FC = () => {
                   placeholder="Paste details of the posting here to run evaluation..."
                   value={matchDesc}
                   onChange={(e) => setMatchDesc(e.target.value)}
-                  className="textarea textarea-bordered bg-neutral-900 border-white/5 text-white text-xs rounded-lg h-44 focus:outline-none focus:border-amber-500"
+                  className="textarea textarea-bordered bg-neutral-900 border-white/5 text-white text-xs rounded-lg h-44 focus:outline-none focus:border-brand-500"
                   required
                 ></textarea>
               </div>
 
               <button 
                 type="submit"
-                className="btn btn-sm btn-primary text-slate-950 font-bold w-full rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-amber-500/20 hover:scale-[1.01] transition-transform"
+                className="btn btn-sm btn-primary text-slate-950 font-bold w-full rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-brand-500/20 hover:scale-[1.01] transition-transform"
                 disabled={matchingJob}
               >
                 {matchingJob ? (
@@ -176,7 +177,7 @@ export const AIHub: React.FC = () => {
                     placeholder="e.g. 95000"
                     value={offerAmount}
                     onChange={(e) => setOfferAmount(e.target.value)}
-                    className="input input-sm input-bordered bg-neutral-900 border-white/5 text-white text-xs rounded-lg focus:outline-none focus:border-amber-500"
+                    className="input input-sm input-bordered bg-neutral-900 border-white/5 text-white text-xs rounded-lg focus:outline-none focus:border-brand-500"
                     required
                   />
                 </div>
@@ -187,7 +188,7 @@ export const AIHub: React.FC = () => {
                     placeholder="e.g. Frontend Engineer"
                     value={offerRole}
                     onChange={(e) => setOfferRole(e.target.value)}
-                    className="input input-sm input-bordered bg-neutral-900 border-white/5 text-white text-xs rounded-lg focus:outline-none focus:border-amber-500"
+                    className="input input-sm input-bordered bg-neutral-900 border-white/5 text-white text-xs rounded-lg focus:outline-none focus:border-brand-500"
                     required
                   />
                 </div>
@@ -201,7 +202,7 @@ export const AIHub: React.FC = () => {
                     placeholder="e.g. Austin, TX"
                     value={offerLoc}
                     onChange={(e) => setOfferLoc(e.target.value)}
-                    className="input input-sm input-bordered bg-neutral-900 border-white/5 text-white text-xs rounded-lg focus:outline-none focus:border-amber-500"
+                    className="input input-sm input-bordered bg-neutral-900 border-white/5 text-white text-xs rounded-lg focus:outline-none focus:border-brand-500"
                   />
                 </div>
                 <div className="form-control">
@@ -221,7 +222,7 @@ export const AIHub: React.FC = () => {
 
               <button 
                 type="submit"
-                className="btn btn-sm btn-primary text-slate-950 font-bold w-full rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-amber-500/20 hover:scale-[1.01] transition-transform"
+                className="btn btn-sm btn-primary text-slate-950 font-bold w-full rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-brand-500/20 hover:scale-[1.01] transition-transform"
                 disabled={evaluatingSalary}
               >
                 {evaluatingSalary ? (
@@ -253,7 +254,7 @@ export const AIHub: React.FC = () => {
                     <h4 className="text-xs font-bold text-white uppercase tracking-wide">Key Matching Factors</h4>
                     <div className="space-y-1.5">
                       {matchResult.factors?.map((f: string, i: number) => (
-                        <p key={i} className={`text-xs leading-relaxed flex items-start gap-1.5 ${f.startsWith('✓') ? 'text-amber-400' : 'text-orange-400'}`}>
+                        <p key={i} className={`text-xs leading-relaxed flex items-start gap-1.5 ${f.startsWith('✓') ? 'text-brand-400' : 'text-teal-400'}`}>
                           {f}
                         </p>
                       ))}
@@ -277,7 +278,7 @@ export const AIHub: React.FC = () => {
 
                   <div className="space-y-2 pt-2 border-t border-white/5">
                     <h4 className="text-xs font-bold text-white uppercase tracking-wide flex items-center gap-1.5">
-                      <BookOpen className="w-4 h-4 text-amber-400" /> Application Advice
+                      <BookOpen className="w-4 h-4 text-brand-400" /> Application Advice
                     </h4>
                     <div className="space-y-1 pl-1">
                       {matchResult.recommendations?.map((rec: string, i: number) => (
@@ -311,14 +312,14 @@ export const AIHub: React.FC = () => {
                     </div>
                     <p className="text-xs text-slate-400 font-semibold pt-1">
                       Offer Evaluation:{' '}
-                      <span className="text-amber-400 font-extrabold">{salaryResult.offerEvaluation}</span>
+                      <span className="text-brand-400 font-extrabold">{salaryResult.offerEvaluation}</span>
                     </p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="p-3 bg-neutral-900/30 border border-white/5 rounded-xl text-center space-y-1">
                       <span className="text-[9px] text-slate-500 uppercase font-bold">Counter Target</span>
-                      <div className="text-lg font-bold text-amber-400">${salaryResult.targetSalary.toLocaleString()}</div>
+                      <div className="text-lg font-bold text-brand-400">${salaryResult.targetSalary.toLocaleString()}</div>
                     </div>
                     <div className="p-3 bg-neutral-900/30 border border-white/5 rounded-xl text-center space-y-1">
                       <span className="text-[9px] text-slate-500 uppercase font-bold">Acceptable Floor</span>
@@ -340,7 +341,7 @@ export const AIHub: React.FC = () => {
                       <span className="text-[10px] text-slate-500 font-bold uppercase">Negotiation Message Template</span>
                       <button 
                         onClick={() => handleCopy(salaryResult.negotiationEmail)}
-                        className="btn btn-ghost btn-xs text-amber-400 hover:bg-amber-500/10 flex items-center gap-1.5"
+                        className="btn btn-ghost btn-xs text-brand-400 hover:bg-brand-500/10 flex items-center gap-1.5"
                       >
                         <Copy className="w-3.5 h-3.5" />
                         Copy
@@ -364,7 +365,7 @@ export const AIHub: React.FC = () => {
           )}
         </div>
       </div>
-    </div>
+    </AnimatedPage>
   );
 };
 export default AIHub;

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { env } from '../config/env.js';
+import User from '../models/User';
 
 export interface AuthenticatedRequest extends Request {
   user?: {
@@ -27,5 +28,25 @@ export const protect = (req: AuthenticatedRequest, res: Response, next: NextFunc
   if (!token) {
     res.status(401);
     return next(new Error('Not authorized, no token provided'));
+  }
+};
+
+export const isAdmin = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    if (!req.user) {
+      res.status(401);
+      return next(new Error('Not authorized'));
+    }
+
+    const user = await User.findById(req.user.id);
+
+    if (!user || user.role !== 'ADMIN') {
+      res.status(403);
+      return next(new Error('Access denied. Admin privileges required.'));
+    }
+
+    return next();
+  } catch (error) {
+    next(error);
   }
 };

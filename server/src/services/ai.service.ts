@@ -178,6 +178,76 @@ class AIService {
       summary: 'Recruiter message requesting an interview loop.'
     }));
   }
+  async extractJobDetailsFromHtml(htmlText: string): Promise<{
+    jobTitle: string;
+    companyName: string;
+    location: string;
+    salaryMin: number;
+    salaryMax: number;
+    workMode: string;
+    description: string;
+  }> {
+    const prompt = `
+    Extract job details from the following web page text.
+    Return ONLY a valid JSON object matching this schema exactly:
+    {
+      "jobTitle": "String or empty",
+      "companyName": "String or empty",
+      "location": "String or empty",
+      "salaryMin": number (or 0),
+      "salaryMax": number (or 0),
+      "workMode": "REMOTE" | "HYBRID" | "ON_SITE" | "REMOTE",
+      "description": "Short summary of the role, max 2 sentences"
+    }
+
+    Text:
+    """
+    ${htmlText.substring(0, 8000)}
+    """
+    `;
+    
+    return this.generateJSON(prompt, () => ({
+      jobTitle: "Extracted Job Title",
+      companyName: "Extracted Company",
+      location: "San Francisco, CA",
+      salaryMin: 0,
+      salaryMax: 0,
+      workMode: "REMOTE",
+      description: "Fallback description extracted from URL."
+    }));
+  }
+  async generateMockInterviewResponse(data: {
+    jobTitle: string;
+    companyName: string;
+    chatHistory: { role: string; content: string }[];
+  }): Promise<{ message: string; score: number | null; feedback: string | null }> {
+    const historyString = data.chatHistory.map(m => `${m.role === 'user' ? 'Candidate' : 'Interviewer'}: ${m.content}`).join('\n');
+    
+    const prompt = `
+    You are an expert technical and behavioral interviewer for the position of ${data.jobTitle} at ${data.companyName}.
+    You are conducting a mock interview with a candidate.
+    
+    Here is the chat history so far:
+    ${historyString}
+
+    If the candidate just answered a question, provide a brief evaluation of their answer (score out of 10 and 1 sentence of constructive feedback).
+    Then, ask the next relevant interview question. Keep it professional and challenging but fair.
+    If it's the beginning of the interview (no history or just a greeting), introduce yourself briefly and ask the first question.
+
+    Return ONLY a valid JSON object matching this schema exactly:
+    {
+      "message": "The next question or response you say to the candidate",
+      "score": number (1-10, based on their previous answer. Use null if they haven't answered anything yet),
+      "feedback": "1 sentence of constructive feedback on their answer. Use null if n/a."
+    }
+    `;
+
+    return this.generateJSON(prompt, () => ({
+      message: `Thanks for sharing. As a ${data.jobTitle}, how would you approach optimizing a slow-loading web application?`,
+      score: 8,
+      feedback: "Good answer, but you could have mentioned more specific metrics you measured."
+    }));
+  }
 }
 
 export const aiService = new AIService();
