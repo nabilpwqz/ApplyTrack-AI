@@ -1,15 +1,20 @@
 # Dependencies
 node_modules/
 
-# Production build
-dist/
-
-# Environment variables & secrets
+# Environment
 .env
 .env.local
-.env.production
 
-# System files
+# Output
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / Editor
 .DS_Store
 Thumbs.db
-*.log
+.vscode/
+.idea/
