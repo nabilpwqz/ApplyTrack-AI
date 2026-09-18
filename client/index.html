@@ -1,18 +1,1980 @@
-<!doctype html>
-<html lang="en" data-theme="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f59e0b'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.25z'/%3E%3C/svg%3E" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ApplyTrack AI | Job Application Tracker & Command Center</title>
-    <meta name="description" content="Manage your job hunt like a pro. Track applications, parse recruiter emails automatically, generate follow-ups, and negotiate salaries with AI assistance." />
-    <!-- Google Fonts -->
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApplyTrack AI Studio — Job Search Operating System</title>
+    <meta name="theme-color" content="#070b14">
+    <meta name="description" content="ApplyTrack AI Studio — a self-contained job search operating system: pipeline, network, offer desk, story bank, daily brief and intelligence. One HTML file.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  </head>
-  <body class="bg-base-100 text-base-content antialiased">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%231d4ed8'/%3E%3Cstop offset='100%25' stop-color='%23070b14'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23a)'/%3E%3Crect x='3' y='3' width='58' height='58' rx='14' fill='none' stroke='rgba(255,255,255,0.25)' stroke-width='1.5'/%3E%3Ccircle cx='32' cy='24' r='9' fill='none' stroke='rgba(255,255,255,0.35)' stroke-width='1.8'/%3E%3Ccircle cx='32' cy='24' r='4.5' fill='none' stroke='rgba(255,255,255,0.55)' stroke-width='1.8'/%3E%3Ccircle cx='32' cy='24' r='1.8' fill='rgba(255,255,255,0.9)'/%3E%3Ctext x='32' y='49' text-anchor='middle' font-family='Inter,-apple-system,sans-serif' font-size='17' font-weight='800' letter-spacing='2' fill='rgba(255,255,255,0.95)'%3EAT%3C/text%3E%3C/svg%3E">
+    <script>
+        (function() {
+            var theme = localStorage.getItem('applytrack_ai_theme');
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark', 'dark-mode');
+            } else {
+                document.documentElement.classList.remove('dark', 'dark-mode');
+            }
+        })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        blue: {
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8',
+                            800: '#1e40af', 900: '#1e3a8a'
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    
+
+
+
+
+
+
+
+    <link rel="stylesheet" href="/src/styles/main.css">
+</head>
+<body>
+
+
+    <section id="landingPage" class="landing-shell">
+        <header class="landing-nav">
+            <div class="landing-container" style="height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px;">
+                <button class="brand-button" onclick="goHome()" aria-label="ApplyTrack AI home">
+                    <span class="brand-mark">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <rect width="64" height="64" rx="14" fill="url(#logoGrad)"/>
+                            <rect x="3" y="3" width="58" height="58" rx="12" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+                            <circle cx="32" cy="25" r="9" stroke="rgba(255,255,255,0.35)" stroke-width="1.8"/>
+                            <circle cx="32" cy="25" r="4.5" stroke="rgba(255,255,255,0.55)" stroke-width="1.8"/>
+                            <circle cx="32" cy="25" r="1.8" fill="rgba(255,255,255,0.92)"/>
+                            <text x="32" y="50" text-anchor="middle" font-family="Inter, sans-serif" font-size="17" font-weight="800" letter-spacing="2" fill="rgba(255,255,255,0.96)">AT</text>
+                            <defs>
+                                <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#3b82f6"/>
+                                    <stop offset="55%" stop-color="#1d4ed8"/>
+                                    <stop offset="100%" stop-color="#070b14"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </span>
+                    <span style="font-size:18px;">ApplyTrack <span style="color:#93c5fd;">AI</span></span>
+                </button>
+                <nav style="display:flex;align-items:center;gap:8px;">
+                    <button class="landing-secondary" style="padding:8px 12px;" onclick="scrollToSection('features')">Product</button>
+                    <button class="landing-secondary" style="padding:8px 12px;" onclick="scrollToSection('method')">Method</button>
+                    <div class="theme-pill" aria-label="Theme selection">
+                        <button id="homeLightThemeBtn" data-theme-button="light" onclick="setTheme('light')" title="Light mode" aria-label="Light mode">☀</button>
+                        <button id="homeDarkThemeBtn" data-theme-button="dark" onclick="setTheme('dark')" title="Night mode" aria-label="Night mode">☾</button>
+                    </div>
+                    <button class="landing-secondary" style="padding:8px 12px;" onclick="openAuth('login')">Log in</button>
+                    <button class="landing-primary" style="padding:9px 14px;" onclick="openAuth('signup')">Open workspace</button>
+                </nav>
+            </div>
+        </header>
+        <div class="landing-container">
+            <section class="landing-hero">
+                <div class="hero-stage">
+                    <div>
+                        <!-- <span class="hero-kicker">Career operating system</span> -->
+                        <h1 class="hero-title">Run the search like a <span class="accent">studio,</span> not a spreadsheet.</h1>
+                        <p class="hero-copy">ApplyTrack AI Studio is a full job-search operating system in one file - pipeline, network, offer desk, story bank, daily brief and intelligence. Quiet, precise and entirely yours.
+                        </p>
+                        <div class="landing-actions">
+                            <button class="landing-primary" onclick="openAuth('signup')">Start free workspace</button>
+                            <button class="landing-secondary" onclick="openAuth('login')">I already have access</button>
+                        </div>
+                    </div>
+                    <div class="product-frame">
+                        <div class="product-chrome">
+                            <div>
+                                <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#64748b;font-weight:800;">Live pipeline</div>
+                                <div class="product-title" style="font-size:16px;font-weight:800;">North star search</div>
+                            </div>
+                            <div class="hero-dots" aria-label="Pipeline stage focus">
+                                <button class="pipeline-stage-dot is-active" type="button" data-pipeline-stage="0" aria-label="Focus applied roles" aria-pressed="true" onclick="focusPipelineStage(0)"></button>
+                                <button class="pipeline-stage-dot" type="button" data-pipeline-stage="1" aria-label="Focus interview roles" aria-pressed="false" onclick="focusPipelineStage(1)"></button>
+                                <button class="pipeline-stage-dot" type="button" data-pipeline-stage="2" aria-label="Focus decision roles" aria-pressed="false" onclick="focusPipelineStage(2)"></button>
+                            </div>
+                        </div>
+                        <div class="pipeline-board pipeline-stage-focus">
+                            <div class="pipe-col"><h4 data-count="2">Applied</h4><div class="pipe-card"><strong>Product Engineer</strong><span>Linear · 2d ago</span><em>STRONG FIT</em></div><div class="pipe-card"><strong>Design Systems</strong><span>Figma · 5d ago</span><em>FOLLOW UP</em></div></div>
+                            <div class="pipe-col"><h4 data-count="2">Interview</h4><div class="pipe-card"><strong>Frontend Lead</strong><span>Stripe · tomorrow</span><em>PREP 82%</em></div><div class="pipe-card"><strong>Platform</strong><span>Notion · Fri 11:00</span><em>ON TRACK</em></div></div>
+                            <div class="pipe-col"><h4 data-count="1">Decision</h4><div class="pipe-card"><strong>Staff IC</strong><span>Offer review</span><em>+18% LEVERAGE</em></div><div class="pipe-card" style="opacity:.42;border-style:dashed"><strong>Next move</strong><span>Choose your signal</span></div></div>
+                        </div>
+                        <div class="pipeline-footer"><span><strong>Search health</strong> · 78% momentum</span><span class="signal">Updated just now</span></div>
+                    </div>
+                </div>
+                <div class="proof-strip">
+                    <div class="proof-item"><b>1 board</b><span>Every role in motion</span></div>
+                    <div class="proof-item"><b>AI brief</b><span>Fit, salary, readiness</span></div>
+                    <div class="proof-item"><b>No missed</b><span>follow-up windows</span></div>
+                    <div class="proof-item"><b>Signal</b><span>not busywork metrics</span></div>
+                </div>
+                <p class="home-quote">“The difference between a frantic search and a composed one is a board you trust.”</p>
+            </section>
+            <section id="features" class="feature-section">
+                <span class="eyebrow">The workspace</span>
+                <h2 class="section-title">Built like a product team. Tuned for one career.</h2>
+                <p class="section-copy">Huntr-style pipeline. Linear-style focus. A quieter surface than a typical tracker — so the next move is always obvious.</p>
+                <div class="bento">
+                    <button class="bento-wide" onclick="openAuth('signup')"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="7" height="16" rx="1"/><rect x="14" y="4" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="6" rx="1"/></svg></div><h3>Kanban that feels like an ops room</h3><p>Drag roles through Saved, Applied, Interview and Offer. Deadlines, recruiters and notes stay attached to the card — not lost in another tab.</p></button>
+                    <button class="bento-tall" onclick="openAuth('signup')"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.2 3.2L16.5 7.5l-3.3 1.3L12 12l-1.2-3.2-3.3-1.3 3.3-1.3L12 3z"/><path d="M19 13l.6 1.7 1.7.6-1.7.7L19 18l-.6-1.7-1.7-.7 1.7-.6L19 13z"/><path d="M5 13l.7 1.8 1.8.7-1.8.7L5 18l-.7-1.8-1.8-.7 1.8-.7L5 13z"/></svg></div><h3>Intelligence on demand</h3><p>Match score, interview readiness, company health and salary position — without leaving the search.</p></button>
+                </div>
+                <div class="feature-grid">
+                    <button class="feature-card" onclick="openAuth('signup')"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l3 3v15H6z"/><path d="M15 3v4h4M9 12h6M9 16h6M9 8h2"/></svg></div><h3>Application ledger</h3><p>Title, company, status, priority, dates and a timeline you can actually trust.</p></button>
+                    <button class="feature-card" onclick="openAuth('signup')"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="M7 15l4-4 3 2 5-6"/><path d="M16 7h3v3"/></svg></div><h3>Search analytics</h3><p>Response, interview and offer rates as a calm report — not a noisy dashboard.</p></button>
+                    <button class="feature-card" onclick="openAuth('signup')"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div><h3>Inbox capture</h3><p>Review detected recruiting mail, then file it into the board in one pass.</p></button>
+                    <button class="feature-card" onclick="openAuth('signup')"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 9h18M8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01"/></svg></div><h3>Calendar pressure</h3><p>See interviews and follow-ups on the same week you are actually living.</p></button>
+                    <button class="feature-card" onclick="openAuth('signup')"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.7-4.7M8.5 11h5M11 8.5v5"/></svg></div><h3>Command palette</h3><p>Jump to a company, a role, or an action with Ctrl K — studio software muscle memory.</p></button>
+                    <button class="feature-card" onclick="openAuth('signup')"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/></svg></div><h3>Two atmospheres</h3><p>A cinematic home, then a focused light or night workspace once you are inside.</p></button>
+                </div>
+            </section>
+            <section id="method" class="feature-section" style="padding-top:24px;">
+                <span class="eyebrow">The method</span>
+                <h2 class="section-title">Three moves. Then the board runs itself.</h2>
+                <div class="steps">
+                    <div class="step"><em>01</em><h3>Capture the role</h3><p>Log it the moment you apply. Source, recruiter and date become the record of truth.</p></div>
+                    <div class="step"><em>02</em><h3>Advance the stage</h3><p>Move the card when the conversation moves. The next action stays on the surface.</p></div>
+                    <div class="step"><em>03</em><h3>Decide with signal</h3><p>Use AI tools and analytics only when a choice is real - offer, wait, or walk.</p></div>
+                </div>
+                <div class="final-cta">
+                    <h2>Your search deserves a better room.</h2>
+                    <p>Open a workspace in seconds. Guest mode is available if you want to look around first.</p>
+                    <div class="landing-actions" style="justify-content:center;">
+                        <button class="landing-primary" onclick="openAuth('signup')">Create account</button>
+                        <button class="landing-secondary" onclick="handleGuestAuth()">Continue as guest</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <footer class="landing-footer">
+            <div class="landing-container footer-inner">
+                <div class="footer-brand-block">
+                    <div class="footer-brand"><span class="footer-brand-mark">AT</span><span>ApplyTrack <b>AI</b></span></div>
+                    <p>A calmer operating system for the work between applying and arriving.</p>
+                    <span class="footer-status"><i></i> Your next move is waiting</span>
+                </div>
+                <div class="footer-links">
+                    <div><span class="footer-label">Explore</span><a href="#features">Workspace</a><a href="#method">The method</a><a href="#" onclick="openAuth('signup');return false;">Start free</a></div>
+                    <div><span class="footer-label">Access</span><a href="#" onclick="openAuth('login');return false;">Log in</a><a href="#" onclick="handleGuestAuth();return false;">Guest mode</a><a href="#" onclick="setTheme(document.body.classList.contains('dark-mode')?'light':'dark');return false;">Change atmosphere</a></div>
+                </div>
+                <div class="footer-contact"><span class="footer-label">Connect</span><a id="footerLinkedIn" href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a><a id="footerGmail" href="mailto:hello@example.com">hello@example.com</a></div>
+                <div class="footer-note"><span>Built for focused searches.</span><strong>© 2026 ApplyTrack AI</strong></div>
+            </div>
+        </footer>
+    </section>
+
+    <div id="authOverlay" class="auth-overlay" aria-hidden="true" onclick="if(event.target.id==='authOverlay')closeAuth()">
+        <div class="auth-card" role="dialog" aria-modal="true">
+            <div class="auth-header">
+                <div>
+                    <div class="brand-button" style="pointer-events:none;">
+                        <span class="brand-mark small">
+                            <svg viewBox="0 0 64 64" fill="none">
+                                <rect width="64" height="64" rx="14" fill="url(#logoGradSm)"/>
+                                <rect x="3" y="3" width="58" height="58" rx="12" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+                                <circle cx="32" cy="25" r="9" stroke="rgba(255,255,255,0.35)" stroke-width="1.8"/>
+                                <circle cx="32" cy="25" r="4.5" stroke="rgba(255,255,255,0.55)" stroke-width="1.8"/>
+                                <circle cx="32" cy="25" r="1.8" fill="rgba(255,255,255,0.92)"/>
+                                <text x="32" y="50" text-anchor="middle" font-family="Inter, sans-serif" font-size="17" font-weight="800" letter-spacing="2" fill="rgba(255,255,255,0.96)">AT</text>
+                                <defs>
+                                    <linearGradient id="logoGradSm" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#3b82f6"/>
+                                        <stop offset="55%" stop-color="#1d4ed8"/>
+                                        <stop offset="100%" stop-color="#070b14"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </span>
+                        <span>ApplyTrack <span style="color:#93c5fd;">AI</span></span>
+                    </div>
+                    <h2 id="authTitle">Welcome back</h2>
+                    <p id="authSubtitle">Enter your workspace.</p>
+                </div>
+                <button class="auth-close" onclick="closeAuth()" aria-label="Close">×</button>
+            </div>
+            <div class="auth-tabs"><button id="loginTab" class="auth-tab active" type="button" onclick="setAuthMode('login')">Log in</button><button id="signupTab" class="auth-tab" type="button" onclick="setAuthMode('signup')">Create account</button></div>
+            <form id="authForm" class="auth-form" onsubmit="handleAuthSubmit(event)">
+                <div id="nameField" style="display:none;"><label class="auth-label">Full name</label><input id="authName" class="auth-input" type="text" autocomplete="name" placeholder="Your name"></div>
+                <div class="auth-email"><label class="auth-label">Email</label><input id="authEmail" class="auth-input" type="email" autocomplete="email" placeholder="you@example.com" required></div>
+                <div class="auth-password" id="passwordField"><label class="auth-label">Password</label><input id="authPassword" class="auth-input" type="password" autocomplete="current-password" placeholder="••••••••" minlength="6" required></div>
+                <div id="confirmPasswordField" style="display:none;"><label class="auth-label">Confirm</label><input id="authConfirmPassword" class="auth-input" type="password" autocomplete="new-password" placeholder="••••••••" minlength="6"></div>
+                <div id="forgotWrap" style="display:flex;justify-content:flex-end;"><button type="button" onclick="handleForgotPassword()" style="border:0;background:none;color:#93c5fd;font-size:11px;font-weight:800;cursor:pointer;">Forgot password?</button></div>
+                <button type="submit" class="landing-primary" style="width:100%;border:0;padding:10px;" id="authSubmit">Log in</button>
+            </form>
+            <div id="authErrorMessage" style="display:none;color:#ef4444;font-size:12px;margin-top:8px;text-align:center;"></div>
+            <div class="auth-divider">OR</div>
+            <div class="auth-alt">
+                <button id="googleAuthButton" class="google-btn" type="button" onclick="handleGoogleAuth()">
+                    <span id="googleButtonIcon" class="google-btn-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M21.35 12.27c0-.79-.07-1.55-.22-2.27H12v4.3h5.24a4.48 4.48 0 01-1.94 2.94v2.45h3.14c1.84-1.7 2.91-4.2 2.91-7.42z"/><path fill="#94A3B8" d="M12 21.75c2.63 0 4.84-.87 6.45-2.36l-3.14-2.45c-.87.58-1.98.92-3.31.92-2.54 0-4.7-1.72-5.47-4.03H3.28v2.53A9.75 9.75 0 0012 21.75z"/><path fill="#CBD5E1" d="M6.53 13.83A5.86 5.86 0 016.22 12c0-.64.11-1.26.31-1.83V7.64H3.28A9.75 9.75 0 002.25 12c0 1.57.38 3.05 1.03 4.36l3.25-2.53z"/><path fill="#64748B" d="M12 6.14c1.43 0 2.72.49 3.73 1.45l2.8-2.8C16.83 3.17 14.63 2.25 12 2.25a9.75 9.75 0 00-8.72 5.39l3.25 2.53C7.3 7.86 9.46 6.14 12 6.14z"/></svg></span>
+                    <span id="googleButtonLabel">Google</span>
+                </button>
+                <button type="button" class="landing-secondary" onclick="handleGuestAuth()">Guest</button>
+            </div>
+            <p class="auth-switch" id="authSwitch">New here? <button type="button" onclick="setAuthMode('signup')">Create an account</button></p>
+        </div>
+    </div>
+
+
+    <div id="nlCommandBar" class="nl-commandbar" onclick="if(event.target.id==='nlCommandBar')closeCommandPalette()">
+        <div class="nl-command-panel">
+            <input id="nlCommandInput" class="nl-command-input" autocomplete="off" placeholder="Search applications, companies, or actions…" oninput="renderCommandResults()">
+            <div id="nlCommandResults" class="nl-command-results"></div>
+        </div>
+    </div>
+
+    <div id="nlShortcutsModal" class="nl-shortcuts-modal" onclick="if(event.target.id==='nlShortcutsModal')closeShortcutsModal()">
+        <div class="nl-shortcuts-panel">
+            <div class="nl-shortcuts-head">
+                <strong style="font-size:15px;">Keyboard shortcuts</strong>
+                <button onclick="closeShortcutsModal()" style="border:0;background:#f5f5f4;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:18px;">×</button>
+            </div>
+            <div class="nl-shortcuts-list">
+                <div class="nl-shortcut-row"><span>Command palette</span><span class="nl-shortcut">Ctrl K</span></div>
+                <div class="nl-shortcut-row"><span>Keyboard shortcuts</span><span class="nl-shortcut">?</span></div>
+                <div class="nl-shortcut-row"><span>Close modal / panel</span><span class="nl-shortcut">Esc</span></div>
+                <div class="nl-shortcut-row"><span>Go to Dashboard</span><span class="nl-shortcut">G then D</span></div>
+                <div class="nl-shortcut-row"><span>Go to Applications</span><span class="nl-shortcut">G then A</span></div>
+                <div class="nl-shortcut-row"><span>Go to Kanban</span><span class="nl-shortcut">G then K</span></div>
+                <div class="nl-shortcut-row"><span>Go to Career Goals</span><span class="nl-shortcut">G then G</span></div>
+                <div class="nl-shortcut-row"><span>Add application</span><span class="nl-shortcut">N</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+
+    <div id="appShell" class="app-shell-hidden">
+        <header class="app-topbar">
+            <button class="brand-button" onclick="goHome()" aria-label="ApplyTrack AI home">
+                <span class="brand-mark small">
+                    <svg viewBox="0 0 64 64" fill="none">
+                        <rect width="64" height="64" rx="14" fill="url(#logoGradBar)"/>
+                        <rect x="3" y="3" width="58" height="58" rx="12" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+                        <circle cx="32" cy="25" r="9" stroke="rgba(255,255,255,0.35)" stroke-width="1.8"/>
+                        <circle cx="32" cy="25" r="4.5" stroke="rgba(255,255,255,0.55)" stroke-width="1.8"/>
+                        <circle cx="32" cy="25" r="1.8" fill="rgba(255,255,255,0.92)"/>
+                        <text x="32" y="50" text-anchor="middle" font-family="Inter, sans-serif" font-size="17" font-weight="800" letter-spacing="2" fill="rgba(255,255,255,0.96)">AT</text>
+                        <defs>
+                            <linearGradient id="logoGradBar" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#1d4ed8"/>
+                                <stop offset="45%" stop-color="#2563eb"/>
+                                <stop offset="100%" stop-color="#0b1220"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </span>
+                <span>ApplyTrack <span style="color:#2563eb;">AI</span></span>
+            </button>
+            <div class="topbar-actions">
+                <div class="nl-global-search" onclick="openCommandPalette()">
+                    <span>⌕</span><input id="nlSearchInput" readonly placeholder="Search anything…"><span class="nl-shortcut">Ctrl K</span>
+                </div>
+                <div class="theme-pill"><button id="lightThemeBtn" data-theme-button="light" onclick="setTheme('light')" title="Light mode">☀</button><button id="darkThemeBtn" data-theme-button="dark" onclick="setTheme('dark')" title="Night mode">☾</button></div>
+                <button class="icon-btn" onclick="goHome()" title="Home" aria-label="Home">⌂</button>
+                <div class="nl-notification-wrap">
+                    <button class="icon-btn" onclick="toggleNotifications()" title="Notifications" aria-label="Notifications"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
+                    <span id="nlNotificationBadge" class="nl-notification-badge"></span>
+                    <div id="nlNotificationPanel" class="nl-notification-panel">
+                        <div class="nl-notification-head"><strong style="font-size:13px;">Notifications</strong><button onclick="markNotificationsRead()" style="border:0;background:none;color:#1d4ed8;font-size:11px;font-weight:800;cursor:pointer;">Mark read</button></div>
+                        <div id="nlNotificationList" class="nl-notification-list"></div>
+                    </div>
+                </div>
+                <div class="profile-menu">
+                    <button class="icon-btn" onclick="toggleProfileMenu()" title="Account" aria-label="Account"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg></button>
+                    <div id="profileDropdown" class="profile-dropdown">
+                        <div style="padding:10px 12px;border-bottom:1px solid #e7e5e4;margin-bottom:5px;"><div id="topbarUserName" style="font-weight:800;font-size:13px;">Demo User</div><div id="topbarUserEmail" style="font-size:11px;color:#a8a29e;margin-top:2px;">demo.user@example.com</div></div>
+                        <button onclick="switchView('settings');toggleProfileMenu()">⚙ Settings</button>
+                        <button onclick="setTheme(document.body.classList.contains('dark-mode')?'light':'dark');toggleProfileMenu()">◐ Toggle theme</button>
+                        <button onclick="signOut()" style="color:#334155;">↪ Sign out</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar fixed left-0 top-0 bottom-0 w-[280px] flex flex-col shadow-2xl">
+            <div class="p-6 border-b border-stone-700/50">
+                <button onclick="goHome()" aria-label="ApplyTrack AI home" class="flex items-center gap-3 bg-transparent border-0 cursor-pointer text-left">
+                    <span class="brand-mark small">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <rect width="64" height="64" rx="14" fill="url(#logoGradSide)"/>
+                            <rect x="3" y="3" width="58" height="58" rx="12" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+                            <circle cx="32" cy="25" r="9" stroke="rgba(255,255,255,0.35)" stroke-width="1.8"/>
+                            <circle cx="32" cy="25" r="4.5" stroke="rgba(255,255,255,0.55)" stroke-width="1.8"/>
+                            <circle cx="32" cy="25" r="1.8" fill="rgba(255,255,255,0.92)"/>
+                            <text x="32" y="50" text-anchor="middle" font-family="Inter, sans-serif" font-size="17" font-weight="800" letter-spacing="2" fill="rgba(255,255,255,0.96)">AT</text>
+                            <defs>
+                                <linearGradient id="logoGradSide" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#1d4ed8"/>
+                                    <stop offset="45%" stop-color="#2563eb"/>
+                                    <stop offset="100%" stop-color="#0b1220"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </span>
+                    <div>
+                        <h1 class="text-white font-bold text-lg leading-tight">ApplyTrack <span class="text-blue-500">AI</span></h1>
+                        <p class="text-stone-400 text-xs">Job Search Command Center</p>
+                    </div>
+                </button>
+            </div>
+            <nav class="flex-1 p-4 space-y-1 overflow-y-auto scrollbar-thin" id="sidebarNav">
+                <a href="#" data-view="dashboard" class="sidebar-link active flex items-center gap-3 px-4 py-3 rounded-lg text-stone-300 text-sm font-medium">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+                    Dashboard
+                </a>
+                <a href="#" data-view="brief" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-stone-300 text-sm font-medium">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Today’s Brief
+                </a>
+                <a href="#" data-view="applications" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-stone-300 text-sm font-medium">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-4.25m16.5-3.65l-3.75-3.75-3.75 3.75m3.75-3.75v12"/></svg>
+                    Applications
+                    <span id="appCountBadge" class="ml-auto bg-blue-500/20 text-blue-400 text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+                </a>
+                <a href="#" data-view="kanban" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-stone-300 text-sm font-medium">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16v12H4V6zm2 3h5v6H6V9zm7 0h5v6h-5V9z"/></svg>
+                    Kanban Board
+                </a>
+                <a href="#" data-view="calendar" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-stone-300 text-sm font-medium">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3.75 8.25h16.5M4.5 4.5h15a1.5 1.5 0 011.5 1.5v13.5a1.5 1.5 0 01-1.5 1.5h-15a1.5 1.5 0 01-1.5-1.5V6a1.5 1.5 0 011.5-1.5z"/></svg>
+                    Calendar
+                </a>
+                <a href="#" data-view="analytics" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-stone-300 text-sm font-medium">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zm7.5-6.75c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v13.5c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V6.375zm7.5-6.75c0-.621.504-1.125 1.125-1.125h2.25C21.496 0 22 .504 22 1.125v18.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V1.125z"/></svg>
+                    Analytics
+                </a>
+                <a href="#" data-view="network" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-stone-300 text-sm font-medium">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9 9 0 01-6 0M15.75 7.5a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 19.128a7.5 7.5 0 0113.86-2.25"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg>
+                    Network
+                    <span id="networkCountBadge" class="ml-auto bg-blue-500/20 text-blue-400 text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+                </a>
+                <a href="#" data-view="offers" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-stone-300 text-sm font-medium">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879-.659a1.5 1.5 0 01.9-.273h2.658a1.5 1.5 0 00.9-2.727L13.158 10.5a1.5 1.5 0 00-.9-2.727H9.6a1.5 1.5 0 00-.9.273L7.5 8.818"/></svg>
+                    Offer Desk
+                </a>
+                <a href="#" data-view="stories" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-stone-300 text-sm font-medium">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+                    Story Bank
+                </a>
+                <a href="#" data-view="goals" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-stone-300 text-sm font-medium">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 01-.982-3.172M9.497 14.25a7.454 7.454 0 00.981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 007.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M18.75 4.236c.982.143 1.954.317 2.916.52A6.003 6.003 0 0116.27 9.728M18.75 4.236V4.5c0 2.108-.966 3.99-2.48 5.228m0 0a6.023 6.023 0 01-1.77.88M8.25 9.75h7.5"/></svg>
+                    Career Goals
+                </a>
+                <a href="#" data-view="ai-tools" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-stone-300 text-sm font-medium">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.75L12 2.25l2.25 1.5-1.5 1.5 2.25 1.5L12 9.75 9.75 8.25 7.5 9.75l1.5-2.25-1.5-1.5L9.75 3.75zM21 19.5l-2.25-1.5-1.5 1.5 2.25 1.5L21 19.5zM3 19.5l2.25-1.5 1.5 1.5-2.25 1.5L3 19.5zM12 21l2.25-1.5 1.5 1.5-2.25 1.5L12 21z"/></svg>
+                    AI Tools
+                </a>
+                <a href="#" data-view="email-import" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-stone-300 text-sm font-medium">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                    Email Import
+                    <span id="pendingImportBadge" class="ml-auto bg-blue-500/20 text-blue-400 text-xs font-bold px-2 py-0.5 rounded-full hidden">0</span>
+                </a>
+                <a href="#" data-view="settings" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-stone-300 text-sm font-medium">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.39.44 1.002.12 1.45l-.527.737c-.25.35-.272.807-.108 1.205.166.396.506.71.93.78l.894.149c.542.09.94.56.94 1.11v1.093c0 .55-.398 1.02-.94 1.11l-.894.149c-.424.07-.764.384-.93.78-.164.398-.142.854.108 1.205l.527.737c.32.448.27 1.06-.12 1.45l-.773.773a1.125 1.125 0 01-1.45.12l-.737-.527c-.35-.25-.807-.272-1.205-.108-.396.166-.71.506-.78.93l-.149.894c-.09.542-.56.94-1.11.94h-1.093c-.55 0-1.02-.398-1.11-.94l-.149-.894c-.07-.424-.384-.764-.78-.93-.398-.164-.855-.142-1.205.108l-.737.527a1.125 1.125 0 01-1.45-.12l-.773-.773a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.272-.807.108-1.205-.166-.396-.506-.71-.93-.78l-.894-.149c-.542-.09-.94-.56-.94-1.11v-1.093c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.764-.384.93-.78.164-.398.142-.855-.108-1.205l-.527-.737a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.205.108.396-.166.71-.506.78-.93l.149-.894z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    Settings
+                </a>
+                <a href="#" data-view="admin" id="adminNavLink" class="sidebar-link hidden flex items-center gap-3 px-4 py-3 rounded-lg text-stone-300 text-sm font-medium">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 12l1.7 1.7 3.4-3.4"/></svg>
+                    Admin Dashboard
+                </a>
+            </nav>
+            <div class="p-4 border-t border-stone-700/50">
+                <div class="flex items-center gap-3 text-stone-400 text-xs">
+                    <div id="sidebarUserInitials" class="w-9 h-9 rounded-full blue-gradient flex items-center justify-center text-white text-sm font-bold">JD</div>
+                    <div class="min-w-0">
+                        <p id="sidebarUserName" class="font-semibold text-stone-200 text-sm truncate">John Doe</p>
+                        <p id="sidebarUserPlan" class="text-stone-500">Free Plan</p>
+                    </div>
+                </div>
+                <button id="sidebarSignOutBtn" type="button" onclick="signOut()" class="mt-3 w-full flex items-center justify-center gap-2 rounded-lg border border-stone-700 bg-stone-800/70 px-3 py-2 text-xs font-semibold text-stone-300 transition-colors hover:border-blue-400/60 hover:bg-blue-500/10 hover:text-blue-300" aria-label="Sign out of ApplyTrack AI">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/></svg>
+                    <span>Sign out</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile Overlay -->
+        <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden"></div>
+
+        <!-- Mobile Header -->
+        <div id="mobileAppHeader" class="md:hidden fixed top-0 left-0 right-0 bg-stone-900 text-white px-4 py-3 z-30 flex items-center justify-between">
+            <button id="mobileMenuBtn" class="text-white p-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg></button>
+            <span class="font-bold">ApplyTrack <span class="text-blue-500">AI</span></span>
+            <div class="w-6"></div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="md:ml-[280px] pt-16 md:pt-0">
+            <div class="p-4 md:p-8 max-w-[1600px] mx-auto">
+
+                <!-- ============ DASHBOARD VIEW ============ -->
+                <div id="view-dashboard" class="view active">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-bold text-stone-900">Dashboard</h2>
+                            <p class="text-stone-500 mt-1">Pipeline, follow-ups and the next decision - in one place.</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="openEmailImport()" class="btn-outline flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                                Import Email
+                            </button>
+                            <button onclick="openAddApplicationModal()" class="btn-primary flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                                Add Application
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8" id="dashboardStats">
+                        <!-- Filled by JS -->
+                    </div>
+
+                    <!-- Middle Section -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                        <!-- Recent Applications -->
+                        <div class="card p-6 lg:col-span-2">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-bold text-lg text-stone-900">Recent Applications</h3>
+                                <button onclick="switchView('applications')" class="text-blue-600 hover:text-blue-700 text-sm font-semibold flex items-center gap-1">View All <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></button>
+                            </div>
+                            <div class="space-y-3" id="dashboardRecentApps">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
+                        <!-- Upcoming Reminders -->
+                        <div class="card p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-bold text-lg text-stone-900">Upcoming</h3>
+                                <button onclick="switchView('calendar')" class="text-blue-600 hover:text-blue-700 text-sm font-semibold">Calendar</button>
+                            </div>
+                            <div class="space-y-3" id="dashboardReminders">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Quick Tools -->
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                        <button onclick="switchView('ai-tools')" class="card p-4 text-center hover:border-blue-300 cursor-pointer group">
+                            <div class="w-12 h-12 mx-auto mb-3 rounded-xl blue-gradient-light flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.75L12 2.25l2.25 1.5-1.5 1.5 2.25 1.5L12 9.75 9.75 8.25 7.5 9.75l1.5-2.25-1.5-1.5L9.75 3.75z"/></svg>
+                            </div>
+                            <p class="text-sm font-semibold text-stone-700">Job Match</p>
+                        </button>
+                        <button onclick="openInterviewCalculator()" class="card p-4 text-center hover:border-blue-300 cursor-pointer group">
+                            <div class="w-12 h-12 mx-auto mb-3 rounded-xl blue-gradient-light flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.75L12 2.25l2.25 1.5-1.5 1.5 2.25 1.5L12 9.75 9.75 8.25 7.5 9.75l1.5-2.25-1.5-1.5L9.75 3.75zM21 19.5l-2.25-1.5-1.5 1.5 2.25 1.5L21 19.5zM3 19.5l2.25-1.5 1.5 1.5-2.25 1.5L3 19.5z"/></svg>
+                            </div>
+                            <p class="text-sm font-semibold text-stone-700">Interview Score</p>
+                        </button>
+                        <button onclick="openCompanyHealth()" class="card p-4 text-center hover:border-blue-300 cursor-pointer group">
+                            <div class="w-12 h-12 mx-auto mb-3 rounded-xl blue-gradient-light flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 21V10.5m15 10.5V10.5M4.5 10.5h15M4.5 10.5l3-5.25h9l3 5.25M9 21v-4.5m3 4.5v-4.5m3 4.5v-4.5"/></svg>
+                            </div>
+                            <p class="text-sm font-semibold text-stone-700">Company Health</p>
+                        </button>
+                        <button onclick="openSalaryNegotiation()" class="card p-4 text-center hover:border-blue-300 cursor-pointer group">
+                            <div class="w-12 h-12 mx-auto mb-3 rounded-xl blue-gradient-light flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879-.659a1.5 1.5 0 01.9-.273h2.658a1.5 1.5 0 00.9-2.727L13.158 10.5a1.5 1.5 0 00-.9-2.727H9.6a1.5 1.5 0 00-.9.273L7.5 8.818"/></svg>
+                            </div>
+                            <p class="text-sm font-semibold text-stone-700">Salary Analyzer</p>
+                        </button>
+                        <button onclick="openFollowUpEmail()" class="card p-4 text-center hover:border-blue-300 cursor-pointer group">
+                            <div class="w-12 h-12 mx-auto mb-3 rounded-xl blue-gradient-light flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                            </div>
+                            <p class="text-sm font-semibold text-stone-700">Email Drafter</p>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ============ APPLICATIONS VIEW ============ -->
+                <div id="view-applications" class="view hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-bold text-stone-900">The ledger</h2>
+                            <p class="text-stone-500 mt-1">Every role, status and next action in one record.</p>
+                        </div>
+                        <button onclick="openAddApplicationModal()" class="btn-primary flex items-center gap-2 self-start sm:self-auto">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                            Add Application
+                        </button>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="card p-4 mb-6 flex flex-wrap gap-3 items-center">
+                        <input type="text" id="appSearchInput" oninput="renderApplicationsTable()" placeholder="Search by company or title..." class="input-field max-w-xs flex-1 min-w-[200px]">
+                        <select id="appStatusFilter" onchange="renderApplicationsTable()" class="input-field max-w-[160px]">
+                            <option value="">All Statuses</option>
+                            <option value="saved">Saved</option>
+                            <option value="applied">Applied</option>
+                            <option value="screening">Screening</option>
+                            <option value="assessment">Assessment</option>
+                            <option value="interview">Interview</option>
+                            <option value="final_interview">Final Interview</option>
+                            <option value="offer">Offer</option>
+                            <option value="accepted">Accepted</option>
+                            <option value="rejected">Rejected</option>
+                            <option value="withdrawn">Withdrawn</option>
+                        </select>
+                        <select id="appPriorityFilter" onchange="renderApplicationsTable()" class="input-field max-w-[130px]">
+                            <option value="">All Priorities</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                        <button onclick="resetAppFilters()" class="text-blue-600 hover:text-blue-700 text-sm font-semibold ml-auto">Reset</button>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="card overflow-hidden">
+                        <div class="overflow-x-auto scrollbar-thin">
+                            <table class="w-full text-sm min-w-[800px]">
+                                <thead class="bg-stone-50 text-stone-500 text-xs uppercase">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left font-semibold">Company</th>
+                                        <th class="px-4 py-3 text-left font-semibold">Position</th>
+                                        <th class="px-4 py-3 text-left font-semibold">Status</th>
+                                        <th class="px-4 py-3 text-left font-semibold">Priority</th>
+                                        <th class="px-4 py-3 text-left font-semibold">Applied</th>
+                                        <th class="px-4 py-3 text-left font-semibold">Next Action</th>
+                                        <th class="px-4 py-3 text-center font-semibold">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="applicationsTableBody">
+                                    <!-- Filled by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============ KANBAN VIEW ============ -->
+                <div id="view-kanban" class="view hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-bold text-stone-900">Pipeline</h2>
+                            <p class="text-stone-500 mt-1">Move the card when the conversation moves.</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="openAddApplicationModal()" class="btn-primary flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto scrollbar-thin pb-4">
+                        <div class="flex gap-4 min-w-[1000px]" id="kanbanBoard">
+                            <!-- Filled by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============ CALENDAR VIEW ============ -->
+                <div id="view-calendar" class="view hidden">
+                    <!-- Header Section with Title, Nav, View Toggle, and Actions -->
+                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
+                        <div>
+                            <div class="flex items-center gap-3">
+                                <h2 class="text-2xl md:text-3xl font-bold text-stone-900 dark:text-white">Schedule & Interviews</h2>
+                                <span class="badge-blue text-xs font-semibold px-2.5 py-0.5 rounded-full" id="calendarTotalBadge">0 Events</span>
+                            </div>
+                            <p class="text-stone-500 dark:text-stone-400 mt-1">Interviews, deadlines, assessments, and synced calendar reminders.</p>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+                            <!-- Month Navigation -->
+                            <div class="flex items-center bg-white dark:bg-[#121a2b] border border-stone-200 dark:border-stone-800 rounded-xl p-1 shadow-sm">
+                                <button onclick="navigateCalendar(-1)" class="p-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-600 dark:text-stone-300 transition-colors font-bold text-base leading-none" title="Previous Month" aria-label="Previous Month">‹</button>
+                                <button onclick="jumpToToday()" class="px-3 py-1 text-xs font-semibold text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-lg transition-colors">Today</button>
+                                <button onclick="navigateCalendar(1)" class="p-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-600 dark:text-stone-300 transition-colors font-bold text-base leading-none" title="Next Month" aria-label="Next Month">›</button>
+                                <span id="calendarMonthLabel" class="font-bold text-sm sm:text-base px-3 text-center text-stone-900 dark:text-white min-w-[140px]"></span>
+                            </div>
+
+                            <!-- View Mode Switcher -->
+                            <div class="flex items-center bg-stone-100 dark:bg-stone-800/80 p-1 rounded-xl border border-stone-200 dark:border-stone-700/60" id="calendarViewModeGroup">
+                                <button id="calendarBtnMonthView" onclick="setCalendarViewMode('month')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-white dark:bg-[#121a2b] text-blue-600 dark:text-blue-400 shadow-sm">
+                                    Month
+                                </button>
+                                <button id="calendarBtnAgendaView" onclick="setCalendarViewMode('agenda')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white transition-all">
+                                    Agenda
+                                </button>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <button onclick="openAddCalendarEventModal()" class="btn-primary flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                                <span>Add Event</span>
+                            </button>
+                            <button id="btnExportICS" onclick="exportCalendarICS()" class="btn-cal-export" title="Export to Google Calendar, Apple Calendar, or Outlook (.ics)">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                <span>Export .ics</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Category Filter Pills & Key Metrics Banner -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-5 p-3 rounded-2xl bg-white dark:bg-[#121a2b] border border-stone-200 dark:border-stone-800 shadow-sm">
+                        <div class="flex flex-wrap items-center gap-1.5" id="calendarFilterBar">
+                            <button onclick="setCalendarFilter('all')" data-calendar-filter="all" class="calendar-filter-chip active-filter px-3 py-1 rounded-full text-xs font-semibold bg-blue-600 text-white shadow-sm transition-all">All</button>
+                            <button onclick="setCalendarFilter('interview')" data-calendar-filter="interview" class="calendar-filter-chip px-3 py-1 rounded-full text-xs font-semibold bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 transition-all">🎤 Interviews</button>
+                            <button onclick="setCalendarFilter('deadline')" data-calendar-filter="deadline" class="calendar-filter-chip px-3 py-1 rounded-full text-xs font-semibold bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 transition-all">⏰ Deadlines</button>
+                            <button onclick="setCalendarFilter('applied')" data-calendar-filter="applied" class="calendar-filter-chip px-3 py-1 rounded-full text-xs font-semibold bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 transition-all">📄 Submissions</button>
+                            <button onclick="setCalendarFilter('offer')" data-calendar-filter="offer" class="calendar-filter-chip px-3 py-1 rounded-full text-xs font-semibold bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 transition-all">🎯 Offers / Decisions</button>
+                        </div>
+                        <div class="flex items-center gap-4 text-xs font-medium text-stone-500 dark:text-stone-400">
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span><span id="calCountInterviews">0 Interviews</span></span>
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span><span id="calCountDeadlines">0 Deadlines</span></span>
+                        </div>
+                    </div>
+
+                    <!-- Month View Container -->
+                    <div id="calendarMonthViewContainer" class="card calendar-card p-4 sm:p-6 shadow-sm">
+                        <div class="calendar-weekdays grid grid-cols-7 gap-2 mb-2 text-center text-xs font-bold text-stone-500 dark:text-stone-400 uppercase tracking-wider">
+                            <span class="py-2">Sun</span><span class="py-2">Mon</span><span class="py-2">Tue</span><span class="py-2">Wed</span><span class="py-2">Thu</span><span class="py-2">Fri</span><span class="py-2">Sat</span>
+                        </div>
+                        <div id="calendarGrid" class="grid grid-cols-7 gap-2">
+                            <!-- Filled by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Agenda View Container (hidden by default) -->
+                    <div id="calendarAgendaViewContainer" class="hidden card p-5 sm:p-6 shadow-sm">
+                        <div class="flex items-center justify-between mb-4 border-b border-stone-200 dark:border-stone-800 pb-3">
+                            <div>
+                                <h3 class="font-bold text-base text-stone-900 dark:text-white">Scheduled Timeline & Agenda</h3>
+                                <p class="text-xs text-stone-500 dark:text-stone-400">Chronological schedule of interviews, assessments, and deadlines</p>
+                            </div>
+                            <span class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300" id="calendarAgendaCount">0 Events</span>
+                        </div>
+                        <div id="calendarAgendaList" class="space-y-4">
+                            <!-- Filled by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Bottom Grid: Priority Upcoming & Calendar Sync Info -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+                        <!-- Upcoming Events Card (2 cols) -->
+                        <div class="lg:col-span-2 card calendar-events-card p-5 sm:p-6 shadow-sm">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="font-bold text-base sm:text-lg text-stone-900 dark:text-white">Priority Upcoming Schedule</h3>
+                                    <p class="text-xs text-stone-500 dark:text-stone-400">Next 14 days of interviews, assessments, and submission deadlines</p>
+                                </div>
+                                <span class="text-xs font-semibold px-2.5 py-1 bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 rounded-lg" id="calendarUpcomingCountBadge">0 upcoming</span>
+                            </div>
+                            <div id="calendarEventsList" class="space-y-2.5">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Calendar Intelligence & Sync Assist Card (1 col) -->
+                        <div class="card p-5 sm:p-6 shadow-sm bg-gradient-to-br from-white to-blue-50/40 dark:from-[#121a2b] dark:to-[#17253d] border border-blue-100 dark:border-blue-900/40">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-900/60 flex items-center justify-center text-blue-600 dark:text-blue-300">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-stone-900 dark:text-white">Calendar Sync & Assist</h4>
+                                    <p class="text-[11px] text-stone-500 dark:text-stone-400">Connect to your workflow</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-stone-600 dark:text-stone-300 leading-relaxed mb-4">
+                                Export your full application timeline to standard <strong>iCal format</strong>. Works seamlessly with Google Calendar, Apple Calendar, and Outlook.
+                            </p>
+                            <div class="space-y-2 mb-4 text-xs text-stone-600 dark:text-stone-400">
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                    <span>Syncs meeting links & company notes</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                    <span>Auto-includes application deadlines</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                    <span>Supports 1-click custom event scheduling</span>
+                                </div>
+                            </div>
+                            <button onclick="exportCalendarICS()" class="w-full btn-primary py-2 text-xs font-semibold flex items-center justify-center gap-2 rounded-xl">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                <span>Download .ics Schedule</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============ ANALYTICS VIEW ============ -->
+                <div id="view-analytics" class="view hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-bold text-stone-900">Signal</h2>
+                            <p class="text-stone-500 mt-1">Rates and funnel - calm, not noisy.</p>
+                        </div>
+                    </div>
+
+                    <!-- KPI Cards -->
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6" id="analyticsKpis">
+                        <!-- Filled by JS -->
+                    </div>
+
+                    <!-- Charts -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        <div class="card p-6">
+                            <h3 class="font-bold text-stone-800 mb-4">Applications by Status</h3>
+                            <div class="chart-container"><canvas id="statusChart"></canvas></div>
+                        </div>
+                        <div class="card p-6">
+                            <h3 class="font-bold text-stone-800 mb-4">Application Conversion Funnel</h3>
+                            <div class="chart-container"><canvas id="funnelChart"></canvas></div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        <div class="card p-6">
+                            <h3 class="font-bold text-stone-800 mb-4">Weekly Application Activity</h3>
+                            <div class="chart-container"><canvas id="weeklyChart"></canvas></div>
+                        </div>
+                        <div class="card p-6">
+                            <h3 class="font-bold text-stone-800 mb-4">Applications by Job Source</h3>
+                            <div class="chart-container"><canvas id="sourceChart"></canvas></div>
+                        </div>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="font-bold text-stone-800 mb-4">Response Metrics</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="responseMetrics">
+                            <!-- Filled by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============ AI TOOLS VIEW ============ -->
+                <div id="view-ai-tools" class="view hidden ai-tools-shell">
+                    <div class="ai-tools-header">
+                        <div>
+                            <span class="ai-tools-kicker">Decision intelligence</span>
+                            <h2 class="text-2xl md:text-3xl font-bold text-stone-900">Intelligence</h2>
+                            <p class="text-stone-500 mt-1">Fit, readiness, company health and salary - on demand.</p>
+                        </div>
+                        <span class="ai-tools-note">5 tools · ready when you are</span>
+                    </div>
+
+                    <div class="ai-tools-grid grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <!-- Job Match Score -->
+                        <div class="card ai-tool-card">
+                            <div class="ai-tool-top"><div class="flex items-center gap-4">
+                                <div class="ai-tool-icon w-14 h-14 rounded-xl blue-gradient text-white flex items-center justify-center">
+                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.75L12 2.25l2.25 1.5-1.5 1.5 2.25 1.5L12 9.75 9.75 8.25 7.5 9.75l1.5-2.25-1.5-1.5L9.75 3.75z"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">AI Job Match Score</h3>
+                                    <p class="text-sm text-stone-500">Analyze skills vs job description</p>
+                                </div>
+                            </div><span class="ai-tool-index">01</span></div>
+                            <div class="ai-tool-meta"><span>FIT</span> Skills · experience · location</div>
+                            <button onclick="openJobMatch()" class="btn-primary w-full">Analyze Match</button>
+                        </div>
+
+                        <!-- Interview Success -->
+                        <div class="card ai-tool-card">
+                            <div class="ai-tool-top"><div class="flex items-center gap-4">
+                                <div class="ai-tool-icon w-14 h-14 rounded-xl blue-gradient text-white flex items-center justify-center">
+                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">Interview Readiness</h3>
+                                    <p class="text-sm text-stone-500">Estimated success probability</p>
+                                </div>
+                            </div><span class="ai-tool-index">02</span></div>
+                            <div class="ai-tool-meta"><span>READY</span> Preparation · confidence · risk</div>
+                            <button onclick="openInterviewCalculator()" class="btn-primary w-full">Calculate Score</button>
+                        </div>
+
+                        <!-- Company Health -->
+                        <div class="card ai-tool-card">
+                            <div class="ai-tool-top"><div class="flex items-center gap-4">
+                                <div class="ai-tool-icon w-14 h-14 rounded-xl blue-gradient text-white flex items-center justify-center">
+                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 21V10.5m15 10.5V10.5M4.5 10.5h15M4.5 10.5l3-5.25h9l3 5.25M9 21v-4.5m3 4.5v-4.5m3 4.5v-4.5"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">Company Health Analysis</h3>
+                                    <p class="text-sm text-stone-500">Layoff-risk & stability prediction</p>
+                                </div>
+                            </div><span class="ai-tool-index">03</span></div>
+                            <div class="ai-tool-meta"><span>SIGNAL</span> Hiring · funding · stability</div>
+                            <button onclick="openCompanyHealth()" class="btn-primary w-full">Analyze Company</button>
+                        </div>
+
+                        <!-- Salary Negotiation -->
+                        <div class="card ai-tool-card">
+                            <div class="ai-tool-top"><div class="flex items-center gap-4">
+                                <div class="ai-tool-icon w-14 h-14 rounded-xl blue-gradient text-white flex items-center justify-center">
+                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879-.659a1.5 1.5 0 01.9-.273h2.658a1.5 1.5 0 00.9-2.727L13.158 10.5a1.5 1.5 0 00-.9-2.727H9.6a1.5 1.5 0 00-.9.273L7.5 8.818"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">Salary Negotiation Advisor</h3>
+                                    <p class="text-sm text-stone-500">Market analysis & negotiation strategy</p>
+                                </div>
+                            </div><span class="ai-tool-index">04</span></div>
+                            <div class="ai-tool-meta"><span>MARKET</span> Range · leverage · strategy</div>
+                            <button onclick="openSalaryNegotiation()" class="btn-primary w-full">Analyze Offer</button>
+                        </div>
+
+                        <!-- Follow-Up Email -->
+                        <div class="card ai-tool-card md:col-span-2">
+                            <div class="ai-tool-top"><div class="flex items-center gap-4">
+                                <div class="ai-tool-icon w-14 h-14 rounded-xl blue-gradient text-white flex items-center justify-center">
+                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">AI Follow-Up Email Generator</h3>
+                                    <p class="text-sm text-stone-500">Personalized, context-aware follow-up emails</p>
+                                </div>
+                            </div><span class="ai-tool-index">05</span></div>
+                            <div class="ai-tool-meta"><span>WRITE</span> Context · tone · timing</div>
+                            <button onclick="openFollowUpEmail()" class="btn-primary w-full">Generate Email</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============ EMAIL IMPORT VIEW ============ -->
+                <div id="view-email-import" class="view hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse"></span>
+                                    AI Inbox Listener Active
+                                </span>
+                            </div>
+                            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Inbox capture</h2>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm mt-0.5">Review detected recruitment emails before filing into your pipeline.</p>
+                        </div>
+                        <div class="flex items-center gap-2.5 flex-wrap">
+                            <button onclick="simulateEmailSync()" class="btn-outline flex items-center gap-2 py-2 px-4 text-xs sm:text-sm bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 hover:border-blue-500 shadow-sm transition-all font-semibold">
+                                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
+                                Sync Emails
+                            </button>
+                            <button onclick="openAddApplicationModal()" class="btn-primary flex items-center gap-2 py-2 px-4 text-xs sm:text-sm shadow-sm hover:shadow-md font-bold">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                                Manually Add
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="email-import-info-card mb-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center flex-shrink-0 shadow-md mt-0.5">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between gap-2 flex-wrap">
+                                    <h4 class="text-sm font-extrabold text-slate-900 dark:text-blue-200">Connect Mailbox to Auto-Detect Recruiter Messages</h4>
+                                    <span class="text-[11px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950 px-2 py-0.5 rounded-full border border-blue-200/60 dark:border-blue-800">100% Client-Side Intelligence</span>
+                                </div>
+                                <p class="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+                                    ApplyTrack AI continuously parses interview invites, recruiter inquiries, and status updates directly from incoming communications. New detections appear below for your review before entering your pipeline.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-[#121a2b]">
+                        <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100 dark:border-slate-800">
+                            <div>
+                                <h3 class="font-extrabold text-lg text-slate-900 dark:text-white flex items-center gap-2">
+                                    Pending Review 
+                                    <span id="pendingCount" class="text-blue-600 dark:text-blue-400 text-xs font-black bg-blue-50 dark:bg-blue-950 px-2.5 py-0.5 rounded-full border border-blue-200 dark:border-blue-800"></span>
+                                </h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Verify and file detected applications into your tracker pipeline.</p>
+                            </div>
+                        </div>
+                        <div id="emailPendingList" class="space-y-3">
+                            <!-- Filled by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-brief" class="view hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                        <div>
+                            <span class="studio-chip">Daily operating rhythm</span>
+                            <h2 class="text-2xl md:text-3xl font-bold text-stone-900 mt-2">Today’s Brief</h2>
+                            <p class="text-stone-500 mt-1">What to do in the next 90 minutes- generated from your live pipeline.</p>
+                        </div>
+                    </div>
+                    <div id="briefContent"></div>
+                </div>
+
+                <div id="view-network" class="view hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-bold text-stone-900">Network</h2>
+                            <p class="text-stone-500 mt-1">Recruiters, referrals and hiring managers attached to the search.</p>
+                        </div>
+                        <button class="btn-primary" onclick="openContactModal()">Add contact</button>
+                    </div>
+                    <div class="card p-4 mb-5 flex flex-wrap gap-3">
+                        <input class="input-field max-w-xs flex-1" id="networkSearch" placeholder="Search people or companies…" oninput="renderNetwork()">
+                        <select class="input-field max-w-[180px]" id="networkFilter" onchange="renderNetwork()">
+                            <option value="">All relationships</option>
+                            <option value="Recruiter">Recruiter</option>
+                            <option value="Hiring manager">Hiring manager</option>
+                            <option value="Referral">Referral</option>
+                            <option value="Peer">Peer</option>
+                        </select>
+                    </div>
+                    <div id="networkGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+                </div>
+
+                <div id="view-offers" class="view hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-bold text-stone-900">Offer Desk</h2>
+                            <p class="text-stone-500 mt-1">Compare compensation, leverage and walk-away math.</p>
+                        </div>
+                    </div>
+                    <div id="offersContent"></div>
+                </div>
+
+                <div id="view-stories" class="view hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-bold text-stone-900">Story Bank</h2>
+                            <p class="text-stone-500 mt-1">STAR stories ready for screens, loops and follow-ups.</p>
+                        </div>
+                        <button class="btn-primary" onclick="openStoryModal()">Add story</button>
+                    </div>
+                    <div id="storiesGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-4"></div>
+                </div>
+
+                <!-- ============ DEDICATED MASTER ADMIN CONSOLE ============ -->
+                <div id="view-admin" class="view hidden">
+                    <div class="admin-dashboard-hero">
+                        <div class="left">
+                            <span class="eyebrow">✦ Executive Authority Console</span>
+                            <h3>Dedicated Master Admin Console</h3>
+                            <p>Restricted to <strong>admin@example.com</strong>. Manage platform users, block/unblock accounts, modify subscription plans, set company health status, and oversee transactions.</p>
+                        </div>
+                        <div class="flex items-center gap-2.5 flex-wrap">
+                            <span class="pill">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                MASTER ADMIN ACTIVE
+                            </span>
+                            <button id="adminMaintenanceBtn" onclick="window.toggleMaintenanceMode()" class="btn-outline text-xs py-1.5 px-3">
+                                Toggle Maintenance
+                            </button>
+                            <button onclick="window.exitAdminMode()" class="btn-primary text-xs py-1.5 px-3 bg-rose-600 hover:bg-rose-700 text-white border-none shadow-sm">
+                                Exit Admin Mode
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Platform Telemetry KPIs -->
+                    <div class="admin-kpi-grid">
+                        <div class="admin-kpi">
+                            <span>Total Users</span>
+                            <strong id="adminTotalUsersCount">5</strong>
+                        </div>
+                        <div class="admin-kpi">
+                            <span>Active Users</span>
+                            <strong id="adminActiveUsersCount" style="color: #16a34a;">4</strong>
+                        </div>
+                        <div class="admin-kpi">
+                            <span>Paid Members</span>
+                            <strong id="adminPremiumCount" style="color: #2563eb;">4</strong>
+                        </div>
+                        <div class="admin-kpi">
+                            <span>Applications</span>
+                            <strong>18,542</strong>
+                        </div>
+                        <div class="admin-kpi">
+                            <span>API Latency</span>
+                            <strong style="color: #6366f1;">24ms</strong>
+                        </div>
+                        <div class="admin-kpi">
+                            <span>System Health</span>
+                            <strong style="color: #16a34a;">99.9%</strong>
+                        </div>
+                    </div>
+
+                    <!-- Pending Approvals Queue -->
+                    <div id="premiumApprovalPanel" class="card p-5 mb-6 border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-[#121a2b]">
+                        <!-- Rendered by JS -->
+                    </div>
+
+                    <!-- Section 1: User Governance Matrix (Block User, Change User Plan) -->
+                    <div class="card p-6 mb-6 border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-[#121a2b]">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                            <div>
+                                <h3 class="font-extrabold text-lg text-slate-900 dark:text-white">User Governance & Access Control</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Block/unblock platform accounts and modify user subscription tiers.</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input id="adminUserSearch" class="input-field text-xs py-1.5 px-3 max-w-[200px]" placeholder="Search user by name or email..." oninput="renderAdminUsers()">
+                                <button onclick="window.addNewAdminUser()" class="btn-primary text-xs py-1.5 px-3 flex items-center gap-1 font-bold">
+                                    <span>+ Add User</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="admin-table-wrap overflow-x-auto">
+                            <table class="admin-table w-full text-left">
+                                <thead>
+                                    <tr class="border-b border-slate-200 dark:border-slate-800 text-[11px] text-slate-500 uppercase tracking-wider font-extrabold">
+                                        <th class="py-3 px-4">User Details</th>
+                                        <th class="py-3 px-4">Subscription Plan</th>
+                                        <th class="py-3 px-4">Applications</th>
+                                        <th class="py-3 px-4">Account Status</th>
+                                        <th class="py-3 px-4">Admin Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adminUsersBody">
+                                    <!-- Populated by renderAdminUsers() -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Company Health Intelligence Controller ("change company health") -->
+                    <div class="card p-6 mb-6 border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-[#121a2b]">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h3 class="font-extrabold text-lg text-slate-900 dark:text-white">Company Health Intelligence Control</h3>
+                                    <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 text-[10px] font-extrabold">OVERRIDE ACTIVE</span>
+                                </div>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Admin authority to set company health status (Healthy, Moderate, At Risk, Hiring Freeze) and stability scores.</p>
+                            </div>
+                            <button onclick="window.resetCompanyHealthToDefaults()" class="btn-outline text-xs py-1.5 px-3 text-slate-600 dark:text-slate-300 font-semibold bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700">
+                                Reset to Defaults
+                            </button>
+                        </div>
+                        <div class="admin-table-wrap overflow-x-auto">
+                            <table class="admin-table w-full text-left">
+                                <thead>
+                                    <tr class="border-b border-slate-200 dark:border-slate-800 text-[11px] text-slate-500 uppercase tracking-wider font-extrabold">
+                                        <th class="py-3 px-4">Enterprise</th>
+                                        <th class="py-3 px-4">Health Status Override</th>
+                                        <th class="py-3 px-4">Stability Score (1-100)</th>
+                                        <th class="py-3 px-4">Cash Runway</th>
+                                        <th class="py-3 px-4">Layoff Risk</th>
+                                        <th class="py-3 px-4">Last Updated</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="companyHealthTableBody">
+                                    <!-- Populated by renderCompanyHealthAdmin() -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Payment History & Billing Transactions Ledger -->
+                    <div class="card p-6 mb-6 border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-[#121a2b]">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="font-extrabold text-lg text-slate-900 dark:text-white">Payment & Billing Transaction History</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Review verified subscription charges, payment methods, and handle refunds.</p>
+                            </div>
+                            <span class="premium-badge bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 px-2.5 py-1 rounded-full text-xs font-extrabold">Verified Ledger</span>
+                        </div>
+                        <div class="admin-table-wrap overflow-x-auto">
+                            <table class="admin-table w-full text-left">
+                                <thead>
+                                    <tr class="border-b border-slate-200 dark:border-slate-800 text-[11px] text-slate-500 uppercase tracking-wider font-extrabold">
+                                        <th class="py-3 px-4">Txn ID</th>
+                                        <th class="py-3 px-4">Customer</th>
+                                        <th class="py-3 px-4">Plan</th>
+                                        <th class="py-3 px-4">Amount</th>
+                                        <th class="py-3 px-4">Gateway</th>
+                                        <th class="py-3 px-4">Date</th>
+                                        <th class="py-3 px-4">Status & Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="paymentHistoryBody">
+                                    <!-- Populated by renderPaymentHistory() -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Emergency Operations & Security Audit Log -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Emergency Controls -->
+                        <div class="card p-6 border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-[#121a2b]">
+                            <h3 class="font-extrabold text-lg text-slate-900 dark:text-white mb-1">Platform Operations & Control</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Execute administrative commands across client workspaces.</p>
+                            
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-[#152033]/40">
+                                    <div>
+                                        <strong class="text-xs font-bold text-slate-900 dark:text-white block">Dispatch Recruitment Wave</strong>
+                                        <span class="text-[11px] text-slate-500 dark:text-slate-400">Inject test recruiter email detections into pipeline</span>
+                                    </div>
+                                    <button onclick="window.triggerAdminSimWave()" class="btn-outline text-xs py-1.5 px-3 bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold shadow-sm">
+                                        ⚡ Dispatch Wave
+                                    </button>
+                                </div>
+
+                                <div class="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-[#152033]/40">
+                                    <div>
+                                        <strong class="text-xs font-bold text-slate-900 dark:text-white block">Platform Maintenance Mode</strong>
+                                        <span class="text-[11px] text-slate-500 dark:text-slate-400">Broadcast maintenance alert banner to active sessions</span>
+                                    </div>
+                                    <button onclick="window.toggleMaintenanceMode()" class="btn-outline text-xs py-1.5 px-3 text-amber-700 dark:text-amber-300 border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/40 font-semibold">
+                                        Toggle Alert
+                                    </button>
+                                </div>
+
+                                <div class="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-[#152033]/40">
+                                    <div>
+                                        <strong class="text-xs font-bold text-slate-900 dark:text-white block">Company Health Refresh</strong>
+                                        <span class="text-[11px] text-slate-500 dark:text-slate-400">Re-index financial records and headcount ratings</span>
+                                    </div>
+                                    <button onclick="showToast('Company records re-indexed successfully.','success')" class="btn-outline text-xs py-1.5 px-3 bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold shadow-sm">
+                                        Sync Intelligence
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Real-time Audit Trail -->
+                        <div class="card p-6 border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-[#121a2b] flex flex-col">
+                            <div class="flex items-center justify-between mb-3">
+                                <div>
+                                    <h3 class="font-extrabold text-lg text-slate-900 dark:text-white">Security & Billing Audit Trail</h3>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Chronological record of all administrative operations.</p>
+                                </div>
+                                <button onclick="window.clearAdminAuditLog()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-xs font-medium">
+                                    Clear Log
+                                </button>
+                            </div>
+                            <div id="adminAuditLogList" class="flex-1 overflow-y-auto max-h-[260px] space-y-1 pr-1">
+                                <!-- Populated by renderAuditLogs() -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-goals" class="view hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-bold text-stone-900">Career goals</h2>
+                            <p class="text-stone-500 mt-1">Weekly targets, streaks and interview prep - stay accountable.</p>
+                        </div>
+                        <span id="goalStreakBadge" class="goal-streak"></span>
+                    </div>
+                    <div class="goals-grid mb-6">
+                        <div class="card p-0 overflow-hidden">
+                            <div class="goal-ring-wrap">
+                                <div class="goal-ring" id="goalRingApplications">
+                                    <svg width="110" height="110" viewBox="0 0 110 110"><circle cx="55" cy="55" r="48" fill="none" stroke="#f1efeb" stroke-width="10"/><circle id="goalRingAppsArc" cx="55" cy="55" r="48" fill="none" stroke="#2563eb" stroke-width="10" stroke-linecap="round" stroke-dasharray="301.59" stroke-dashoffset="301.59"/></svg>
+                                    <div class="goal-ring-label" id="goalRingAppsLabel">0/5</div>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg mb-1">Weekly applications</h3>
+                                    <p class="text-xs text-stone-500 mb-3">Applications submitted this week vs your target.</p>
+                                    <label class="input-label">Weekly target</label>
+                                    <input type="number" class="input-field" id="goalWeeklyApps" min="1" max="50" value="5" onchange="saveCareerGoals()">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card p-0 overflow-hidden">
+                            <div class="goal-ring-wrap">
+                                <div class="goal-ring" id="goalRingInterviews">
+                                    <svg width="110" height="110" viewBox="0 0 110 110"><circle cx="55" cy="55" r="48" fill="none" stroke="#f1efeb" stroke-width="10"/><circle id="goalRingIntArc" cx="55" cy="55" r="48" fill="none" stroke="#1d4ed8" stroke-width="10" stroke-linecap="round" stroke-dasharray="301.59" stroke-dashoffset="301.59"/></svg>
+                                    <div class="goal-ring-label" id="goalRingIntLabel">0/2</div>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg mb-1">Interview momentum</h3>
+                                    <p class="text-xs text-stone-500 mb-3">Active interview-stage roles this week.</p>
+                                    <label class="input-label">Weekly interview target</label>
+                                    <input type="number" class="input-field" id="goalWeeklyInterviews" min="0" max="20" value="2" onchange="saveCareerGoals()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="card p-6 profile-settings-card">
+                            <h3 class="font-bold text-lg mb-4">Target role</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="input-label">Dream role</label>
+                                    <input type="text" class="input-field" id="goalTargetRole" placeholder="e.g., Senior Frontend Engineer" onchange="saveCareerGoals()">
+                                </div>
+                                <div>
+                                    <label class="input-label">Target date</label>
+                                    <input type="date" class="input-field" id="goalTargetDate" onchange="saveCareerGoals()">
+                                </div>
+                                <div>
+                                    <label class="input-label">Notes & strategy</label>
+                                    <textarea class="input-field" id="goalNotes" rows="3" placeholder="What does success look like this month?" onchange="saveCareerGoals()"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card p-6">
+                            <h3 class="font-bold text-lg mb-1">Interview prep hub</h3>
+                            <p class="text-xs text-stone-500 mb-4">Checklists for roles in active interview stages.</p>
+                            <div id="interviewPrepList">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-settings" class="view hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-bold text-stone-900">Preferences</h2>
+                            <p class="text-stone-500 mt-1">Profile, notifications and workspace defaults.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="card p-6">
+                            <h3 class="font-bold text-lg mb-4">Profile</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="input-label">Full Name</label>
+                                    <input type="text" class="input-field" value="John Doe" id="settingsName">
+                                </div>
+                                <div>
+                                    <label class="input-label">Email</label>
+                                    <input type="email" class="input-field" value="demo.user@example.com" id="settingsEmail">
+                                </div>
+                                <div>
+                                    <label class="input-label">LinkedIn Profile</label>
+                                    <input type="url" class="input-field" placeholder="https://linkedin.com/in/..." id="settingsLinkedIn">
+                                </div>
+                                <div>
+                                    <label class="input-label">Resume Version</label>
+                                    <input type="text" class="input-field" value="v3 - Updated June 2024" id="settingsResume">
+                                </div>
+                                <button onclick="saveSettings()" class="btn-primary w-full">Save Changes</button>
+                            </div>
+                        </div>
+                        <div id="subscriptionBillingCard" class="card p-6">
+                            <div class="billing-shell">
+                                <div class="billing-header"><div><span class="billing-kicker">Workspace access</span><h3 class="billing-title">Subscription & billing</h3><p class="billing-copy">Choose a plan, select a payment route, and activate your workspace.</p></div><span class="billing-secure">⌁ Secure checkout</span></div>
+                                <div class="billing-plans">
+                                    <label class="billing-plan selected" data-plan-option="free"><input type="radio" name="subscriptionPlan" value="free" checked onchange="selectSubscriptionPlan('free')"><div class="billing-plan-top"><h4>Free plan</h4><span class="billing-price">$0</span></div><p>Pipeline, calendar and goals for your core search.</p></label>
+                                    <label class="billing-plan" data-plan-option="premium"><input type="radio" name="subscriptionPlan" value="premium" onchange="selectSubscriptionPlan('premium')"><div class="billing-plan-top"><h4>Premium plan</h4><span class="billing-price">Pro</span></div><p>Advanced AI tools, richer insights and priority features.</p></label>
+                                </div>
+                                <div id="paymentMethodSection" class="gateway-panel hidden">
+                                    <span class="gateway-label">Choose payment method</span>
+                                    <div class="gateway-tabs">
+                                        <button type="button" class="gateway-tab selected" data-payment-method="International payment" onclick="selectPaymentMethod('International payment')"><span class="gateway-icon">◎</span>International</button>
+                                        <button type="button" class="gateway-tab" data-payment-method="Bank" onclick="selectPaymentMethod('Bank')"><span class="gateway-icon">▦</span>Bank</button>
+                                        <button type="button" class="gateway-tab" data-payment-method="Card" onclick="selectPaymentMethod('Card')"><span class="gateway-icon">▣</span>Card</button>
+                                        <button type="button" class="gateway-tab" data-payment-method="SSLCommerz" onclick="selectPaymentMethod('SSLCommerz')"><span class="gateway-icon">◈</span>SSLCommerz</button>
+                                    </div>
+                                    <div class="gateway-form"><p id="gatewayFormTitle" class="gateway-note">You will continue to a secure international payment page through email.</p><div id="gatewayInlineFields" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3"><div><label class="input-label">Billing name</label><input class="input-field" id="billingName" placeholder="Your full name"></div><div><label class="input-label">Billing email</label><input class="input-field" id="billingEmail" type="email" placeholder="you@example.com"></div><div><label class="input-label">Amount</label><input class="input-field" id="billingAmountInput" value="19.00" readonly></div><div><label class="input-label">Currency</label><select class="input-field" id="billingCurrency"><option>USD</option><option>EUR</option><option>GBP</option><option>BDT</option></select></div><div class="sm:col-span-2"><label class="input-label">Description</label><input class="input-field" id="billingDescription" value="ApplyTrack AI Premium plan" readonly></div></div><div id="gatewayDetailFields" class="mt-4"><div id="gateway-card" class="gateway-detail hidden grid grid-cols-1 sm:grid-cols-2 gap-3"><div class="sm:col-span-2"><label class="input-label">Card number</label><input class="input-field" id="billingCardNumber" inputmode="numeric" placeholder="1234 5678 9012 3456"></div><div><label class="input-label">Expiry date</label><input class="input-field" id="billingCardExpiry" placeholder="MM / YY"></div><div><label class="input-label">Security code</label><input class="input-field" id="billingCardCvv" type="password" inputmode="numeric" placeholder="CVV"></div></div><div id="gateway-paypal" class="gateway-detail hidden"><p class="gateway-note">You will be redirected to PayPal to complete the payment securely.</p></div><div id="gateway-sslcommerz" class="gateway-detail hidden"><p class="gateway-note">You will be redirected to the SSLCommerz secure payment page.</p></div><div id="gateway-international" class="gateway-detail hidden grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label class="input-label">Country</label><input class="input-field" id="billingCountry" placeholder="Country"></div><div><label class="input-label">Bank name</label><input class="input-field" id="billingBank" placeholder="Bank name"></div></div><div id="gateway-bank" class="gateway-detail hidden"><p class="gateway-note">Bank transfer instructions will be provided after confirmation through email.</p></div></div></div>
+                                    <div class="billing-summary"><div><small>Premium workspace</small><strong id="billingAmount">$19 / month</strong></div><span id="billingMethodLabel">International payment</span></div>
+                                    <div class="billing-action-row"><button type="button" class="btn-outline billing-reset" onclick="resetBillingForm()">Reset</button><button id="subscriptionAction" type="button" onclick="saveSubscription()" class="btn-primary billing-pay">Pay for premium plan</button></div><div id="billingStatus" class="billing-status"></div><div id="billingReceipt" class="billing-receipt"></div>
+                                    <div class="billing-log"><div class="billing-log-header"><h4>Transaction Log</h4><button type="button" class="admin-action" onclick="clearBillingLog()">Clear</button></div><div id="billingTransactionLog" class="billing-log-list"><div class="billing-log-empty">No subscription payments recorded yet.</div></div></div>
+                                </div>
+                                <div id="freePlanPrompt" class="subscription-note">You are on the Free plan. Upgrade whenever you need more intelligence for your search.</div>
+                            </div>
+                        </div>
+                        <div class="card p-6">
+                            <h3 class="font-bold text-lg mb-4">Notification Preferences</h3>
+                            <div class="space-y-3">
+                                <label class="notification-preference flex items-center justify-between p-3 border rounded-lg border-stone-200 cursor-pointer hover:bg-blue-50">
+                                    <div>
+                                        <p class="font-semibold text-sm">Follow-up Reminders</p>
+                                        <p class="text-xs text-stone-500">Get notified when applications need attention</p>
+                                    </div>
+                                    <input type="checkbox" checked class="w-5 h-5 accent-blue-600">
+                                </label>
+                                <label class="notification-preference flex items-center justify-between p-3 border rounded-lg border-stone-200 cursor-pointer hover:bg-blue-50">
+                                    <div>
+                                        <p class="font-semibold text-sm">Interview Alerts</p>
+                                        <p class="text-xs text-stone-500">Never miss an interview</p>
+                                    </div>
+                                    <input type="checkbox" checked class="w-5 h-5 accent-blue-600">
+                                </label>
+                                <label class="notification-preference flex items-center justify-between p-3 border rounded-lg border-stone-200 cursor-pointer hover:bg-blue-50">
+                                    <div>
+                                        <p class="font-semibold text-sm">Email Sync Notifications</p>
+                                        <p class="text-xs text-stone-500">Get notified when new emails are detected</p>
+                                    </div>
+                                    <input type="checkbox" checked class="w-5 h-5 accent-blue-600">
+                                </label>
+                                <label class="notification-preference flex items-center justify-between p-3 border rounded-lg border-stone-200 cursor-pointer hover:bg-blue-50">
+                                    <div>
+                                        <p class="font-semibold text-sm">Weekly Analytics Report</p>
+                                        <p class="text-xs text-stone-500">Receive a weekly summary of your job search</p>
+                                    </div>
+                                    <input type="checkbox" checked class="w-5 h-5 accent-blue-600">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="card p-6 lg:col-span-2">
+                            <h3 class="font-bold text-lg mb-4">Data Management</h3>
+                            <div class="flex flex-wrap gap-3">
+                                <button onclick="exportData()" class="btn-outline flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                    Export JSON
+                                </button>
+                                <button onclick="exportDataCSV()" class="btn-outline flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                    Export CSV
+                                </button>
+                                <button id="pwaInstallBtn" onclick="installPWA()" class="btn-outline flex items-center gap-2 hidden">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                                    Install App
+                                </button>
+                                <button onclick="importDataFile()" class="btn-outline flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                                    Import Data
+                                </button>
+                                <button onclick="resetAllData()" class="btn-outline data-reset-button text-slate-600 border-slate-300 hover:bg-slate-100 flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+                                    Reset All Data
+                                </button>
+                            </div>
+                            <div class="mt-6 pt-6 border-t border-stone-200">
+                                <h4 class="font-bold text-sm mb-3">Auto-backups</h4>
+                                <p class="text-xs text-stone-500 mb-3">Last 5 snapshots saved automatically on every change.</p>
+                                <div id="backupList"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <div id="contactModal" class="hidden">
+        <div class="modal-backdrop" onclick="closeContactModal()"></div>
+        <div class="modal-panel">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold text-stone-900">Add contact</h3>
+                    <button onclick="closeContactModal()" class="p-2 hover:bg-stone-100 rounded-lg">×</button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div><label class="input-label">Name *</label><input class="input-field" id="ctName" placeholder="Alex Rivera"></div>
+                    <div><label class="input-label">Role</label><select class="input-field" id="ctRole"><option>Recruiter</option><option>Hiring manager</option><option>Referral</option><option>Peer</option></select></div>
+                    <div><label class="input-label">Company</label><input class="input-field" id="ctCompany" placeholder="Stripe"></div>
+                    <div><label class="input-label">Email</label><input class="input-field" id="ctEmail" type="email" placeholder="alex@company.com"></div>
+                    <div class="sm:col-span-2"><label class="input-label">Last touch + next move</label><textarea class="input-field" id="ctNotes" rows="3" placeholder="Sent thank-you. Follow up Friday."></textarea></div>
+                </div>
+                <div class="flex gap-3 mt-6">
+                    <button class="btn-primary flex-1" onclick="saveContact()">Save contact</button>
+                    <button class="btn-outline" onclick="closeContactModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="storyModal" class="hidden">
+        <div class="modal-backdrop" onclick="closeStoryModal()"></div>
+        <div class="modal-panel">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold text-stone-900">STAR story</h3>
+                    <button onclick="closeStoryModal()" class="p-2 hover:bg-stone-100 rounded-lg">×</button>
+                </div>
+                <div class="space-y-3">
+                    <div><label class="input-label">Title *</label><input class="input-field" id="stTitle" placeholder="Led a 6-week design-system migration"></div>
+                    <div><label class="input-label">Skill tags</label><input class="input-field" id="stTags" placeholder="leadership, react, influence"></div>
+                    <div><label class="input-label">Situation</label><textarea class="input-field" id="stS" rows="2"></textarea></div>
+                    <div><label class="input-label">Task</label><textarea class="input-field" id="stT" rows="2"></textarea></div>
+                    <div><label class="input-label">Action</label><textarea class="input-field" id="stA" rows="2"></textarea></div>
+                    <div><label class="input-label">Result</label><textarea class="input-field" id="stR" rows="2"></textarea></div>
+                </div>
+                <div class="flex gap-3 mt-6">
+                    <button class="btn-primary flex-1" onclick="saveStory()">Save story</button>
+                    <button class="btn-outline" onclick="closeStoryModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Application Modal -->
+    <div id="addAppModal" class="hidden">
+        <div class="modal-backdrop" onclick="closeAddAppModal()"></div>
+        <div class="modal-panel">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold text-stone-900" id="addAppModalTitle">Add Application</h3>
+                    <button onclick="closeAddAppModal()" class="p-2 hover:bg-stone-100 rounded-lg transition-colors">
+                        <svg class="w-5 h-5 text-stone-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="addAppForm">
+                    <input type="hidden" id="editingAppId" value="">
+                    <div>
+                        <label class="input-label">Company *</label>
+                        <input type="text" class="input-field" id="formCompany" placeholder="e.g., Google">
+                    </div>
+                    <div>
+                        <label class="input-label">Job Title *</label>
+                        <input type="text" class="input-field" id="formTitle" placeholder="e.g., Senior Frontend Developer">
+                    </div>
+                    <div>
+                        <label class="input-label">Job URL</label>
+                        <input type="url" class="input-field" id="formUrl" placeholder="https://...">
+                    </div>
+                    <div>
+                        <label class="input-label">Location</label>
+                        <input type="text" class="input-field" id="formLocation" placeholder="e.g., Mountain View, CA">
+                    </div>
+                    <div>
+                        <label class="input-label">Work Mode</label>
+                        <select class="input-field" id="formWorkMode">
+                            <option value="">Select</option>
+                            <option value="Remote">Remote</option>
+                            <option value="Hybrid">Hybrid</option>
+                            <option value="On-site">On-site</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="input-label">Employment Type</label>
+                        <select class="input-field" id="formEmploymentType">
+                            <option value="">Select</option>
+                            <option value="Full-time">Full-time</option>
+                            <option value="Part-time">Part-time</option>
+                            <option value="Contract">Contract</option>
+                            <option value="Internship">Internship</option>
+                            <option value="Freelance">Freelance</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="input-label">Salary Min ($)</label>
+                        <input type="number" class="input-field" id="formSalaryMin" placeholder="e.g., 120000">
+                    </div>
+                    <div>
+                        <label class="input-label">Salary Max ($)</label>
+                        <input type="number" class="input-field" id="formSalaryMax" placeholder="e.g., 160000">
+                    </div>
+                    <div>
+                        <label class="input-label">Application Date *</label>
+                        <input type="date" class="input-field" id="formAppDate">
+                    </div>
+                    <div>
+                        <label class="input-label">Deadline</label>
+                        <input type="date" class="input-field" id="formDeadline">
+                    </div>
+                    <div>
+                        <label class="input-label">Job Source</label>
+                        <select class="input-field" id="formSource">
+                            <option value="">Select</option>
+                            <option value="LinkedIn">LinkedIn</option>
+                            <option value="Indeed">Indeed</option>
+                            <option value="Company Website">Company Website</option>
+                            <option value="Referral">Referral</option>
+                            <option value="Job Board">Job Board</option>
+                            <option value="Recruiter">Recruiter</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="input-label">Priority</label>
+                        <select class="input-field" id="formPriority">
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="input-label">Status</label>
+                        <select class="input-field" id="formStatus">
+                            <option value="saved">Saved</option>
+                            <option value="applied">Applied</option>
+                            <option value="screening">Screening</option>
+                            <option value="assessment">Assessment</option>
+                            <option value="interview">Interview</option>
+                            <option value="final_interview">Final Interview</option>
+                            <option value="offer">Offer</option>
+                            <option value="accepted">Accepted</option>
+                            <option value="rejected">Rejected</option>
+                            <option value="withdrawn">Withdrawn</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="input-label">Resume Version</label>
+                        <input type="text" class="input-field" id="formResume" placeholder="e.g., v3">
+                    </div>
+                    <div>
+                        <label class="input-label">Recruiter Name</label>
+                        <input type="text" class="input-field" id="formRecruiterName" placeholder="e.g., Sarah Johnson">
+                    </div>
+                    <div>
+                        <label class="input-label">Recruiter Email</label>
+                        <input type="email" class="input-field" id="formRecruiterEmail" placeholder="e.g., sarah@company.com">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="input-label">Notes</label>
+                        <textarea class="input-field" id="formNotes" rows="3" placeholder="Any additional notes..."></textarea>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="input-label">Tags (comma-separated)</label>
+                        <input type="text" class="input-field" id="formTags" placeholder="e.g., frontend, react, remote">
+                    </div>
+                </div>
+                <div class="flex gap-3 mt-6">
+                    <button onclick="saveApplication()" class="btn-primary flex-1">Save Application</button>
+                    <button onclick="closeAddAppModal()" class="btn-outline">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Details Modal -->
+    <div id="appDetailsModal" class="hidden">
+        <div class="modal-backdrop" onclick="closeAppDetailsModal()"></div>
+        <div class="modal-panel ai-modal-panel max-w-[700px]">
+            <div class="p-6">
+                <div class="flex items-start justify-between mb-6">
+                    <div>
+                        <h3 class="text-xl font-bold text-stone-900" id="detailsTitle">Application Details</h3>
+                        <p class="text-stone-500 text-sm" id="detailsSubtitle"></p>
+                    </div>
+                    <button onclick="closeAppDetailsModal()" class="p-2 hover:bg-stone-100 rounded-lg transition-colors">
+                        <svg class="w-5 h-5 text-stone-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+                <div id="detailsContent">
+                    <!-- Filled by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Job Match Modal -->
+    <div id="jobMatchModal" class="hidden">
+        <div class="modal-backdrop" onclick="closeJobMatch()"></div>
+        <div class="modal-panel ai-modal-panel max-w-[650px]">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold text-stone-900">AI Job Match Score</h3>
+                    <button onclick="closeJobMatch()" class="p-2 hover:bg-stone-100 rounded-lg"><svg class="w-5 h-5 text-stone-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="input-label">Job Title</label>
+                        <input type="text" class="input-field" id="jmTitle" placeholder="e.g., Frontend Developer">
+                    </div>
+                    <div>
+                        <label class="input-label">Company</label>
+                        <input type="text" class="input-field" id="jmCompany" placeholder="e.g., Netflix">
+                    </div>
+                    <div>
+                        <label class="input-label">Your Skills (comma-separated)</label>
+                        <input type="text" class="input-field" id="jmSkills" placeholder="e.g., React, JavaScript, CSS, Node.js">
+                    </div>
+                    <div>
+                        <label class="input-label">Years of Experience</label>
+                        <input type="number" class="input-field" id="jmExperience" value="3" min="0">
+                    </div>
+                    <div>
+                        <label class="input-label">Job Description (paste key requirements)</label>
+                        <textarea class="input-field" id="jmDescription" rows="4" placeholder="Paste the job description here..."></textarea>
+                    </div>
+                    <div>
+                        <label class="input-label">Location Preference</label>
+                        <select class="input-field" id="jmLocation">
+                            <option value="Remote">Remote</option>
+                            <option value="Hybrid">Hybrid</option>
+                            <option value="On-site">On-site</option>
+                        </select>
+                    </div>
+                    <button onclick="calculateJobMatch()" class="btn-primary w-full">Analyze Match</button>
+                </div>
+                <div id="jobMatchResult" class="mt-6 hidden">
+                    <!-- Filled by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interview Calculator Modal -->
+    <div id="interviewCalculatorModal" class="hidden">
+        <div class="modal-backdrop" onclick="closeInterviewCalculator()"></div>
+        <div class="modal-panel ai-modal-panel max-w-[650px]">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold text-stone-900">Interview Success Calculator</h3>
+                    <button onclick="closeInterviewCalculator()" class="p-2 hover:bg-stone-100 rounded-lg"><svg class="w-5 h-5 text-stone-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="input-label">Job Title</label>
+                        <input type="text" class="input-field" id="icTitle" placeholder="e.g., Full Stack Developer">
+                    </div>
+                    <div>
+                        <label class="input-label">Company</label>
+                        <input type="text" class="input-field" id="icCompany" placeholder="e.g., Stripe">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="input-label">Skill Match (0-100%)</label>
+                            <input type="range" id="icSkillMatch" min="0" max="100" value="75" class="w-full accent-blue-600" oninput="document.getElementById('icSkillVal').textContent=this.value+'%'">
+                            <span id="icSkillVal" class="text-sm font-bold text-blue-600">75%</span>
+                        </div>
+                        <div>
+                            <label class="input-label">Experience Match (0-100%)</label>
+                            <input type="range" id="icExpMatch" min="0" max="100" value="65" class="w-full accent-blue-600" oninput="document.getElementById('icExpVal').textContent=this.value+'%'">
+                            <span id="icExpVal" class="text-sm font-bold text-blue-600">65%</span>
+                        </div>
+                        <div>
+                            <label class="input-label">Resume Relevance (0-100%)</label>
+                            <input type="range" id="icResumeRelevance" min="0" max="100" value="80" class="w-full accent-blue-600" oninput="document.getElementById('icResumeVal').textContent=this.value+'%'">
+                            <span id="icResumeVal" class="text-sm font-bold text-blue-600">80%</span>
+                        </div>
+                        <div>
+                            <label class="input-label">Interview Prep Level (0-100%)</label>
+                            <input type="range" id="icPrepLevel" min="0" max="100" value="70" class="w-full accent-blue-600" oninput="document.getElementById('icPrepVal').textContent=this.value+'%'">
+                            <span id="icPrepVal" class="text-sm font-bold text-blue-600">70%</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="input-label">Role Competitiveness</label>
+                        <select class="input-field" id="icCompetitiveness">
+                            <option value="low">Low - few qualified applicants</option>
+                            <option value="medium" selected>Medium - average competition</option>
+                            <option value="high">High - highly competitive</option>
+                        </select>
+                    </div>
+                    <button onclick="calculateInterviewScore()" class="btn-primary w-full">Calculate Score</button>
+                </div>
+                <div id="interviewResult" class="mt-6 hidden">
+                    <!-- Filled by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Company Health Modal -->
+    <div id="companyHealthModal" class="hidden">
+        <div class="modal-backdrop" onclick="closeCompanyHealth()"></div>
+        <div class="modal-panel ai-modal-panel max-w-[650px]">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold text-stone-900">Company Health Analysis</h3>
+                    <button onclick="closeCompanyHealth()" class="p-2 hover:bg-stone-100 rounded-lg"><svg class="w-5 h-5 text-stone-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="input-label">Company Name</label>
+                        <input type="text" class="input-field" id="chCompany" placeholder="e.g., Amazon">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="input-label">Company Size</label>
+                            <select class="input-field" id="chSize">
+                                <option value="startup">Startup (&lt;50)</option>
+                                <option value="small">Small (50-200)</option>
+                                <option value="medium" selected>Medium (200-1000)</option>
+                                <option value="large">Large (1000-5000)</option>
+                                <option value="enterprise">Enterprise (5000+)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="input-label">Industry</label>
+                            <select class="input-field" id="chIndustry">
+                                <option value="tech">Technology</option>
+                                <option value="finance">Finance</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="retail">Retail</option>
+                                <option value="education">Education</option>
+                                <option value="manufacturing">Manufacturing</option>
+                                <option value="consulting">Consulting</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="input-label">Recent Layoffs?</label>
+                            <select class="input-field" id="chLayoffs">
+                                <option value="none" selected>None recently</option>
+                                <option value="minor">Minor (&lt;5%)</option>
+                                <option value="moderate">Moderate (5-15%)</option>
+                                <option value="major">Major (>15%)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="input-label">Hiring Activity</label>
+                            <select class="input-field" id="chHiring">
+                                <option value="active" selected>Actively hiring</option>
+                                <option value="moderate">Moderate hiring</option>
+                                <option value="slow">Slow/limited</option>
+                                <option value="freeze">Hiring freeze</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="input-label">Funding/Financial Status</label>
+                        <select class="input-field" id="chFunding">
+                            <option value="strong" selected>Strong / profitable</option>
+                            <option value="stable">Stable / break-even</option>
+                            <option value="venture">Venture-funded</option>
+                            <option value="uncertain">Uncertain / not disclosed</option>
+                        </select>
+                    </div>
+                    <button onclick="calculateCompanyHealth()" class="btn-primary w-full">Analyze Company</button>
+                </div>
+                <div id="companyHealthResult" class="mt-6 hidden">
+                    <!-- Filled by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Salary Negotiation Modal -->
+    <div id="salaryNegotiationModal" class="hidden">
+        <div class="modal-backdrop" onclick="closeSalaryNegotiation()"></div>
+        <div class="modal-panel ai-modal-panel max-w-[650px]">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold text-stone-900">AI Salary Negotiation Advisor</h3>
+                    <button onclick="closeSalaryNegotiation()" class="p-2 hover:bg-stone-100 rounded-lg"><svg class="w-5 h-5 text-stone-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="input-label">Job Title</label>
+                        <input type="text" class="input-field" id="snTitle" placeholder="e.g., Senior Software Engineer">
+                    </div>
+                    <div>
+                        <label class="input-label">Company</label>
+                        <input type="text" class="input-field" id="snCompany" placeholder="e.g., Microsoft">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="input-label">Offered Salary ($)</label>
+                            <input type="number" class="input-field" id="snOffer" placeholder="e.g., 95000">
+                        </div>
+                        <div>
+                            <label class="input-label">Your Experience (years)</label>
+                            <input type="number" class="input-field" id="snYears" value="4" min="0">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="input-label">Location</label>
+                        <input type="text" class="input-field" id="snLocation" placeholder="e.g., San Francisco, CA">
+                    </div>
+                    <div>
+                        <label class="input-label">Other Compensation (bonus, stock, etc.)</label>
+                        <textarea class="input-field" id="snOtherComp" rows="2" placeholder="e.g., $15k signing bonus, $30k RSUs per year"></textarea>
+                    </div>
+                    <button onclick="calculateSalaryAnalysis()" class="btn-primary w-full">Analyze Offer</button>
+                </div>
+                <div id="salaryResult" class="mt-6 hidden">
+                    <!-- Filled by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Follow-Up Email Modal -->
+    <div id="followUpEmailModal" class="hidden">
+        <div class="modal-backdrop" onclick="closeFollowUpEmail()"></div>
+        <div class="modal-panel max-w-[700px]">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold text-stone-900">AI Follow-Up Email Generator</h3>
+                    <button onclick="closeFollowUpEmail()" class="p-2 hover:bg-stone-100 rounded-lg"><svg class="w-5 h-5 text-stone-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                </div>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="input-label">Company</label>
+                            <input type="text" class="input-field" id="feCompany" placeholder="e.g., Google">
+                        </div>
+                        <div>
+                            <label class="input-label">Job Title</label>
+                            <input type="text" class="input-field" id="feTitle" placeholder="e.g., Frontend Developer">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="input-label">Application Date</label>
+                            <input type="date" class="input-field" id="feAppDate">
+                        </div>
+                        <div>
+                            <label class="input-label">Last Communication Date</label>
+                            <input type="date" class="input-field" id="feLastContact">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="input-label">Current Status</label>
+                        <select class="input-field" id="feStatus">
+                            <option value="applied">Applied - no response</option>
+                            <option value="screening">Screening completed</option>
+                            <option value="interview">Interview completed</option>
+                            <option value="final_interview">Final interview completed</option>
+                            <option value="offer">Offer received</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="input-label">Recruiter Name</label>
+                            <input type="text" class="input-field" id="feRecruiterName" placeholder="e.g., Sarah Johnson">
+                        </div>
+                        <div>
+                            <label class="input-label">Email Tone</label>
+                            <select class="input-field" id="feTone">
+                                <option value="Professional">Professional</option>
+                                <option value="Friendly">Friendly</option>
+                                <option value="Concise">Concise</option>
+                                <option value="Confident">Confident</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="input-label">Additional Context / Notes</label>
+                        <textarea class="input-field" id="feContext" rows="3" placeholder="e.g., Met at a career fair, discussed team culture..."></textarea>
+                    </div>
+                    <button onclick="generateFollowUpEmail()" class="btn-primary w-full">Generate Email</button>
+                </div>
+                <div id="emailResult" class="mt-6 hidden">
+                    <!-- Filled by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ DAY DETAIL MODAL ============ -->
+    <div id="dayDetailModal" class="hidden">
+        <div class="modal-backdrop" onclick="closeDayDetailModal()"></div>
+        <div class="modal-panel max-w-lg">
+            <div class="p-6">
+                <div class="flex items-center justify-between pb-4 border-b border-stone-200 dark:border-stone-800 mb-5">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-300 font-bold">
+                            📅
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-stone-900 dark:text-white" id="dayDetailModalTitle">Schedule for Day</h3>
+                            <p class="text-xs text-stone-500 dark:text-stone-400" id="dayDetailModalSubtitle">View all planned milestones & rounds</p>
+                        </div>
+                    </div>
+                    <button onclick="closeDayDetailModal()" class="p-2 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-lg transition-colors text-lg leading-none" aria-label="Close modal">×</button>
+                </div>
+
+                <div id="dayDetailEventsList" class="space-y-3 max-h-[360px] overflow-y-auto pr-1">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="flex items-center justify-between gap-3 pt-5 mt-5 border-t border-stone-200 dark:border-stone-800">
+                    <button type="button" class="btn-primary flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl" onclick="openAddCalendarEventModal(window._activeCalendarDayDate)">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        <span>Schedule Event</span>
+                    </button>
+                    <button type="button" class="btn-outline px-4 py-2 text-xs rounded-xl" onclick="closeDayDetailModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ ADD/EDIT CALENDAR EVENT MODAL ============ -->
+    <div id="calendarEventModal" class="hidden">
+        <div class="modal-backdrop" onclick="closeAddCalendarEventModal()"></div>
+        <div class="modal-panel max-w-lg">
+            <div class="p-6">
+                <div class="flex items-center justify-between pb-4 border-b border-stone-200 dark:border-stone-800 mb-5">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center text-indigo-600 dark:text-indigo-300 font-bold">
+                            ⏰
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-stone-900 dark:text-white" id="calendarEventModalTitle">Schedule Event / Milestone</h3>
+                            <p class="text-xs text-stone-500 dark:text-stone-400">Add an interview, deadline, or preparation reminder</p>
+                        </div>
+                    </div>
+                    <button onclick="closeAddCalendarEventModal()" class="p-2 text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-lg transition-colors text-lg leading-none" aria-label="Close modal">×</button>
+                </div>
+
+                <form id="calendarEventForm" onsubmit="saveCalendarEvent(event)" class="space-y-4">
+                    <input type="hidden" id="calEventId" value="">
+                    <div>
+                        <label class="input-label" for="calEventTitle">Event Title / Description *</label>
+                        <input type="text" id="calEventTitle" class="input-field" placeholder="e.g. Technical System Design Round, Take-home Due" required>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="input-label" for="calEventCategory">Category</label>
+                            <select id="calEventCategory" class="input-field">
+                                <option value="interview">🎤 Interview / Screen</option>
+                                <option value="deadline">⏰ Take-home / Deadline</option>
+                                <option value="applied">📄 Submission / Follow-up</option>
+                                <option value="offer">🎯 Offer / Decision</option>
+                                <option value="other">📌 Other Reminder</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="input-label" for="calEventCompany">Company</label>
+                            <input type="text" id="calEventCompany" class="input-field" placeholder="e.g. Google, Stripe, Linear">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="input-label" for="calEventDate">Date *</label>
+                            <input type="date" id="calEventDate" class="input-field" required>
+                        </div>
+                        <div>
+                            <label class="input-label" for="calEventTime">Time (Optional)</label>
+                            <input type="time" id="calEventTime" class="input-field">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="input-label" for="calEventLocation">Meeting Link / Platform / Location</label>
+                        <input type="text" id="calEventLocation" class="input-field" placeholder="e.g. Google Meet, Zoom, On-site HQ">
+                    </div>
+
+                    <div>
+                        <label class="input-label" for="calEventAppSelect">Link to Existing Application</label>
+                        <select id="calEventAppSelect" class="input-field" onchange="window.handleCalendarAppSelect?.(this.value)">
+                            <option value="">None (Standalone event)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="input-label" for="calEventNotes">Notes / Preparation Checklist</label>
+                        <textarea id="calEventNotes" rows="2" class="input-field" placeholder="e.g. Review STAR stories on conflict resolution, bring portfolio deck"></textarea>
+                    </div>
+
+                    <div class="flex items-center justify-between gap-3 pt-4 border-t border-stone-200 dark:border-stone-800">
+                        <button type="button" class="btn-outline px-4 py-2 text-xs rounded-xl" onclick="closeAddCalendarEventModal()">Cancel</button>
+                        <button type="submit" class="btn-primary flex items-center gap-1.5 px-5 py-2 text-xs font-semibold rounded-xl">
+                            <span>Save to Schedule</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Inbox Refresh / Detections Pop-up Banner -->
+    <div id="refreshPopupBanner" class="hidden fixed bottom-6 right-6 z-50 max-w-md w-[calc(100vw-3rem)] bg-white dark:bg-[#121a2b] border border-blue-200 dark:border-blue-900 rounded-2xl p-4.5 shadow-2xl transition-all duration-300"></div>
+
+    <script type="module" src="/src/main.ts"></script>
+</body>
 </html>
