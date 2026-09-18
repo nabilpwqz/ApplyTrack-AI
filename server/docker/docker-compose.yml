@@ -1,0 +1,118 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: applytrack_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me-postgres-password}
+      POSTGRES_DB: ${POSTGRES_DB:-applytrack_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - applytrack_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-applytrack_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: applytrack_redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "${REDIS_PASSWORD:-change-me-redis-password}"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - applytrack_network
+
+  pgadmin:
+    image: dpage/pgadmin4:8.12
+    container_name: applytrack_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@example.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-change-me-admin-password}
+    ports:
+      - "5050:80"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - applytrack_network
+
+  supabase-db:
+    image: supabase/postgres:15.1.0.117
+    container_name: applytrack_supabase_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${SUPABASE_DB:-postgres}
+      POSTGRES_USER: ${SUPABASE_USER:-postgres}
+      POSTGRES_PASSWORD: ${SUPABASE_PASSWORD:-change-me-supabase-password}
+      JWT_SECRET: ${SUPABASE_JWT_SECRET:-super-secret-jwt-token-change-me}
+      ANON_KEY: ${SUPABASE_ANON_KEY:-anon-key}
+      SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:-service-role-key}
+    ports:
+      - "5433:5432"
+    volumes:
+      - supabase_data:/var/lib/postgresql/data
+    networks:
+      - applytrack_network
+
+  supabase-studio:
+    image: supabase/studio:latest
+    container_name: applytrack_supabase_studio
+    restart: unless-stopped
+    environment:
+      STUDIO_PG_META_URL: http://supabase-db:5432
+      POSTGRES_PASSWORD: ${SUPABASE_PASSWORD:-change-me-supabase-password}
+      SUPABASE_URL: ${SUPABASE_URL:-http://localhost:5434}
+      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY:-anon-key}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:-service-role-key}
+    depends_on:
+      - supabase-db
+    ports:
+      - "5434:3000"
+    networks:
+      - applytrack_network
+
+  firebase-emulator:
+    image: node:20-alpine
+    container_name: applytrack_firebase_emulator
+    working_dir: /workspace
+    command: >
+      sh -c "npm install -g firebase-tools &&
+      firebase emulators:start --only auth,firestore,storage --project ${FIREBASE_PROJECT_ID:-applytrack-ai-dev}"
+    environment:
+      FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID:-your-firebase-project-id}
+      FIREBASE_AUTH_EMULATOR_HOST: "0.0.0.0"
+      FIRESTORE_EMULATOR_HOST: "0.0.0.0"
+      STORAGE_EMULATOR_HOST: "0.0.0.0"
+    ports:
+      - "9099:9099"
+      - "8080:8080"
+      - "9199:9199"
+    volumes:
+      - ./firebase:/workspace
+    networks:
+      - applytrack_network
+
+networks:
+  applytrack_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  supabase_data:
+    driver: local
