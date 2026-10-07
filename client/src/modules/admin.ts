@@ -31,6 +31,9 @@ export interface PaymentRecord {
   txnId: string;
 }
 
+/**
+ * Employer health and stability assessment record.
+ */
 export interface CompanyHealthRecord {
   name: string;
   healthStatus: 'Healthy' | 'Moderate' | 'At Risk' | 'Hiring Freeze';
