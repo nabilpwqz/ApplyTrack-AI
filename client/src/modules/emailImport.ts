@@ -77,6 +77,9 @@ export function renderEmailImports(): void {
   updateNavBadges();
 }
 
+/**
+ * Promotes a detected email draft into the active application pipeline.
+ */
 export function acceptEmailImport(id: number): void {
   const item = state.emailImports.find((e) => e.id === id);
   if (!item) return;
