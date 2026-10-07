@@ -151,6 +151,9 @@ export function renderInterviewPrepList(): void {
     .join('');
 }
 
+/**
+ * Coordinates full goals view update including rings, streak counter, and prep lists.
+ */
 export function renderGoalsView(): void {
   updateGoalStreak();
 
