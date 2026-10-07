@@ -5,6 +5,9 @@ Chart.register(...registerables);
 
 const charts: Record<string, Chart> = {};
 
+/**
+ * Aggregates application submission counts across the previous seven days.
+ */
 export function getWeeklyApplications(): { labels: string[]; data: number[] } {
   const today = new Date();
   const labels: string[] = [];
