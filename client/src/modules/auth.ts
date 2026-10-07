@@ -79,6 +79,9 @@ export function getSession(): UserSession | null {
   }
 }
 
+/**
+ * Saves user session and syncs auth headers with GraphQL client.
+ */
 export function saveSession(user: UserSession): void {
   localStorage.setItem(AUTH_KEY, JSON.stringify(user));
   state.session = user;
