@@ -170,6 +170,9 @@ export function getStatusColor(status: string): string {
   return STATUS_CONFIG[status]?.color || '#78716c';
 }
 
+/**
+ * Returns badge background hex color code associated with application status.
+ */
 export function getStatusBg(status: string): string {
   return STATUS_CONFIG[status]?.bg || '#f5f5f4';
 }
