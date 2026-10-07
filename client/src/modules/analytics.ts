@@ -45,6 +45,9 @@ export function getAverageResponseTime(): number {
   return Math.round(totalDays / responded.length);
 }
 
+/**
+ * Populates analytics dashboards, conversion rates, and progress charts.
+ */
 export function renderAnalytics(): void {
   const total = state.applications.length;
   const responses = state.applications.filter((a) => !['saved', 'applied'].includes(a.status)).length;
