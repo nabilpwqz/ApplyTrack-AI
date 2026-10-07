@@ -19,6 +19,9 @@ export type ApplicationStatus =
  */
 export type Priority = 'High' | 'Medium' | 'Low';
 
+/**
+ * Historical milestone entry representing an interview or status change event.
+ */
 export interface TimelineItem {
   date: string;
   event: string;
