@@ -1,6 +1,9 @@
 import { getStatusBg, getStatusColor, getStatusLabel, state } from './state';
 import { escapeHtml, formatCurrency } from './utils';
 
+/**
+ * Renders the offer comparison desk highlighting finalist positions and active packages.
+ */
 export function renderOfferDesk(): void {
   const container = document.getElementById('offersContent');
   if (!container) return;
