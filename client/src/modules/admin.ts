@@ -149,6 +149,9 @@ export function getAdminCompanyHealth(company: string): CompanyHealthRecord | un
   return records.find((c) => c.name.toLowerCase() === company.trim().toLowerCase());
 }
 
+/**
+ * Retrieves administrative action history log.
+ */
 export function getAuditLogs(): AuditLogEntry[] {
   try {
     const data = localStorage.getItem('applytrack_admin_audit_log');
