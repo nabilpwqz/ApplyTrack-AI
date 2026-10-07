@@ -23,6 +23,9 @@ export function closeCommandPalette(): void {
   document.getElementById('nlCommandBar')?.classList.remove('open');
 }
 
+/**
+ * Displays cheatsheet modal of global keyboard shortcut mappings.
+ */
 export function openShortcutsModal(): void {
   document.getElementById('nlShortcutsModal')?.classList.add('open');
 }
