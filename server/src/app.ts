@@ -34,6 +34,9 @@ const requestLoggerPlugin = {
   },
 };
 
+/**
+ * Evaluates incoming request origin against configured allowed origins.
+ */
 function resolveOriginPolicy(origin: string | undefined): { allow: boolean; value: string | true } {
   if (!origin) {
     return { allow: true, value: true };
