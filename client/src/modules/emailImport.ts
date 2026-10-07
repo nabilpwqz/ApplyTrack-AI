@@ -131,6 +131,9 @@ export function acceptEmailImport(id: number): void {
  */
 export const importEmailApp = acceptEmailImport;
 
+/**
+ * Discards detected email notification from candidate inbox list.
+ */
 export function dismissEmailImport(id: number): void {
   const item = state.emailImports.find((e) => e.id === id);
   if (!item) return;
