@@ -96,6 +96,9 @@ export function getAdminUsers(): AdminUserRecord[] {
   }
 }
 
+/**
+ * Saves updated user management records into persistent store.
+ */
 export function saveAdminUsers(users: AdminUserRecord[]): void {
   localStorage.setItem('applytrack_admin_users', JSON.stringify(users));
 }
