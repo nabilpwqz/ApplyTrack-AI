@@ -694,6 +694,9 @@ export async function calculateSalaryAnalysis(): Promise<void> {
   streamText('salaryNegotiationScript', negotiationEmail, 6);
 }
 
+/**
+ * Copies generated negotiation script text to clipboard.
+ */
 export function copyNegotiationScript(): void {
   const el = document.getElementById('salaryNegotiationScript') as HTMLTextAreaElement | null;
   if (el) {
