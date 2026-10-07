@@ -28,6 +28,9 @@ let googleAuthTimer: any = null;
  */
 type AuthFlowStage = 'idle' | 'validating' | 'syncing' | 'complete' | 'failed';
 
+/**
+ * Normalized metadata context accompanying an authentication request.
+ */
 interface AuthExecutionContext {
   email: string;
   provider: 'email' | 'google';
