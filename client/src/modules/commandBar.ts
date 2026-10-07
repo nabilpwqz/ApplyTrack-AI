@@ -107,6 +107,9 @@ export function executeCommand(command: string): void {
   switchView(command);
 }
 
+/**
+ * Binds global document keydown listeners for keyboard navigation shortcuts.
+ */
 export function setupKeyboardShortcuts(): void {
   document.addEventListener('keydown', (e) => {
     const target = e.target as HTMLElement;
