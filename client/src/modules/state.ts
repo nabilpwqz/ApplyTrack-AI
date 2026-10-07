@@ -163,6 +163,9 @@ export function getStatusLabel(status: string): string {
   return STATUS_CONFIG[status]?.label || status;
 }
 
+/**
+ * Returns primary foreground hex color code associated with application status.
+ */
 export function getStatusColor(status: string): string {
   return STATUS_CONFIG[status]?.color || '#78716c';
 }
