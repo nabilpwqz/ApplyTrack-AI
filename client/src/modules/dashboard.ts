@@ -36,6 +36,9 @@ export function getNextActionLabel(app: Application): string {
   return 'Review application';
 }
 
+/**
+ * Retrieves nearest upcoming scheduled interviews and deadlines.
+ */
 export function getUpcomingEvents(limit = 4): Array<{ title: string; company: string; dateLabel: string; type: string }> {
   const events: Array<{ title: string; company: string; dateLabel: string; type: string }> = [];
   state.applications.forEach((a) => {
