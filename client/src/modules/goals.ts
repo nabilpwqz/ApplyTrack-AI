@@ -16,6 +16,9 @@ export function getWeekKey(date = new Date()): string {
   return `${d.getFullYear()}-W${weekNum}`;
 }
 
+/**
+ * Evaluates goal completion streak based on past week activity timestamps.
+ */
 export function updateGoalStreak(): void {
   const weekKey = getWeekKey();
   const appsDone = getWeekApplicationsCount() >= (state.careerGoals.weeklyApplications || 5);
