@@ -95,7 +95,8 @@ application: async (_: unknown, { id }: { id: number }, ctx: GraphQLContext) => 
   },
 
   Mutation: {
-    createApplication: async (
+        // Mutation resolver creating new tracked job application
+createApplication: async (
       _: unknown,
       { input }: { input: Record<string, unknown> },
       ctx: GraphQLContext
