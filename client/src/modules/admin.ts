@@ -122,6 +122,9 @@ export function savePaymentHistory(records: PaymentRecord[]): void {
   localStorage.setItem('applytrack_payment_history', JSON.stringify(records));
 }
 
+/**
+ * Reads cached company stability and hiring health ratings.
+ */
 export function getCompanyHealthRecords(): CompanyHealthRecord[] {
   try {
     const data = localStorage.getItem('applytrack_company_health');
