@@ -43,7 +43,8 @@ export const adminResolvers = {
       }));
     },
 
-    premiumPayers: async (_: unknown, __: unknown, ctx: GraphQLContext) => {
+        // Resolves list of users with active paid subscriptions
+premiumPayers: async (_: unknown, __: unknown, ctx: GraphQLContext) => {
       const premiumUsers = await ctx.prisma.user.findMany({
         where: { plan: 'premium' },
         include: {
