@@ -272,6 +272,9 @@ export async function syncWithBackend(): Promise<void> {
   }
 }
 
+/**
+ * Initializes application state with representative seed fixtures on first launch.
+ */
 export function seedDefaultData(): void {
   const today = new Date();
   const d = (daysAgo: number) => {
