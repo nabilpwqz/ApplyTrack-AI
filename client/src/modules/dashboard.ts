@@ -279,6 +279,9 @@ export function renderNextLevelDashboard(): void {
   });
 }
 
+/**
+ * Evaluates application deadlines and builds user notification list.
+ */
 export function buildNotifications(): Array<{ title: string; copy: string; type: string }> {
   const list: Array<{ title: string; copy: string; type: string }> = [];
   const attention = getNeedsAttentionApps();
