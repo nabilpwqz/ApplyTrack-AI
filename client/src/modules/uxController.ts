@@ -93,6 +93,9 @@ export function setupNavigationObserver(): void {
   });
 }
 
+/**
+ * Exposes diagnostic telemetry and UX state flags to window global scope.
+ */
 export function exposeUxStatus(): void {
   (window as any).ApplyTrackUX = {
     version: 'Next-Level Full-Stack TypeScript v2',
