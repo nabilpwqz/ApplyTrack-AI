@@ -3,6 +3,9 @@ import { isAdmin } from './auth';
 import { getStatusLabel, state } from './state';
 import { escapeHtml } from './utils';
 
+/**
+ * Filters applications requiring user intervention or interview prep.
+ */
 export function getNeedsAttentionApps(): Application[] {
   const now = new Date();
   return state.applications.filter((a) => {
