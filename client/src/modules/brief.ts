@@ -3,6 +3,9 @@ import { getNeedsAttentionApps, getNextActionLabel, getUpcomingEvents } from './
 import { state } from './state';
 import { escapeHtml, showToast } from './utils';
 
+/**
+ * Renders daily executive brief summarizing active interviews and urgent actions.
+ */
 export function renderBrief(): void {
   const container = document.getElementById('briefContent');
   if (!container) return;
