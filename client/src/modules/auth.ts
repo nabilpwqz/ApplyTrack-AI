@@ -23,6 +23,9 @@ const AUTH_KEY = 'applytrack_ai_session';
 let authMode: 'login' | 'signup' | 'reset' = 'login';
 let googleAuthTimer: any = null;
 
+/**
+ * Progression states for the asynchronous authentication flow.
+ */
 type AuthFlowStage = 'idle' | 'validating' | 'syncing' | 'complete' | 'failed';
 
 interface AuthExecutionContext {
