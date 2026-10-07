@@ -312,6 +312,9 @@ export function buildNotifications(): Array<{ title: string; copy: string; type:
   return list.slice(0, 6);
 }
 
+/**
+ * Populates notification drawer with timely alerts and reminders.
+ */
 export function renderNotifications(): void {
   const list = document.getElementById('nlNotificationList');
   const badge = document.getElementById('nlNotificationBadge');
