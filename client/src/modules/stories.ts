@@ -27,6 +27,9 @@ export function closeStoryModal(): void {
   setEmpty('stR');
 }
 
+/**
+ * Validates and persists a new STAR story into local state and backend GraphQL store.
+ */
 export async function saveStory(): Promise<void> {
   const title = ((document.getElementById('stTitle') as HTMLInputElement)?.value || '').trim();
   if (!title) {
