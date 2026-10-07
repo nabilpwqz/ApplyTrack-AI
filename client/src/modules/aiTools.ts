@@ -598,6 +598,9 @@ export async function calculateCompanyHealth(): Promise<void> {
 }
 
 // ==================== 4. SALARY NEGOTIATION ADVISOR ====================
+/**
+ * Opens compensation negotiation counter-offer script generator.
+ */
 export function openSalaryNegotiation(): void {
   document.getElementById('salaryNegotiationModal')?.classList.remove('hidden');
 }
