@@ -16,6 +16,9 @@ export function openCommandPalette(): void {
   renderCommandResults();
 }
 
+/**
+ * Dismisses command palette modal and clears search query buffer.
+ */
 export function closeCommandPalette(): void {
   document.getElementById('nlCommandBar')?.classList.remove('open');
 }
