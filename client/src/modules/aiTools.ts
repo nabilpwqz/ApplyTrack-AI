@@ -6,6 +6,9 @@ import { escapeHtml, formatCurrency, showToast } from './utils';
 // DYNAMIC AI ANIMATION & STREAMING HELPERS
 // =========================================================
 
+/**
+ * Displays animated phase spinner during simulated AI inference.
+ */
 export function showAILoader(container: HTMLElement, phaseText: string): Promise<void> {
   container.classList.remove('hidden');
   container.innerHTML = `
