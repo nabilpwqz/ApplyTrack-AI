@@ -84,6 +84,9 @@ export function selectPaymentMethod(method: string): void {
   }
 }
 
+/**
+ * Recalculates total charge based on chosen subscription term.
+ */
 export function updateBillingAmount(): void {
   const rates: Record<string, number> = { USD: 1, EUR: 0.92, GBP: 0.79, BDT: 117 };
   const currency = (document.getElementById('billingCurrency') as HTMLSelectElement)?.value || 'USD';
