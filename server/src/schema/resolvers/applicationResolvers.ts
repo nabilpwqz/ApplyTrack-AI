@@ -1,5 +1,8 @@
 import { GraphQLContext } from '../../context';
 
+/**
+ * GraphQL resolvers managing the application lifecycle and timeline events.
+ */
 export const applicationResolvers = {
   Query: {
     applications: async (
