@@ -112,6 +112,9 @@ export function togglePrepItem(appId: number, item: string, checked: boolean): v
   ).catch(() => {});
 }
 
+/**
+ * Renders interactive checklist cards for all applications in interview stages.
+ */
 export function renderInterviewPrepList(): void {
   const host = document.getElementById('interviewPrepList');
   if (!host) return;
