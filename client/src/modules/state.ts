@@ -57,6 +57,9 @@ export const PREP_ITEMS = [
  */
 export const PREP_KEY = 'interviewPrep';
 
+/**
+ * Master client-side application state schema.
+ */
 export interface AppState {
   applications: Application[];
   emailImports: EmailImport[];
