@@ -14,6 +14,9 @@ const SUBSCRIPTION_KEY = 'applytrack_ai_subscription';
  */
 const BILLING_LOG_KEY = 'applytrack_ai_billing_transactions';
 
+/**
+ * Retrieves active subscription tier model from persistent storage.
+ */
 export function getSubscription(): SubscriptionState {
   try {
     const saved = JSON.parse(localStorage.getItem(SUBSCRIPTION_KEY) || 'null');
