@@ -2,8 +2,14 @@ import { PrismaClient, User } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 import { prisma } from './db';
 
+/**
+ * Secret key used for signing and verifying JSON Web Tokens.
+ */
 const JWT_SECRET = process.env.JWT_SECRET || 'applytrack_ai_super_secret_jwt_key_2026_dev';
 
+/**
+ * Request execution context passed to all GraphQL resolvers.
+ */
 export interface GraphQLContext {
   prisma: PrismaClient;
   user: User | null;
@@ -30,12 +36,18 @@ export interface GraphQLContext {
   };
 }
 
+/**
+ * Decoded authorization token payload and validation metadata.
+ */
 interface ResolvedToken {
   scheme?: string;
   token?: string;
   valid: boolean;
 }
 
+/**
+ * Extracts client IP and user agent headers for security auditing.
+ */
 function buildRequestMetadata(req: any) {
   const forwardedFor = req?.headers?.['x-forwarded-for'];
   const realIp = req?.headers?.['x-real-ip'];
@@ -51,6 +63,9 @@ function buildRequestMetadata(req: any) {
   };
 }
 
+/**
+ * Parses and validates bearer authorization header token.
+ */
 function resolveAuthorizationToken(value: unknown): ResolvedToken {
   if (typeof value !== 'string') {
     return { valid: false };

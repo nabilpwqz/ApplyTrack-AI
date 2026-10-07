@@ -5,9 +5,18 @@ import { switchView, updateNavBadges } from './dashboard';
 import { persistData, seedDefaultData, state } from './state';
 import { escapeHtml, showToast } from './utils';
 
+/**
+ * Storage key for active subscription membership parameters.
+ */
 const SUBSCRIPTION_KEY = 'applytrack_ai_subscription';
+/**
+ * Storage key for billing invoice logs and transaction records.
+ */
 const BILLING_LOG_KEY = 'applytrack_ai_billing_transactions';
 
+/**
+ * Retrieves active subscription tier model from persistent storage.
+ */
 export function getSubscription(): SubscriptionState {
   try {
     const saved = JSON.parse(localStorage.getItem(SUBSCRIPTION_KEY) || 'null');
@@ -25,6 +34,9 @@ export function getSubscription(): SubscriptionState {
   }
 }
 
+/**
+ * Sets selected subscription tier and updates pricing display.
+ */
 export function selectSubscriptionPlan(plan: 'free' | 'premium'): void {
   document.querySelectorAll('[data-plan-option]').forEach((option) =>
     option.classList.toggle('selected', (option as HTMLElement).dataset.planOption === plan)
@@ -37,6 +49,9 @@ export function selectSubscriptionPlan(plan: 'free' | 'premium'): void {
   if (action) action.textContent = plan === 'premium' ? 'Pay for premium plan' : 'Continue with free plan';
 }
 
+/**
+ * Selects active payment gateway method in checkout dialog.
+ */
 export function selectPaymentMethod(method: string): void {
   document.querySelectorAll('[data-payment-method]').forEach((option) =>
     option.classList.toggle('selected', (option as HTMLElement).dataset.paymentMethod === method)
@@ -69,6 +84,9 @@ export function selectPaymentMethod(method: string): void {
   }
 }
 
+/**
+ * Recalculates total charge based on chosen subscription term.
+ */
 export function updateBillingAmount(): void {
   const rates: Record<string, number> = { USD: 1, EUR: 0.92, GBP: 0.79, BDT: 117 };
   const currency = (document.getElementById('billingCurrency') as HTMLSelectElement)?.value || 'USD';
@@ -81,6 +99,9 @@ export function updateBillingAmount(): void {
   if (summary) summary.textContent = `${currency} ${amount} / month`;
 }
 
+/**
+ * Returns historical payment transactions recorded on account.
+ */
 export function getBillingTransactions(): BillingTransaction[] {
   try {
     return JSON.parse(localStorage.getItem(BILLING_LOG_KEY) || '[]');
@@ -89,10 +110,16 @@ export function getBillingTransactions(): BillingTransaction[] {
   }
 }
 
+/**
+ * Persists updated transaction array to client storage.
+ */
 export function saveBillingTransactions(transactions: BillingTransaction[]): void {
   localStorage.setItem(BILLING_LOG_KEY, JSON.stringify(transactions.slice(0, 12)));
 }
 
+/**
+ * Generates formatted billing reference voucher code.
+ */
 function billingReference(prefix: string, length: number): string {
   const bytes = new Uint8Array(Math.ceil(length / 2));
   crypto.getRandomValues(bytes);
@@ -102,6 +129,9 @@ function billingReference(prefix: string, length: number): string {
     .slice(0, length)}`;
 }
 
+/**
+ * Renders table rows representing prior payment receipts.
+ */
 export function renderBillingTransactions(): void {
   const list = document.getElementById('billingTransactionLog');
   if (!list) return;
@@ -124,6 +154,9 @@ export function renderBillingTransactions(): void {
     : '<div class="billing-log-empty text-xs text-stone-400 py-3">No subscription payments recorded yet.</div>';
 }
 
+/**
+ * Confirms subscription upgrade and updates local account status.
+ */
 export function saveSubscription(): void {
   const plan =
     ((document.querySelector('input[name="subscriptionPlan"]:checked') as HTMLInputElement)?.value as any) || 'free';
@@ -194,6 +227,9 @@ export function saveSubscription(): void {
   }).catch(() => {});
 }
 
+/**
+ * Synchronizes header and settings badges with current subscription state.
+ */
 export function updateSubscriptionUI(): void {
   const subscription = getSubscription();
   const premium = subscription.plan === 'premium';

@@ -1,6 +1,9 @@
 import { Request, Response, Router } from 'express';
 import { prisma } from '../db';
 
+/**
+ * Express router managing data export and import streaming endpoints.
+ */
 export const exportRouter = Router();
 
 // Health check endpoint
@@ -22,6 +25,7 @@ exportRouter.get('/health', async (_req: Request, res: Response) => {
 });
 
 // JSON Full Export
+  // Export full user database records as formatted JSON backup
 exportRouter.get('/export/json', async (_req: Request, res: Response) => {
   try {
     const [applications, emailImports, careerGoals, networkContacts, storyBank] = await Promise.all([
@@ -51,6 +55,7 @@ exportRouter.get('/export/json', async (_req: Request, res: Response) => {
 });
 
 // CSV Export
+  // Stream application records as downloadable CSV document
 exportRouter.get('/export/csv', async (_req: Request, res: Response) => {
   try {
     const applications = await prisma.application.findMany({

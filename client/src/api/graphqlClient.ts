@@ -1,7 +1,13 @@
 // Typed GraphQL client with automatic local persistence fallback
 
+/**
+ * Relative URI endpoint for GraphQL queries and mutations.
+ */
 const GRAPHQL_ENDPOINT = '/graphql';
 
+/**
+ * Standard response envelope returned by GraphQL execution pipeline.
+ */
 export interface GraphQLResponse<T> {
   data?: T;
   errors?: Array<{ message: string }>;
@@ -56,6 +62,9 @@ export async function graphQLRequest<T = any>(
 }
 
 // Queries & Mutation Strings
+/**
+ * Query documents for fetching applications, analytics, and settings.
+ */
 export const QUERIES = {
   GET_APPLICATIONS: `#graphql
     query GetApplications($search: String, $status: String, $priority: String) {
@@ -181,6 +190,9 @@ export const QUERIES = {
   `,
 };
 
+/**
+ * Mutation documents for creating, updating, and removing pipeline entities.
+ */
 export const MUTATIONS = {
   LOGIN: `#graphql
     mutation Login($email: String!, $password: String!) {

@@ -4,6 +4,9 @@ import { renderDashboard, updateNavBadges } from './dashboard';
 import { getStatusBg, getStatusColor, getStatusLabel, persistData, state } from './state';
 import { escapeHtml, formatCurrency, formatDate, generateId, showToast } from './utils';
 
+/**
+ * Renders the primary tabular data grid with filtering, sorting, and pagination.
+ */
 export function renderApplicationsTable(): void {
   const tbody = document.getElementById('applicationsTableBody');
   if (!tbody) return;
@@ -72,6 +75,9 @@ export function renderApplicationsTable(): void {
     .join('');
 }
 
+/**
+ * Prepares form fields and opens dialog for adding a new job application.
+ */
 export function openAddApplicationModal(): void {
   state.editingId = null;
   const titleEl = document.getElementById('addAppModalTitle');
@@ -100,6 +106,9 @@ export function openAddApplicationModal(): void {
   document.getElementById('addAppModal')?.classList.remove('hidden');
 }
 
+/**
+ * Loads existing application values into modal inputs for updating details.
+ */
 export function openEditApplication(id: number): void {
   const app = state.applications.find((a) => a.id === id);
   if (!app) return;
@@ -138,6 +147,9 @@ export function openEditApplication(id: number): void {
   document.getElementById('addAppModal')?.classList.remove('hidden');
 }
 
+/**
+ * Closes application entry modal and resets form inputs.
+ */
 export function closeAddAppModal(): void {
   document.getElementById('addAppModal')?.classList.add('hidden');
   state.editingId = null;
@@ -211,6 +223,9 @@ export async function saveApplication(): Promise<void> {
   updateNavBadges();
 }
 
+/**
+ * Removes target application from state and triggers remote deletion.
+ */
 export function deleteApplication(id: number): void {
   if (confirm('Are you sure you want to delete this application?')) {
     state.applications = state.applications.filter((a) => a.id !== id);
@@ -224,6 +239,9 @@ export function deleteApplication(id: number): void {
   }
 }
 
+/**
+ * Opens detailed slide-out inspector showing application timeline and notes.
+ */
 export function openAppDetails(id: number): void {
   const app = state.applications.find((a) => a.id === id);
   if (!app) return;
@@ -306,6 +324,9 @@ export function openAppDetails(id: number): void {
   document.getElementById('appDetailsModal')?.classList.remove('hidden');
 }
 
+/**
+ * Dismisses application detail inspector drawer.
+ */
 export function closeAppDetailsModal(): void {
   document.getElementById('appDetailsModal')?.classList.add('hidden');
 }

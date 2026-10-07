@@ -10,9 +10,18 @@ import { typeDefs } from './schema/typeDefs';
 
 dotenv.config();
 
+/**
+ * Allowed frontend client origin for CORS policy.
+ */
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
+/**
+ * Default development origins permitted by CORS headers.
+ */
 const DEFAULT_ALLOWED_ORIGINS = ['http://localhost:5173', 'http://127.0.0.1:5173'];
 
+/**
+ * Apollo Server plugin logging operation names and execution duration.
+ */
 const requestLoggerPlugin = {
   async requestDidStart() {
     return {
@@ -25,6 +34,9 @@ const requestLoggerPlugin = {
   },
 };
 
+/**
+ * Evaluates incoming request origin against configured allowed origins.
+ */
 function resolveOriginPolicy(origin: string | undefined): { allow: boolean; value: string | true } {
   if (!origin) {
     return { allow: true, value: true };

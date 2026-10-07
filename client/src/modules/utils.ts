@@ -1,5 +1,10 @@
 // Utility functions
 
+/**
+ * Sanitizes untrusted text to prevent cross-site scripting (XSS) in DOM injection.
+ * @param value Raw string or unknown value to escape
+ * @returns HTML-safe escaped string
+ */
 export function escapeHtml(value: unknown): string {
   return String(value ?? '').replace(
     /[&<>"']/g,
@@ -14,6 +19,11 @@ export function escapeHtml(value: unknown): string {
   );
 }
 
+/**
+ * Formats a numeric salary or compensation amount as localized USD currency.
+ * @param amount Numeric financial value
+ * @returns Formatted currency string without cents
+ */
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -22,6 +32,11 @@ export function formatCurrency(amount: number): string {
   }).format(amount);
 }
 
+/**
+ * Formats an ISO 8601 date string into human-friendly medium date representation.
+ * @param dateString Optional raw date string
+ * @returns Formatted date or fallback placeholder
+ */
 export function formatDate(dateString?: string): string {
   if (!dateString) return '—';
   try {
@@ -33,10 +48,19 @@ export function formatDate(dateString?: string): string {
   }
 }
 
+/**
+ * Generates a pseudo-random unique numeric identifier combining timestamp and entropy.
+ * @returns Unique numeric ID
+ */
 export function generateId(): number {
   return Date.now() + Math.floor(Math.random() * 1000);
 }
 
+/**
+ * Dispatches a lightweight animated toast alert to the toast container overlay.
+ * @param message Feedback notification text
+ * @param type Toast severity category
+ */
 export function showToast(message: string, type: 'success' | 'error' | 'info' = 'success'): void {
   const container = document.getElementById('toastContainer');
   if (!container) return;

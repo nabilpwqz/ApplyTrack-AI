@@ -1,8 +1,14 @@
 import { createApp } from './app';
 import { bootstrapDatabase } from './db';
 
+/**
+ * Port number on which Express HTTP server listens.
+ */
 const PORT = parseInt(process.env.PORT || '4000', 10);
 
+/**
+ * Diagnostic report created upon server initialization.
+ */
 interface StartupRuntime {
   phase: 'bootstrapping' | 'starting' | 'ready';
   startedAt: number;

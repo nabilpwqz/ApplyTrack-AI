@@ -3,6 +3,9 @@ import { isAdmin } from './auth';
 import { getStatusLabel, state } from './state';
 import { escapeHtml } from './utils';
 
+/**
+ * Filters applications requiring user intervention or interview prep.
+ */
 export function getNeedsAttentionApps(): Application[] {
   const now = new Date();
   return state.applications.filter((a) => {
@@ -21,6 +24,9 @@ export function getNeedsAttentionApps(): Application[] {
   });
 }
 
+/**
+ * Determines highest-leverage next step recommended for an application.
+ */
 export function getNextActionLabel(app: Application): string {
   if (app.status === 'interview' || app.status === 'final_interview') return 'Prep interview answers';
   if (app.status === 'applied') return 'Send follow-up note';
@@ -30,6 +36,9 @@ export function getNextActionLabel(app: Application): string {
   return 'Review application';
 }
 
+/**
+ * Retrieves nearest upcoming scheduled interviews and deadlines.
+ */
 export function getUpcomingEvents(limit = 4): Array<{ title: string; company: string; dateLabel: string; type: string }> {
   const events: Array<{ title: string; company: string; dateLabel: string; type: string }> = [];
   state.applications.forEach((a) => {
@@ -52,6 +61,9 @@ export function getUpcomingEvents(limit = 4): Array<{ title: string; company: st
   return events.slice(0, limit);
 }
 
+/**
+ * Computes count of applications submitted during the active week.
+ */
 export function getWeekApplicationsCount(): number {
   const now = new Date();
   const start = new Date(now);
@@ -65,10 +77,16 @@ export function getWeekApplicationsCount(): number {
   }).length;
 }
 
+/**
+ * Computes total interviews conducted or scheduled during the active week.
+ */
 export function getWeekInterviewCount(): number {
   return state.applications.filter((a) => a.status === 'interview' || a.status === 'final_interview').length;
 }
 
+/**
+ * Builds HTML markup for weekly pipeline performance insights widget.
+ */
 export function renderWeeklyInsightsHTML(): string {
   const weekApps = getWeekApplicationsCount();
   const weekTarget = state.careerGoals.weeklyApplications || 5;
@@ -100,6 +118,9 @@ export function renderWeeklyInsightsHTML(): string {
   </div>`;
 }
 
+/**
+ * Compiles recommended next-level career acceleration activities.
+ */
 export function getNextLevelActivities(): Array<{ title: string; copy: string; icon: string }> {
   const sorted = [...state.applications].sort(
     (a, b) => new Date(b.applicationDate || 0).getTime() - new Date(a.applicationDate || 0).getTime()
@@ -111,10 +132,16 @@ export function getNextLevelActivities(): Array<{ title: string; copy: string; i
   }));
 }
 
+/**
+ * Main coordinator rendering metrics, charts, and urgent tasks.
+ */
 export function renderDashboard(): void {
   renderNextLevelDashboard();
 }
 
+/**
+ * Enhanced overview dashboard with AI recommendations and activity feeds.
+ */
 export function renderNextLevelDashboard(): void {
   const host = document.getElementById('view-dashboard');
   if (!host) return;
@@ -252,6 +279,9 @@ export function renderNextLevelDashboard(): void {
   });
 }
 
+/**
+ * Evaluates application deadlines and builds user notification list.
+ */
 export function buildNotifications(): Array<{ title: string; copy: string; type: string }> {
   const list: Array<{ title: string; copy: string; type: string }> = [];
   const attention = getNeedsAttentionApps();
@@ -282,6 +312,9 @@ export function buildNotifications(): Array<{ title: string; copy: string; type:
   return list.slice(0, 6);
 }
 
+/**
+ * Populates notification drawer with timely alerts and reminders.
+ */
 export function renderNotifications(): void {
   const list = document.getElementById('nlNotificationList');
   const badge = document.getElementById('nlNotificationBadge');
@@ -302,17 +335,26 @@ export function renderNotifications(): void {
   badge?.classList.toggle('show', data.length > 0 && localStorage.getItem('applytrack_notifications_read') !== '1');
 }
 
+/**
+ * Toggles visibility of notification popover tray.
+ */
 export function toggleNotifications(): void {
   document.getElementById('nlNotificationPanel')?.classList.toggle('open');
   renderNotifications();
 }
 
+/**
+ * Clears unread notification badge counter.
+ */
 export function markNotificationsRead(): void {
   localStorage.setItem('applytrack_notifications_read', '1');
   renderNotifications();
   document.getElementById('nlNotificationPanel')?.classList.remove('open');
 }
 
+/**
+ * Updates indicator counts across navigation links and badges.
+ */
 export function updateNavBadges(): void {
   const appBadge = document.getElementById('appCountBadge');
   if (appBadge) appBadge.textContent = String(state.applications.length);

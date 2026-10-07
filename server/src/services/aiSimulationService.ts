@@ -1,6 +1,9 @@
 // Server-side AI evaluation & simulation services
 // Providing dynamic, role-specific, context-aware intelligence
 
+/**
+ * Parameters for calculating candidate resume job match score.
+ */
 export interface JobMatchParams {
   jobTitle: string;
   company: string;
@@ -10,6 +13,9 @@ export interface JobMatchParams {
   locationPreference?: string;
 }
 
+/**
+ * Parameters for estimating probability of reaching next interview round.
+ */
 export interface InterviewScoreParams {
   jobTitle: string;
   company: string;
@@ -20,6 +26,9 @@ export interface InterviewScoreParams {
   competitiveness: string;
 }
 
+/**
+ * Metrics used to assess employer financial and hiring stability.
+ */
 export interface CompanyHealthParams {
   company: string;
   size: string;
@@ -29,6 +38,9 @@ export interface CompanyHealthParams {
   funding: string;
 }
 
+/**
+ * Parameters for salary percentile benchmark analysis.
+ */
 export interface SalaryAnalysisParams {
   jobTitle: string;
   company: string;
@@ -38,6 +50,9 @@ export interface SalaryAnalysisParams {
   otherComp?: string;
 }
 
+/**
+ * Input parameters for drafting personalized recruiter follow-up emails.
+ */
 export interface FollowUpEmailParams {
   company: string;
   jobTitle: string;
@@ -49,6 +64,9 @@ export interface FollowUpEmailParams {
   context?: string;
 }
 
+/**
+ * Simulated AI reasoning engine providing heuristics and draft generation.
+ */
 export const aiSimulationService = {
   analyzeJobMatch(params: JobMatchParams) {
     const rawSkills = params.skills

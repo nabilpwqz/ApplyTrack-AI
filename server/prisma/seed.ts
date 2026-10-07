@@ -3,6 +3,9 @@ import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
+/**
+ * Database seed routine populating initial demo accounts and fixtures.
+ */
 async function main() {
   console.log('🌱 Seeding database with exact ApplyTrack AI initial data...');
 

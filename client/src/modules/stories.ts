@@ -3,10 +3,16 @@ import { StoryItem } from '../types';
 import { persistData, state } from './state';
 import { escapeHtml, generateId, showToast } from './utils';
 
+/**
+ * Opens the modal dialog for composing a new STAR behavioral interview story.
+ */
 export function openStoryModal(): void {
   document.getElementById('storyModal')?.classList.remove('hidden');
 }
 
+/**
+ * Closes the STAR story modal and resets all textarea input buffers.
+ */
 export function closeStoryModal(): void {
   document.getElementById('storyModal')?.classList.add('hidden');
   const setEmpty = (id: string) => {
@@ -21,6 +27,9 @@ export function closeStoryModal(): void {
   setEmpty('stR');
 }
 
+/**
+ * Validates and persists a new STAR story into local state and backend GraphQL store.
+ */
 export async function saveStory(): Promise<void> {
   const title = ((document.getElementById('stTitle') as HTMLInputElement)?.value || '').trim();
   if (!title) {
@@ -58,6 +67,9 @@ export async function saveStory(): Promise<void> {
   }).catch(() => {});
 }
 
+/**
+ * Renders the behavioral story bank grid displaying situation, task, action, and results.
+ */
 export function renderStoryBank(): void {
   const host = document.getElementById('storiesGrid');
   if (!host) return;

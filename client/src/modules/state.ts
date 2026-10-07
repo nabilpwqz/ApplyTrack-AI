@@ -21,6 +21,9 @@ export const STATUS_CONFIG: Record<string, { label: string; color: string; bg: s
   withdrawn: { label: 'Withdrawn', color: '#6b7280', bg: '#f3f4f6' },
 };
 
+/**
+ * Default Kanban board status columns and display labels.
+ */
 export const KANBAN_COLUMNS = [
   { key: 'saved', label: 'Saved' },
   { key: 'applied', label: 'Applied' },
@@ -37,6 +40,9 @@ export const PRIORITY_CONFIG: Record<string, { color: string; bg: string }> = {
   Low: { color: '#1d4ed8', bg: '#eff6ff' },
 };
 
+/**
+ * Standard checklist items for comprehensive interview preparation.
+ */
 export const PREP_ITEMS = [
   'Research company & culture',
   'Review job description',
@@ -46,8 +52,14 @@ export const PREP_ITEMS = [
   'Test AV & environment',
 ];
 
+/**
+ * Local storage key storing interview preparation task completion.
+ */
 export const PREP_KEY = 'interviewPrep';
 
+/**
+ * Master client-side application state schema.
+ */
 export interface AppState {
   applications: Application[];
   emailImports: EmailImport[];
@@ -144,18 +156,30 @@ export const state: AppState = {
   session: null,
 };
 
+/**
+ * Translates internal application status slug into human-readable label.
+ */
 export function getStatusLabel(status: string): string {
   return STATUS_CONFIG[status]?.label || status;
 }
 
+/**
+ * Returns primary foreground hex color code associated with application status.
+ */
 export function getStatusColor(status: string): string {
   return STATUS_CONFIG[status]?.color || '#78716c';
 }
 
+/**
+ * Returns badge background hex color code associated with application status.
+ */
 export function getStatusBg(status: string): string {
   return STATUS_CONFIG[status]?.bg || '#f5f5f4';
 }
 
+/**
+ * Serializes current state trees to browser local storage.
+ */
 export function persistData(): void {
   try {
     localStorage.setItem(
@@ -174,6 +198,9 @@ export function persistData(): void {
   }
 }
 
+/**
+ * Creates timestamped snapshot backup of application data in local storage.
+ */
 export function createAutoBackup(): void {
   try {
     const backups = JSON.parse(localStorage.getItem('applytrack_backups') || '[]');
@@ -245,6 +272,9 @@ export async function syncWithBackend(): Promise<void> {
   }
 }
 
+/**
+ * Initializes application state with representative seed fixtures on first launch.
+ */
 export function seedDefaultData(): void {
   const today = new Date();
   const d = (daysAgo: number) => {

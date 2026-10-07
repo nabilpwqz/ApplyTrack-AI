@@ -1,11 +1,20 @@
+/**
+ * Recognized environment execution stages with differentiated telemetry.
+ */
 export type RuntimeEnvironment = 'local' | 'development' | 'staging' | 'production';
 
+/**
+ * Feature flag descriptor controlling dynamic client capabilities.
+ */
 export interface RuntimeFeatureFlag {
   key: string;
   enabled: boolean;
   description?: string;
 }
 
+/**
+ * Runtime configuration parameters governing client polling and logging.
+ */
 export interface RuntimeConfig {
   appName: string;
   environment: RuntimeEnvironment;
@@ -13,6 +22,9 @@ export interface RuntimeConfig {
   features?: Record<string, RuntimeFeatureFlag>;
 }
 
+/**
+ * Point-in-time diagnostic snapshot of client engine parameters.
+ */
 export interface RuntimeSnapshot {
   appName: string;
   environment: RuntimeEnvironment;
@@ -23,6 +35,9 @@ export interface RuntimeSnapshot {
   features: Record<string, RuntimeFeatureFlag>;
 }
 
+/**
+ * Client runtime controller coordinating lifecycle hooks and performance profiling.
+ */
 export class ApplicationRuntime {
   private readonly featureMatrix = new Map<string, RuntimeFeatureFlag>();
   private readonly lifecycleHooks: Array<() => void> = [];
@@ -92,6 +107,9 @@ export class ApplicationRuntime {
   }
 }
 
+/**
+ * Factory helper initializing an ApplicationRuntime instance with active config.
+ */
 export function createRuntimeProfile(): ApplicationRuntime {
   return new ApplicationRuntime({
     appName: 'ApplyTrack AI Studio',

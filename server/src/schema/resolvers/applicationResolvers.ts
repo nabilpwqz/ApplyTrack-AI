@@ -1,8 +1,12 @@
 import { GraphQLContext } from '../../context';
 
+/**
+ * GraphQL resolvers managing the application lifecycle and timeline events.
+ */
 export const applicationResolvers = {
   Query: {
-    applications: async (
+        // Query resolver fetching all applications for authenticated user
+applications: async (
       _: unknown,
       { search, status, priority }: { search?: string; status?: string; priority?: string },
       ctx: GraphQLContext
@@ -32,7 +36,8 @@ export const applicationResolvers = {
       });
     },
 
-    application: async (_: unknown, { id }: { id: number }, ctx: GraphQLContext) => {
+        // Query resolver fetching single application by primary key
+application: async (_: unknown, { id }: { id: number }, ctx: GraphQLContext) => {
       return ctx.prisma.application.findUnique({
         where: { id },
         include: { timeline: { orderBy: { createdAt: 'desc' } } },
@@ -90,7 +95,8 @@ export const applicationResolvers = {
   },
 
   Mutation: {
-    createApplication: async (
+        // Mutation resolver creating new tracked job application
+createApplication: async (
       _: unknown,
       { input }: { input: Record<string, unknown> },
       ctx: GraphQLContext
@@ -132,7 +138,8 @@ export const applicationResolvers = {
       });
     },
 
-    updateApplication: async (
+        // Mutation resolver updating properties of an existing application
+updateApplication: async (
       _: unknown,
       { id, input }: { id: number; input: Record<string, unknown> },
       ctx: GraphQLContext
@@ -163,12 +170,14 @@ export const applicationResolvers = {
       });
     },
 
-    deleteApplication: async (_: unknown, { id }: { id: number }, ctx: GraphQLContext) => {
+        // Mutation resolver removing application and cascading timeline events
+deleteApplication: async (_: unknown, { id }: { id: number }, ctx: GraphQLContext) => {
       await ctx.prisma.application.delete({ where: { id } });
       return true;
     },
 
-    updateApplicationStatus: async (
+        // Mutation resolver transitioning pipeline stage and logging timeline
+updateApplicationStatus: async (
       _: unknown,
       { id, status }: { id: number; status: string },
       ctx: GraphQLContext

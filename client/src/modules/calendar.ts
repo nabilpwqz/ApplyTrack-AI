@@ -1,17 +1,29 @@
 import { state } from './state';
 import { escapeHtml, formatDate, showToast } from './utils';
 
+/**
+ * Display names for calendar month headers.
+ */
 const MONTH_NAMES = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
+/**
+ * Display labels for calendar day-of-week grid headers.
+ */
 const DAY_NAMES = [
   'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
 ];
 
+/**
+ * Classification categories for calendar events.
+ */
 export type CalendarCategory = 'interview' | 'deadline' | 'applied' | 'offer' | 'other';
 
+/**
+ * User-defined scheduled event entry.
+ */
 export interface CustomCalendarEvent {
   id: string;
   title: string;
@@ -25,6 +37,9 @@ export interface CustomCalendarEvent {
   createdAt: string;
 }
 
+/**
+ * Unified event aggregating application deadlines and custom events.
+ */
 export interface UnifiedCalendarEvent {
   id: string;
   source: 'application_deadline' | 'application_applied' | 'application_timeline' | 'custom';
@@ -44,9 +59,15 @@ let currentViewMode: 'month' | 'agenda' = 'month';
 let currentCategoryFilter: 'all' | CalendarCategory = 'all';
 let activeDayDate: string | null = null;
 
+/**
+ * Storage key for custom calendar events in local storage.
+ */
 const STORAGE_KEY = 'applytrack_calendar_events';
 
 // Persistence helpers
+/**
+ * Retrieves custom calendar events from persistent store.
+ */
 export function getCustomCalendarEvents(): CustomCalendarEvent[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -57,6 +78,9 @@ export function getCustomCalendarEvents(): CustomCalendarEvent[] {
   }
 }
 
+/**
+ * Persists updated custom events to storage.
+ */
 export function saveCustomCalendarEvents(events: CustomCalendarEvent[]): void {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
@@ -66,6 +90,9 @@ export function saveCustomCalendarEvents(events: CustomCalendarEvent[]): void {
 }
 
 // Extract and unify all events from applications + custom storage
+/**
+ * Consolidates all application dates and custom events into unified timeline.
+ */
 export function getAllCalendarEvents(): UnifiedCalendarEvent[] {
   const events: UnifiedCalendarEvent[] = [];
 
@@ -171,6 +198,9 @@ export function getAllCalendarEvents(): UnifiedCalendarEvent[] {
 }
 
 // Category styling helpers
+/**
+ * Resolves badge style classes and icons corresponding to event category.
+ */
 function getCategoryPillClasses(category: CalendarCategory): { bgClass: string; icon: string; label: string } {
   switch (category) {
     case 'interview':
@@ -208,6 +238,9 @@ function getCategoryPillClasses(category: CalendarCategory): { bgClass: string; 
 }
 
 // Navigation
+/**
+ * Adjusts active calendar view month by specified offset.
+ */
 export function changeCalendarMonth(offset: number): void {
   state.calendarMonth += offset;
   if (state.calendarMonth > 11) {
@@ -220,10 +253,16 @@ export function changeCalendarMonth(offset: number): void {
   renderCalendar();
 }
 
+/**
+ * Navigates calendar by offset depending on current view mode.
+ */
 export function navigateCalendar(offset: number): void {
   changeCalendarMonth(offset);
 }
 
+/**
+ * Resets calendar view to today's date.
+ */
 export function jumpToToday(): void {
   const now = new Date();
   state.calendarMonth = now.getMonth();
@@ -232,6 +271,9 @@ export function jumpToToday(): void {
 }
 
 // View Mode Switching
+/**
+ * Toggles between month grid view and agenda list view.
+ */
 export function setCalendarViewMode(mode: 'month' | 'agenda'): void {
   currentViewMode = mode;
   const btnMonth = document.getElementById('calendarBtnMonthView');

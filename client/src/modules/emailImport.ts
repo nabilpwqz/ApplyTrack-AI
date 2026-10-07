@@ -3,6 +3,9 @@ import { updateNavBadges } from './dashboard';
 import { persistData, state } from './state';
 import { escapeHtml, formatDate, generateId, showToast } from './utils';
 
+/**
+ * Renders detected incoming job application opportunities from email sync.
+ */
 export function renderEmailImports(): void {
   const container = document.getElementById('emailPendingList') || document.getElementById('emailImportList');
   const countBadge = document.getElementById('pendingCount');
@@ -74,6 +77,9 @@ export function renderEmailImports(): void {
   updateNavBadges();
 }
 
+/**
+ * Promotes a detected email draft into the active application pipeline.
+ */
 export function acceptEmailImport(id: number): void {
   const item = state.emailImports.find((e) => e.id === id);
   if (!item) return;
@@ -120,8 +126,14 @@ export function acceptEmailImport(id: number): void {
 }
 
 // Alias for backward compatibility
+/**
+ * Backward-compatible alias for accepting email imports.
+ */
 export const importEmailApp = acceptEmailImport;
 
+/**
+ * Discards detected email notification from candidate inbox list.
+ */
 export function dismissEmailImport(id: number): void {
   const item = state.emailImports.find((e) => e.id === id);
   if (!item) return;
@@ -136,6 +148,9 @@ export function dismissEmailImport(id: number): void {
 }
 
 // Pool of realistic recruitment emails for simulated sync
+/**
+ * Simulated mock inbound recruiting emails for demonstration pipeline.
+ */
 const EMAIL_POOLS = [
   {
     company: 'Dropbox',
@@ -195,6 +210,9 @@ const EMAIL_POOLS = [
 
 let syncIteration = 0;
 
+/**
+ * Simulates IMAP email synchronization discovery cycle.
+ */
 export function simulateEmailSync(): void {
   const today = new Date().toISOString().split('T')[0];
   const offset = (syncIteration * 2) % EMAIL_POOLS.length;
@@ -234,6 +252,9 @@ export function simulateEmailSync(): void {
 }
 
 // ==================== REFRESH POP-UP LOGIC ====================
+/**
+ * Displays popup notification informing user of newly detected email imports.
+ */
 export function showRefreshPopup(newItems: any[]): void {
   let popup = document.getElementById('refreshPopupBanner');
   if (!popup) {
@@ -278,6 +299,9 @@ export function showRefreshPopup(newItems: any[]): void {
   popup.classList.remove('hidden');
 }
 
+/**
+ * Closes email import discovery notification modal.
+ */
 export function closeRefreshPopup(): void {
   const popup = document.getElementById('refreshPopupBanner');
   if (popup) {

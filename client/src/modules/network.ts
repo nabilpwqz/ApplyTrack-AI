@@ -4,14 +4,23 @@ import { updateNavBadges } from './dashboard';
 import { persistData, state } from './state';
 import { escapeHtml, formatDate, generateId, showToast } from './utils';
 
+/**
+ * Displays the modal interface for creating or updating a networking contact.
+ */
 export function openContactModal(): void {
   document.getElementById('contactModal')?.classList.remove('hidden');
 }
 
+/**
+ * Hides the networking contact dialog.
+ */
 export function closeContactModal(): void {
   document.getElementById('contactModal')?.classList.add('hidden');
 }
 
+/**
+ * Commits new contact record to in-memory state and triggers remote GraphQL mutation.
+ */
 export async function saveContact(): Promise<void> {
   const name = ((document.getElementById('ctName') as HTMLInputElement)?.value || '').trim();
   if (!name) {
@@ -55,6 +64,9 @@ export async function saveContact(): Promise<void> {
   }).catch(() => {});
 }
 
+/**
+ * Renders the networking directory cards filtered by search keywords and role tags.
+ */
 export function renderNetwork(): void {
   const grid = document.getElementById('networkGrid');
   if (!grid) return;

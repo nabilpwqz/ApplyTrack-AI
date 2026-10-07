@@ -3,6 +3,9 @@ import { getNeedsAttentionApps, getNextActionLabel, getUpcomingEvents } from './
 import { state } from './state';
 import { escapeHtml, showToast } from './utils';
 
+/**
+ * Renders daily executive brief summarizing active interviews and urgent actions.
+ */
 export function renderBrief(): void {
   const container = document.getElementById('briefContent');
   if (!container) return;
@@ -104,6 +107,9 @@ export function renderBrief(): void {
   `;
 }
 
+/**
+ * Appends a scratchpad quick note to the daily brief summary.
+ */
 export function addQuickBriefNote(): void {
   const input = document.getElementById('briefQuickNote') as HTMLInputElement | null;
   const value = input?.value?.trim();

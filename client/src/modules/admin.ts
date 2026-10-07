@@ -2,6 +2,9 @@ import { getSession, isAdmin, saveSession } from './auth';
 import { getSubscription, updateSubscriptionUI } from './settings';
 import { escapeHtml, formatDate, generateId, showToast } from './utils';
 
+/**
+ * Administrative representation of registered system user.
+ */
 export interface AdminUserRecord {
   id: number;
   name: string;
@@ -13,6 +16,9 @@ export interface AdminUserRecord {
   joinedDate: string;
 }
 
+/**
+ * Administrative ledger record for customer payments.
+ */
 export interface PaymentRecord {
   id: string;
   name: string;
@@ -25,6 +31,9 @@ export interface PaymentRecord {
   txnId: string;
 }
 
+/**
+ * Employer health and stability assessment record.
+ */
 export interface CompanyHealthRecord {
   name: string;
   healthStatus: 'Healthy' | 'Moderate' | 'At Risk' | 'Hiring Freeze';
@@ -35,6 +44,9 @@ export interface CompanyHealthRecord {
   lastUpdated: string;
 }
 
+/**
+ * Tamper-evident administrative action log entry.
+ */
 export interface AuditLogEntry {
   id: number;
   timestamp: string;
@@ -72,6 +84,9 @@ const DEFAULT_COMPANY_HEALTH: CompanyHealthRecord[] = [
 ];
 
 // Data Loaders with LocalStorage Persistence
+/**
+ * Reads administrator user management dataset from store.
+ */
 export function getAdminUsers(): AdminUserRecord[] {
   try {
     const data = localStorage.getItem('applytrack_admin_users');
@@ -81,10 +96,16 @@ export function getAdminUsers(): AdminUserRecord[] {
   }
 }
 
+/**
+ * Saves updated user management records into persistent store.
+ */
 export function saveAdminUsers(users: AdminUserRecord[]): void {
   localStorage.setItem('applytrack_admin_users', JSON.stringify(users));
 }
 
+/**
+ * Reads ledger of all platform billing transactions.
+ */
 export function getPaymentHistory(): PaymentRecord[] {
   try {
     const data = localStorage.getItem('applytrack_payment_history');
@@ -94,10 +115,16 @@ export function getPaymentHistory(): PaymentRecord[] {
   }
 }
 
+/**
+ * Commits updated payment records to storage.
+ */
 export function savePaymentHistory(records: PaymentRecord[]): void {
   localStorage.setItem('applytrack_payment_history', JSON.stringify(records));
 }
 
+/**
+ * Reads cached company stability and hiring health ratings.
+ */
 export function getCompanyHealthRecords(): CompanyHealthRecord[] {
   try {
     const data = localStorage.getItem('applytrack_company_health');
@@ -107,15 +134,24 @@ export function getCompanyHealthRecords(): CompanyHealthRecord[] {
   }
 }
 
+/**
+ * Saves updated company health scores to persistent storage.
+ */
 export function saveCompanyHealthRecords(records: CompanyHealthRecord[]): void {
   localStorage.setItem('applytrack_company_health', JSON.stringify(records));
 }
 
+/**
+ * Searches company health score by company name.
+ */
 export function getAdminCompanyHealth(company: string): CompanyHealthRecord | undefined {
   const records = getCompanyHealthRecords();
   return records.find((c) => c.name.toLowerCase() === company.trim().toLowerCase());
 }
 
+/**
+ * Retrieves administrative action history log.
+ */
 export function getAuditLogs(): AuditLogEntry[] {
   try {
     const data = localStorage.getItem('applytrack_admin_audit_log');
@@ -127,6 +163,9 @@ export function getAuditLogs(): AuditLogEntry[] {
   ];
 }
 
+/**
+ * Appends entry to administrative audit log.
+ */
 export function logAdminAction(action: string, type: 'security' | 'billing' | 'intelligence' | 'system' = 'security'): void {
   const logs = getAuditLogs();
   logs.unshift({
@@ -141,6 +180,9 @@ export function logAdminAction(action: string, type: 'security' | 'billing' | 'i
 }
 
 // ==================== 1. USER MANAGEMENT & BLOCK/UNBLOCK ====================
+/**
+ * Populates user management table in administrator dashboard.
+ */
 export function renderAdminUsers(): void {
   const body = document.getElementById('adminUsersBody');
   if (!body) return;

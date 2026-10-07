@@ -5,6 +5,9 @@ Chart.register(...registerables);
 
 const charts: Record<string, Chart> = {};
 
+/**
+ * Aggregates application submission counts across the previous seven days.
+ */
 export function getWeeklyApplications(): { labels: string[]; data: number[] } {
   const today = new Date();
   const labels: string[] = [];
@@ -19,6 +22,9 @@ export function getWeeklyApplications(): { labels: string[]; data: number[] } {
   return { labels, data };
 }
 
+/**
+ * Calculates mean turnaround duration between submission and recruiter response.
+ */
 export function getAverageResponseTime(): number {
   const responded = state.applications.filter((a) =>
     a.timeline?.some((t) => t.type !== 'submitted' && t.type !== 'saved')
@@ -39,6 +45,9 @@ export function getAverageResponseTime(): number {
   return Math.round(totalDays / responded.length);
 }
 
+/**
+ * Populates analytics dashboards, conversion rates, and progress charts.
+ */
 export function renderAnalytics(): void {
   const total = state.applications.length;
   const responses = state.applications.filter((a) => !['saved', 'applied'].includes(a.status)).length;

@@ -14,6 +14,9 @@ import {
   updateProfile
 } from "firebase/auth";
 
+/**
+ * Firebase client configuration parameters.
+ */
 export const firebaseConfig = {
   apiKey: " ----------------",
   authDomain: "  -------------------",
@@ -25,10 +28,19 @@ export const firebaseConfig = {
 };
 
 // Initialize Firebase App
+/**
+ * Initialized Firebase application instance.
+ */
 export const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase Auth & Google Provider
+/**
+ * Firebase Auth service instance for token verification.
+ */
 export const auth = getAuth(app);
+/**
+ * Google OAuth provider configuration for single sign-on.
+ */
 export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
 

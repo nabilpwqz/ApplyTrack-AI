@@ -5,6 +5,9 @@ declare global {
   var prisma: PrismaClient | undefined;
 }
 
+/**
+ * Runtime connection status and query telemetry for Prisma ORM.
+ */
 interface PrismaRuntimeState {
   connected: boolean;
   lastCheckAt: number;
@@ -16,6 +19,9 @@ const runtimeState: PrismaRuntimeState = {
   lastCheckAt: 0,
 };
 
+/**
+ * PrismaClient singleton instance configured with connection pooling.
+ */
 export const prisma =
   global.prisma ||
   new PrismaClient({
@@ -41,10 +47,16 @@ export async function bootstrapDatabase(): Promise<boolean> {
   }
 }
 
+/**
+ * Inspects active database client connectivity and uptime.
+ */
 export function getPrismaRuntimeState(): PrismaRuntimeState {
   return { ...runtimeState };
 }
 
+/**
+ * Diagnostic helpers for inspecting database connection health.
+ */
 export const prismaRuntime = {
   state: runtimeState,
   bootstrap: bootstrapDatabase,

@@ -2,21 +2,32 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { GraphQLContext } from '../../context';
 
+/**
+ * Signing secret for generating session authentication JWTs.
+ */
 const JWT_SECRET = process.env.JWT_SECRET || 'applytrack_ai_super_secret_jwt_key_2026_dev';
 
+/**
+ * Signs a compact JSON Web Token carrying the authenticated user ID.
+ */
 function createToken(userId: string): string {
   return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '7d' });
 }
 
+/**
+ * Authentication query and mutation resolvers handling login and sessions.
+ */
 export const authResolvers = {
   Query: {
-    me: async (_: unknown, __: unknown, ctx: GraphQLContext) => {
+        // Resolves authenticated user profile from request context
+me: async (_: unknown, __: unknown, ctx: GraphQLContext) => {
       return ctx.user;
     },
   },
 
   Mutation: {
-    login: async (
+        // Verifies credentials and issues bearer token
+login: async (
       _: unknown,
       { email, password }: { email: string; password: string },
       ctx: GraphQLContext

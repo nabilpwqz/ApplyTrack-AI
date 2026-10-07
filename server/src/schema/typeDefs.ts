@@ -1,3 +1,6 @@
+/**
+ * Full GraphQL Schema Definition Language (SDL) type definitions.
+ */
 export const typeDefs = `#graphql
   enum Role {
     USER

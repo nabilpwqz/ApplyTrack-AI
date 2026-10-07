@@ -4,6 +4,9 @@ import { getWeekApplicationsCount, getWeekInterviewCount } from './dashboard';
 import { persistData, PREP_ITEMS, PREP_KEY, state } from './state';
 import { escapeHtml, showToast } from './utils';
 
+/**
+ * Computes standardized ISO week identifier string for tracking weekly milestones.
+ */
 export function getWeekKey(date = new Date()): string {
   const d = new Date(date);
   d.setHours(0, 0, 0, 0);
@@ -13,6 +16,9 @@ export function getWeekKey(date = new Date()): string {
   return `${d.getFullYear()}-W${weekNum}`;
 }
 
+/**
+ * Evaluates goal completion streak based on past week activity timestamps.
+ */
 export function updateGoalStreak(): void {
   const weekKey = getWeekKey();
   const appsDone = getWeekApplicationsCount() >= (state.careerGoals.weeklyApplications || 5);
@@ -26,6 +32,9 @@ export function updateGoalStreak(): void {
   }
 }
 
+/**
+ * Updates circular SVG progress indicator dash offset according to achievement ratio.
+ */
 export function setGoalRing(arcId: string, labelId: string, current: number, target: number): void {
   const arc = document.getElementById(arcId);
   const label = document.getElementById(labelId);
@@ -35,6 +44,9 @@ export function setGoalRing(arcId: string, labelId: string, current: number, tar
   if (label) label.textContent = `${current}/${target}`;
 }
 
+/**
+ * Extracts goal inputs from settings form and persists benchmarks to state.
+ */
 export function saveCareerGoals(): void {
   const weeklyApps = parseInt((document.getElementById('goalWeeklyApps') as HTMLInputElement)?.value, 10) || 5;
   const weeklyInterviews = parseInt((document.getElementById('goalWeeklyInterviews') as HTMLInputElement)?.value, 10) || 2;
@@ -58,6 +70,9 @@ export function saveCareerGoals(): void {
   }).catch(() => {});
 }
 
+/**
+ * Initializes interview prep checklist object structure if not already populated.
+ */
 export function ensureInterviewPrep(app: Application): Record<string, boolean> {
   if (typeof app.interviewPrep === 'string') {
     try {
@@ -75,6 +90,9 @@ export function ensureInterviewPrep(app: Application): Record<string, boolean> {
   return (app as any)[PREP_KEY];
 }
 
+/**
+ * Toggles completion flag for a specific interview prep action item.
+ */
 export function togglePrepItem(appId: number, item: string, checked: boolean): void {
   const app = state.applications.find((a) => a.id === appId);
   if (!app) return;
@@ -94,6 +112,9 @@ export function togglePrepItem(appId: number, item: string, checked: boolean): v
   ).catch(() => {});
 }
 
+/**
+ * Renders interactive checklist cards for all applications in interview stages.
+ */
 export function renderInterviewPrepList(): void {
   const host = document.getElementById('interviewPrepList');
   if (!host) return;
@@ -130,6 +151,9 @@ export function renderInterviewPrepList(): void {
     .join('');
 }
 
+/**
+ * Coordinates full goals view update including rings, streak counter, and prep lists.
+ */
 export function renderGoalsView(): void {
   updateGoalStreak();
 

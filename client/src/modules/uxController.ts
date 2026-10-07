@@ -1,3 +1,6 @@
+/**
+ * Mounts transitional loading overlay during initial bundle hydration.
+ */
 export function addBootScreen(): void {
   if (document.getElementById('uxBootScreen')) return;
   const el = document.createElement('div');
@@ -9,6 +12,9 @@ export function addBootScreen(): void {
   setTimeout(() => el.remove(), 900);
 }
 
+/**
+ * Attaches scroll restoration handlers and smooth behavior overrides.
+ */
 export function setupScrollPolish(): void {
   const landing = document.querySelector('.landing-nav');
   const topbar = document.querySelector('.app-topbar');
@@ -21,6 +27,9 @@ export function setupScrollPolish(): void {
   window.addEventListener('scroll', update, { passive: true });
 }
 
+/**
+ * Configures mobile drawer navigation toggles and swipe gestures.
+ */
 export function setupMobileSidebar(): void {
   const sidebar = document.getElementById('sidebar');
   const topbar = document.querySelector('.app-topbar');
@@ -49,6 +58,9 @@ export function setupMobileSidebar(): void {
   });
 }
 
+/**
+ * Listens for outside backdrop click events to dismiss active modal overlays.
+ */
 export function setupOutsideClick(): void {
   document.addEventListener('click', (e: MouseEvent) => {
     const target = e.target as HTMLElement;
@@ -62,6 +74,9 @@ export function setupOutsideClick(): void {
   });
 }
 
+/**
+ * Synchronizes browser navigation history state with internal view switcher.
+ */
 export function setupNavigationObserver(): void {
   const nav = document.getElementById('sidebarNav');
   if (!nav) return;
@@ -78,6 +93,9 @@ export function setupNavigationObserver(): void {
   });
 }
 
+/**
+ * Exposes diagnostic telemetry and UX state flags to window global scope.
+ */
 export function exposeUxStatus(): void {
   (window as any).ApplyTrackUX = {
     version: 'Next-Level Full-Stack TypeScript v2',

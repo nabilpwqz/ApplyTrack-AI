@@ -4,8 +4,14 @@ import { renderDashboard, updateNavBadges } from './dashboard';
 import { KANBAN_COLUMNS, persistData, state } from './state';
 import { escapeHtml, formatCurrency, showToast } from './utils';
 
+/**
+ * Tracks ID of active application card during HTML5 drag-and-drop operations.
+ */
 let draggedAppId: number | null = null;
 
+/**
+ * Generates interactive Kanban board columns and Draggable application cards.
+ */
 export function renderKanban(): void {
   const container = document.getElementById('kanbanBoard');
   if (!container) return;
@@ -62,6 +68,9 @@ export function renderKanban(): void {
   }).join('');
 }
 
+/**
+ * Initializes drag payload and sets transfer metadata for the moving card.
+ */
 export function handleKanbanDragStart(event: DragEvent, id: number): void {
   draggedAppId = id;
   if (event.dataTransfer) {
@@ -69,6 +78,9 @@ export function handleKanbanDragStart(event: DragEvent, id: number): void {
   }
 }
 
+/**
+ * Handles card drop into a column, updates stage status, and appends timeline log.
+ */
 export function handleKanbanDrop(event: DragEvent, newStatus: string): void {
   event.preventDefault();
   if (draggedAppId === null) return;

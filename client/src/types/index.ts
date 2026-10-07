@@ -1,3 +1,7 @@
+/**
+ * Status lifecycle transitions for an application in the pipeline.
+ * Tracks progression from discovery to offer acceptance or archival.
+ */
 export type ApplicationStatus =
   | 'saved'
   | 'applied'
@@ -10,14 +14,23 @@ export type ApplicationStatus =
   | 'rejected'
   | 'withdrawn';
 
+/**
+ * Priority level indicating urgency and focus tier for follow-ups.
+ */
 export type Priority = 'High' | 'Medium' | 'Low';
 
+/**
+ * Historical milestone entry representing an interview or status change event.
+ */
 export interface TimelineItem {
   date: string;
   event: string;
   type: string;
 }
 
+/**
+ * Primary job application entity with interview tracking and recruiter metadata.
+ */
 export interface Application {
   id: number;
   userId?: string | null;
@@ -45,6 +58,9 @@ export interface Application {
   updatedAt?: string;
 }
 
+/**
+ * Extracted job application candidate detected via automated inbox sync.
+ */
 export interface EmailImport {
   id: number;
   company: string;
@@ -64,6 +80,9 @@ export interface EmailImport {
   };
 }
 
+/**
+ * User target benchmarks for weekly outreach, interview quotas, and streaks.
+ */
 export interface CareerGoals {
   weeklyApplications: number;
   weeklyInterviews: number;
@@ -74,6 +93,9 @@ export interface CareerGoals {
   lastWeekKey?: string;
 }
 
+/**
+ * Professional network relationship touchpoint for referrals and outreach.
+ */
 export interface NetworkContact {
   id: number;
   name: string;
@@ -84,6 +106,9 @@ export interface NetworkContact {
   lastTouch: string;
 }
 
+/**
+ * STAR methodology behavioral interview response item with structured tags.
+ */
 export interface StoryItem {
   id: number;
   title: string;
@@ -94,6 +119,9 @@ export interface StoryItem {
   result?: string;
 }
 
+/**
+ * Authenticated client session containing authorization role and bearer token.
+ */
 export interface UserSession {
   name: string;
   email: string;
@@ -102,6 +130,9 @@ export interface UserSession {
   token?: string;
 }
 
+/**
+ * Financial ledger record for premium membership subscriptions.
+ */
 export interface BillingTransaction {
   id: string;
   time: string;
@@ -113,6 +144,9 @@ export interface BillingTransaction {
   message: string;
 }
 
+/**
+ * Subscription plan tier configuration and activation approval state.
+ */
 export interface SubscriptionState {
   plan: 'free' | 'premium';
   status: 'free' | 'pending' | 'approved';

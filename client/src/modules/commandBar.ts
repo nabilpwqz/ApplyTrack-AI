@@ -3,6 +3,9 @@ import { switchView } from './dashboard';
 import { state } from './state';
 import { escapeHtml, showToast } from './utils';
 
+/**
+ * Opens fuzzy command search palette and focuses input field.
+ */
 export function openCommandPalette(): void {
   document.getElementById('nlCommandBar')?.classList.add('open');
   const input = document.getElementById('nlCommandInput') as HTMLInputElement | null;
@@ -13,18 +16,30 @@ export function openCommandPalette(): void {
   renderCommandResults();
 }
 
+/**
+ * Dismisses command palette modal and clears search query buffer.
+ */
 export function closeCommandPalette(): void {
   document.getElementById('nlCommandBar')?.classList.remove('open');
 }
 
+/**
+ * Displays cheatsheet modal of global keyboard shortcut mappings.
+ */
 export function openShortcutsModal(): void {
   document.getElementById('nlShortcutsModal')?.classList.add('open');
 }
 
+/**
+ * Hides keyboard shortcut cheatsheet modal.
+ */
 export function closeShortcutsModal(): void {
   document.getElementById('nlShortcutsModal')?.classList.remove('open');
 }
 
+/**
+ * Compiles full registry of executable commands and shortcut descriptions.
+ */
 function commandItems(): Array<[string, string, string, string]> {
   const nav: Array<[string, string, string, string]> = [
     ['⌂', 'Dashboard', 'Open command center', 'dashboard'],
@@ -46,6 +61,9 @@ function commandItems(): Array<[string, string, string, string]> {
   return [...nav, ...apps];
 }
 
+/**
+ * Filters command registry based on user query and renders matching list.
+ */
 export function renderCommandResults(): void {
   const host = document.getElementById('nlCommandResults');
   const input = document.getElementById('nlCommandInput') as HTMLInputElement | null;
@@ -72,6 +90,9 @@ export function renderCommandResults(): void {
     : `<div class="nl-empty">No matching commands or applications.</div>`;
 }
 
+/**
+ * Dispatches selected command action and closes search palette.
+ */
 export function executeCommand(command: string): void {
   closeCommandPalette();
   if (command.startsWith('application:')) {
@@ -86,6 +107,9 @@ export function executeCommand(command: string): void {
   switchView(command);
 }
 
+/**
+ * Binds global document keydown listeners for keyboard navigation shortcuts.
+ */
 export function setupKeyboardShortcuts(): void {
   document.addEventListener('keydown', (e) => {
     const target = e.target as HTMLElement;

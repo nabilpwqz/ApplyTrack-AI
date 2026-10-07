@@ -1,5 +1,8 @@
 import { GraphQLContext } from '../../context';
 
+/**
+ * Query and mutation resolvers for setting and auditing career goals.
+ */
 export const goalResolvers = {
   Query: {
     careerGoals: async (_: unknown, __: unknown, ctx: GraphQLContext) => {

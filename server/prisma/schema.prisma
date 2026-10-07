@@ -1,17 +1,20 @@
 // Prisma Schema for ApplyTrack AI Studio
 // Database: PostgreSQL
 
+// Client generator configuration producing PrismaClient bindings
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-3.0.x", "debian-openssl-3.0.x"]
 }
 
+// Database datasource configuration for PostgreSQL connection
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
+/// User account entity storing credentials, role, and relational links
 model User {
   id           String   @id @default(cuid())
   email        String   @unique
@@ -36,6 +39,7 @@ model User {
   @@map("users")
 }
 
+/// Tracked job application entity representing candidacy at an employer
 model Application {
   id              Int      @id @default(autoincrement())
   userId          String?
@@ -67,6 +71,7 @@ model Application {
   @@map("applications")
 }
 
+/// Audit timeline marker representing status updates and interview events
 model TimelineEvent {
   id            String   @id @default(cuid())
   applicationId Int

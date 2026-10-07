@@ -6,6 +6,9 @@ import { escapeHtml, formatCurrency, showToast } from './utils';
 // DYNAMIC AI ANIMATION & STREAMING HELPERS
 // =========================================================
 
+/**
+ * Displays animated phase spinner during simulated AI inference.
+ */
 export function showAILoader(container: HTMLElement, phaseText: string): Promise<void> {
   container.classList.remove('hidden');
   container.innerHTML = `
@@ -45,6 +48,9 @@ export function showAILoader(container: HTMLElement, phaseText: string): Promise
   });
 }
 
+/**
+ * Smoothly interpolates numeric score animation from zero to target value.
+ */
 export function animateCountUp(
   elementId: string,
   targetValue: number,
@@ -73,6 +79,9 @@ export function animateCountUp(
   requestAnimationFrame(step);
 }
 
+/**
+ * Animate progress bar fill percentage smoothly with CSS transitions.
+ */
 export function animateProgressBar(elementId: string, targetPercent: number, duration = 750): void {
   const el = document.getElementById(elementId);
   if (!el) return;
@@ -84,6 +93,9 @@ export function animateProgressBar(elementId: string, targetPercent: number, dur
   }, 40);
 }
 
+/**
+ * Simulates typewriter text streaming for conversational AI responses.
+ */
 export function streamText(
   elementId: string,
   fullText: string,
@@ -118,10 +130,16 @@ export function streamText(
 }
 
 // ==================== 1. AI JOB MATCH ====================
+/**
+ * Opens AI resume and job description match analyzer modal.
+ */
 export function openJobMatch(): void {
   document.getElementById('jobMatchModal')?.classList.remove('hidden');
 }
 
+/**
+ * Closes job match modal and resets score outputs.
+ */
 export function closeJobMatch(): void {
   document.getElementById('jobMatchModal')?.classList.add('hidden');
 }
@@ -292,6 +310,9 @@ export async function calculateJobMatch(): Promise<void> {
   streamText('aiMatchRecommendation', recommendation, 12);
 }
 
+/**
+ * Copies AI generated resume bullet points to system clipboard.
+ */
 export function copyResumeBullets(): void {
   const box = document.getElementById('aiResumeBulletBox');
   if (box) {
@@ -301,10 +322,16 @@ export function copyResumeBullets(): void {
 }
 
 // ==================== 2. INTERVIEW SUCCESS CALCULATOR ====================
+/**
+ * Opens interview probability calculator dialog.
+ */
 export function openInterviewCalculator(): void {
   document.getElementById('interviewCalculatorModal')?.classList.remove('hidden');
 }
 
+/**
+ * Closes interview probability calculator dialog.
+ */
 export function closeInterviewCalculator(): void {
   document.getElementById('interviewCalculatorModal')?.classList.add('hidden');
 }
@@ -442,10 +469,16 @@ export async function calculateInterviewScore(): Promise<void> {
 }
 
 // ==================== 3. COMPANY HEALTH ANALYZER ====================
+/**
+ * Displays company stability and hiring trajectory analyzer modal.
+ */
 export function openCompanyHealth(): void {
   document.getElementById('companyHealthModal')?.classList.remove('hidden');
 }
 
+/**
+ * Hides company health analyzer dialog.
+ */
 export function closeCompanyHealth(): void {
   document.getElementById('companyHealthModal')?.classList.add('hidden');
 }
@@ -565,10 +598,16 @@ export async function calculateCompanyHealth(): Promise<void> {
 }
 
 // ==================== 4. SALARY NEGOTIATION ADVISOR ====================
+/**
+ * Opens compensation negotiation counter-offer script generator.
+ */
 export function openSalaryNegotiation(): void {
   document.getElementById('salaryNegotiationModal')?.classList.remove('hidden');
 }
 
+/**
+ * Closes compensation negotiation dialog.
+ */
 export function closeSalaryNegotiation(): void {
   document.getElementById('salaryNegotiationModal')?.classList.add('hidden');
 }
@@ -655,6 +694,9 @@ export async function calculateSalaryAnalysis(): Promise<void> {
   streamText('salaryNegotiationScript', negotiationEmail, 6);
 }
 
+/**
+ * Copies generated negotiation script text to clipboard.
+ */
 export function copyNegotiationScript(): void {
   const el = document.getElementById('salaryNegotiationScript') as HTMLTextAreaElement | null;
   if (el) {

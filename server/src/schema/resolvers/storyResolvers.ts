@@ -1,5 +1,8 @@
 import { GraphQLContext } from '../../context';
 
+/**
+ * Query and mutation resolvers for behavioral STAR interview stories.
+ */
 export const storyResolvers = {
   Query: {
     stories: async (_: unknown, __: unknown, ctx: GraphQLContext) => {

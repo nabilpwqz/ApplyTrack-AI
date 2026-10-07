@@ -8,9 +8,13 @@ import {
   SalaryAnalysisParams,
 } from '../../services/aiSimulationService';
 
+/**
+ * Administrative queries and mutations for telemetry and user moderation.
+ */
 export const adminResolvers = {
   Query: {
-    adminUsers: async (
+        // Resolves paginated administrative user directory
+adminUsers: async (
       _: unknown,
       { search }: { search?: string },
       ctx: GraphQLContext
@@ -40,7 +44,8 @@ export const adminResolvers = {
       }));
     },
 
-    premiumPayers: async (_: unknown, __: unknown, ctx: GraphQLContext) => {
+        // Resolves list of users with active paid subscriptions
+premiumPayers: async (_: unknown, __: unknown, ctx: GraphQLContext) => {
       const premiumUsers = await ctx.prisma.user.findMany({
         where: { plan: 'premium' },
         include: {
@@ -127,7 +132,8 @@ export const adminResolvers = {
   },
 
   Mutation: {
-    toggleUserStatus: async (
+        // Toggles account active status or blocks abusive users
+toggleUserStatus: async (
       _: unknown,
       { userId }: { userId: string },
       ctx: GraphQLContext

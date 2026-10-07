@@ -1,6 +1,9 @@
 import crypto from 'crypto';
 import { GraphQLContext } from '../../context';
 
+/**
+ * Generates unique payment transaction identifier.
+ */
 function generateTxnId(method: string): string {
   const methodCode = method.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 4) || 'CARD';
   const dateCode = new Date().toISOString().slice(0, 10).replace(/-/g, '');
@@ -8,12 +11,18 @@ function generateTxnId(method: string): string {
   return `TXN-${dateCode}-${methodCode}-${random}`;
 }
 
+/**
+ * Generates unique payment gateway audit tracking code.
+ */
 function generateGatewayRef(method: string): string {
   const methodCode = method.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 4) || 'GW';
   const random = crypto.randomBytes(4).toString('hex').toUpperCase();
   return `GW-${methodCode}-${random}`;
 }
 
+/**
+ * Resolvers handling premium membership billing and payment approvals.
+ */
 export const subscriptionResolvers = {
   Query: {
     subscription: async (_: unknown, __: unknown, ctx: GraphQLContext) => {

@@ -1,5 +1,8 @@
 import { GraphQLContext } from '../../context';
 
+/**
+ * Query and mutation resolvers managing networking relationships.
+ */
 export const contactResolvers = {
   Query: {
     networkContacts: async (

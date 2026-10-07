@@ -6,6 +6,9 @@ import { goalResolvers } from './goalResolvers';
 import { storyResolvers } from './storyResolvers';
 import { subscriptionResolvers } from './subscriptionResolvers';
 
+/**
+ * Root resolvers combining all modular GraphQL domain schemas.
+ */
 export const resolvers = {
   Query: {
     ...authResolvers.Query,

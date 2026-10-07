@@ -16,12 +16,21 @@ import { UserSession } from '../types';
 import { state } from './state';
 import { showToast } from './utils';
 
+/**
+ * Key identifying saved user session payload in local storage.
+ */
 const AUTH_KEY = 'applytrack_ai_session';
 let authMode: 'login' | 'signup' | 'reset' = 'login';
 let googleAuthTimer: any = null;
 
+/**
+ * Progression states for the asynchronous authentication flow.
+ */
 type AuthFlowStage = 'idle' | 'validating' | 'syncing' | 'complete' | 'failed';
 
+/**
+ * Normalized metadata context accompanying an authentication request.
+ */
 interface AuthExecutionContext {
   email: string;
   provider: 'email' | 'google';
@@ -38,10 +47,16 @@ const authFlow: AuthExecutionContext = {
   stage: 'idle',
 };
 
+/**
+ * Infers role privilege based on authenticated user email domain rules.
+ */
 function resolveRoleFromEmail(email: string): 'USER' | 'ADMIN' {
   return email.toLowerCase().endsWith('@example.com') || email.toLowerCase() === 'admin@example.com' ? 'ADMIN' : 'USER';
 }
 
+/**
+ * Prepares standardized execution context for auth pipeline execution.
+ */
 function normalizeAuthPipeline(email: string, provider: 'email' | 'google', mode: 'login' | 'signup' | 'reset'): AuthExecutionContext {
   const normalizedEmail = (email || '').trim();
   return {
@@ -53,6 +68,9 @@ function normalizeAuthPipeline(email: string, provider: 'email' | 'google', mode
   };
 }
 
+/**
+ * Reads and parses currently active session from storage.
+ */
 export function getSession(): UserSession | null {
   try {
     return JSON.parse(localStorage.getItem(AUTH_KEY) || 'null');
@@ -61,11 +79,17 @@ export function getSession(): UserSession | null {
   }
 }
 
+/**
+ * Saves user session and syncs auth headers with GraphQL client.
+ */
 export function saveSession(user: UserSession): void {
   localStorage.setItem(AUTH_KEY, JSON.stringify(user));
   state.session = user;
 }
 
+/**
+ * Converts raw Firebase or GraphQL errors into clear user-facing messages.
+ */
 export function formatAuthError(error: any): string {
   if (!error) return 'An unknown error occurred.';
   const code = error.code || '';
@@ -103,6 +127,9 @@ export function formatAuthError(error: any): string {
   }
 }
 
+/**
+ * Opens authentication dialog configured for the specified mode.
+ */
 export function openAuth(mode: 'login' | 'signup' | 'reset' = 'login'): void {
   setAuthMode(mode);
   const errorEl = document.getElementById('authErrorMessage');
@@ -123,6 +150,9 @@ export function openAuth(mode: 'login' | 'signup' | 'reset' = 'login'): void {
   }, 60);
 }
 
+/**
+ * Resets OAuth submit button state and clears loading spinners.
+ */
 export function resetGoogleAuthButton(): void {
   const button = document.getElementById('googleAuthButton');
   const icon = document.getElementById('googleButtonIcon');
@@ -133,6 +163,9 @@ export function resetGoogleAuthButton(): void {
   if (label?.dataset.defaultText) label.textContent = label.dataset.defaultText;
 }
 
+/**
+ * Closes authentication dialog and clears error alerts.
+ */
 export function closeAuth(): void {
   if (googleAuthTimer) {
     clearTimeout(googleAuthTimer);
@@ -153,6 +186,9 @@ export function closeAuth(): void {
   document.body.style.overflow = '';
 }
 
+/**
+ * Switches form fields and header text according to selected auth mode.
+ */
 export function setAuthMode(mode: 'login' | 'signup' | 'reset'): void {
   authMode = mode;
   const signup = mode === 'signup';
@@ -541,6 +577,9 @@ export async function syncFirebaseUser(fbUser: any): Promise<UserSession> {
   return userSession;
 }
 
+/**
+ * Verifies Firebase client initialization state.
+ */
 export function initFirebaseAuth(): boolean {
   try {
     // Capture result if user returns from a redirect-based sign-in
@@ -570,6 +609,9 @@ export function initFirebaseAuth(): boolean {
   }
 }
 
+/**
+ * Initiates simulated guest session with preconfigured sandbox access.
+ */
 export function handleGuestAuth(): void {
   saveSession({ name: 'Guest', email: 'guest@applytrack.local', provider: 'guest', role: 'USER' });
   closeAuth();
