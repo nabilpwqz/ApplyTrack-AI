@@ -186,6 +186,9 @@ export function closeAuth(): void {
   document.body.style.overflow = '';
 }
 
+/**
+ * Switches form fields and header text according to selected auth mode.
+ */
 export function setAuthMode(mode: 'login' | 'signup' | 'reset'): void {
   authMode = mode;
   const signup = mode === 'signup';
