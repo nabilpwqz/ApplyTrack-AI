@@ -138,7 +138,8 @@ createApplication: async (
       });
     },
 
-    updateApplication: async (
+        // Mutation resolver updating properties of an existing application
+updateApplication: async (
       _: unknown,
       { id, input }: { id: number; input: Record<string, unknown> },
       ctx: GraphQLContext
