@@ -343,6 +343,9 @@ export function toggleNotifications(): void {
   renderNotifications();
 }
 
+/**
+ * Clears unread notification badge counter.
+ */
 export function markNotificationsRead(): void {
   localStorage.setItem('applytrack_notifications_read', '1');
   renderNotifications();
