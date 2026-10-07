@@ -44,6 +44,9 @@ export interface CompanyHealthRecord {
   lastUpdated: string;
 }
 
+/**
+ * Tamper-evident administrative action log entry.
+ */
 export interface AuditLogEntry {
   id: number;
   timestamp: string;
