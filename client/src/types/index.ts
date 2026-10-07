@@ -119,6 +119,9 @@ export interface StoryItem {
   result?: string;
 }
 
+/**
+ * Authenticated client session containing authorization role and bearer token.
+ */
 export interface UserSession {
   name: string;
   email: string;
