@@ -110,6 +110,9 @@ export function getBillingTransactions(): BillingTransaction[] {
   }
 }
 
+/**
+ * Persists updated transaction array to client storage.
+ */
 export function saveBillingTransactions(transactions: BillingTransaction[]): void {
   localStorage.setItem(BILLING_LOG_KEY, JSON.stringify(transactions.slice(0, 12)));
 }
