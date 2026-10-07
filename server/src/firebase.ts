@@ -28,6 +28,9 @@ export const firebaseConfig = {
 };
 
 // Initialize Firebase App
+/**
+ * Initialized Firebase application instance.
+ */
 export const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase Auth & Google Provider
