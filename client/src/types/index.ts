@@ -58,6 +58,9 @@ export interface Application {
   updatedAt?: string;
 }
 
+/**
+ * Extracted job application candidate detected via automated inbox sync.
+ */
 export interface EmailImport {
   id: number;
   company: string;
