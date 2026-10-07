@@ -45,6 +45,9 @@ interface ResolvedToken {
   valid: boolean;
 }
 
+/**
+ * Extracts client IP and user agent headers for security auditing.
+ */
 function buildRequestMetadata(req: any) {
   const forwardedFor = req?.headers?.['x-forwarded-for'];
   const realIp = req?.headers?.['x-real-ip'];
