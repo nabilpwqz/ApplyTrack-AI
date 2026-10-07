@@ -14,6 +14,9 @@ export type ApplicationStatus =
   | 'rejected'
   | 'withdrawn';
 
+/**
+ * Priority level indicating urgency and focus tier for follow-ups.
+ */
 export type Priority = 'High' | 'Medium' | 'Low';
 
 export interface TimelineItem {
