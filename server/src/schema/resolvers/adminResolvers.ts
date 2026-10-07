@@ -132,7 +132,8 @@ premiumPayers: async (_: unknown, __: unknown, ctx: GraphQLContext) => {
   },
 
   Mutation: {
-    toggleUserStatus: async (
+        // Toggles account active status or blocks abusive users
+toggleUserStatus: async (
       _: unknown,
       { userId }: { userId: string },
       ctx: GraphQLContext
