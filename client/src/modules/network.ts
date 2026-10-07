@@ -11,6 +11,9 @@ export function openContactModal(): void {
   document.getElementById('contactModal')?.classList.remove('hidden');
 }
 
+/**
+ * Hides the networking contact dialog.
+ */
 export function closeContactModal(): void {
   document.getElementById('contactModal')?.classList.add('hidden');
 }
