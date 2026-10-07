@@ -127,6 +127,9 @@ export function formatAuthError(error: any): string {
   }
 }
 
+/**
+ * Opens authentication dialog configured for the specified mode.
+ */
 export function openAuth(mode: 'login' | 'signup' | 'reset' = 'login'): void {
   setAuthMode(mode);
   const errorEl = document.getElementById('authErrorMessage');
