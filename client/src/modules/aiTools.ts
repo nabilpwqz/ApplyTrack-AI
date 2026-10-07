@@ -79,6 +79,9 @@ export function animateCountUp(
   requestAnimationFrame(step);
 }
 
+/**
+ * Animate progress bar fill percentage smoothly with CSS transitions.
+ */
 export function animateProgressBar(elementId: string, targetPercent: number, duration = 750): void {
   const el = document.getElementById(elementId);
   if (!el) return;
