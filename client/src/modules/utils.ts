@@ -56,6 +56,11 @@ export function generateId(): number {
   return Date.now() + Math.floor(Math.random() * 1000);
 }
 
+/**
+ * Dispatches a lightweight animated toast alert to the toast container overlay.
+ * @param message Feedback notification text
+ * @param type Toast severity category
+ */
 export function showToast(message: string, type: 'success' | 'error' | 'info' = 'success'): void {
   const container = document.getElementById('toastContainer');
   if (!container) return;
