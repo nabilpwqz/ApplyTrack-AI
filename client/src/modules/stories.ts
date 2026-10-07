@@ -10,6 +10,9 @@ export function openStoryModal(): void {
   document.getElementById('storyModal')?.classList.remove('hidden');
 }
 
+/**
+ * Closes the STAR story modal and resets all textarea input buffers.
+ */
 export function closeStoryModal(): void {
   document.getElementById('storyModal')?.classList.add('hidden');
   const setEmpty = (id: string) => {
