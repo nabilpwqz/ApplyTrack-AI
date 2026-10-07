@@ -137,6 +137,9 @@ export function openJobMatch(): void {
   document.getElementById('jobMatchModal')?.classList.remove('hidden');
 }
 
+/**
+ * Closes job match modal and resets score outputs.
+ */
 export function closeJobMatch(): void {
   document.getElementById('jobMatchModal')?.classList.add('hidden');
 }
