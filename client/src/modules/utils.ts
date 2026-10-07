@@ -32,6 +32,11 @@ export function formatCurrency(amount: number): string {
   }).format(amount);
 }
 
+/**
+ * Formats an ISO 8601 date string into human-friendly medium date representation.
+ * @param dateString Optional raw date string
+ * @returns Formatted date or fallback placeholder
+ */
 export function formatDate(dateString?: string): string {
   if (!dateString) return '—';
   try {
