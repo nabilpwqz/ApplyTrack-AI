@@ -324,6 +324,9 @@ export function openAppDetails(id: number): void {
   document.getElementById('appDetailsModal')?.classList.remove('hidden');
 }
 
+/**
+ * Dismisses application detail inspector drawer.
+ */
 export function closeAppDetailsModal(): void {
   document.getElementById('appDetailsModal')?.classList.add('hidden');
 }
