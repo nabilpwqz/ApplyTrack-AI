@@ -132,6 +132,9 @@ export function getNextLevelActivities(): Array<{ title: string; copy: string; i
   }));
 }
 
+/**
+ * Main coordinator rendering metrics, charts, and urgent tasks.
+ */
 export function renderDashboard(): void {
   renderNextLevelDashboard();
 }
