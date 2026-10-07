@@ -106,6 +106,9 @@ export interface NetworkContact {
   lastTouch: string;
 }
 
+/**
+ * STAR methodology behavioral interview response item with structured tags.
+ */
 export interface StoryItem {
   id: number;
   title: string;
