@@ -163,6 +163,9 @@ export function getAuditLogs(): AuditLogEntry[] {
   ];
 }
 
+/**
+ * Appends entry to administrative audit log.
+ */
 export function logAdminAction(action: string, type: 'security' | 'billing' | 'intelligence' | 'system' = 'security'): void {
   const logs = getAuditLogs();
   logs.unshift({
