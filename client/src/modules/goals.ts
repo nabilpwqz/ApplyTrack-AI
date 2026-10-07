@@ -4,6 +4,9 @@ import { getWeekApplicationsCount, getWeekInterviewCount } from './dashboard';
 import { persistData, PREP_ITEMS, PREP_KEY, state } from './state';
 import { escapeHtml, showToast } from './utils';
 
+/**
+ * Computes standardized ISO week identifier string for tracking weekly milestones.
+ */
 export function getWeekKey(date = new Date()): string {
   const d = new Date(date);
   d.setHours(0, 0, 0, 0);
