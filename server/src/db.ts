@@ -47,6 +47,9 @@ export async function bootstrapDatabase(): Promise<boolean> {
   }
 }
 
+/**
+ * Inspects active database client connectivity and uptime.
+ */
 export function getPrismaRuntimeState(): PrismaRuntimeState {
   return { ...runtimeState };
 }
