@@ -12,6 +12,9 @@ export function addBootScreen(): void {
   setTimeout(() => el.remove(), 900);
 }
 
+/**
+ * Attaches scroll restoration handlers and smooth behavior overrides.
+ */
 export function setupScrollPolish(): void {
   const landing = document.querySelector('.landing-nav');
   const topbar = document.querySelector('.app-topbar');
