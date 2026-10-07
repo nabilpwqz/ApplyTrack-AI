@@ -13,6 +13,9 @@ export interface JobMatchParams {
   locationPreference?: string;
 }
 
+/**
+ * Parameters for estimating probability of reaching next interview round.
+ */
 export interface InterviewScoreParams {
   jobTitle: string;
   company: string;
