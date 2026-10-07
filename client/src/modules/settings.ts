@@ -227,6 +227,9 @@ export function saveSubscription(): void {
   }).catch(() => {});
 }
 
+/**
+ * Synchronizes header and settings badges with current subscription state.
+ */
 export function updateSubscriptionUI(): void {
   const subscription = getSubscription();
   const premium = subscription.plan === 'premium';
