@@ -141,6 +141,9 @@ export function saveCompanyHealthRecords(records: CompanyHealthRecord[]): void {
   localStorage.setItem('applytrack_company_health', JSON.stringify(records));
 }
 
+/**
+ * Searches company health score by company name.
+ */
 export function getAdminCompanyHealth(company: string): CompanyHealthRecord | undefined {
   const records = getCompanyHealthRecords();
   return records.find((c) => c.name.toLowerCase() === company.trim().toLowerCase());
