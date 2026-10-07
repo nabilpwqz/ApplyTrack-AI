@@ -26,6 +26,9 @@ export interface InterviewScoreParams {
   competitiveness: string;
 }
 
+/**
+ * Metrics used to assess employer financial and hiring stability.
+ */
 export interface CompanyHealthParams {
   company: string;
   size: string;
