@@ -299,6 +299,9 @@ export function showRefreshPopup(newItems: any[]): void {
   popup.classList.remove('hidden');
 }
 
+/**
+ * Closes email import discovery notification modal.
+ */
 export function closeRefreshPopup(): void {
   const popup = document.getElementById('refreshPopupBanner');
   if (popup) {
