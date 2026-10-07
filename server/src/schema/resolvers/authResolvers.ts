@@ -2,6 +2,9 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { GraphQLContext } from '../../context';
 
+/**
+ * Signing secret for generating session authentication JWTs.
+ */
 const JWT_SECRET = process.env.JWT_SECRET || 'applytrack_ai_super_secret_jwt_key_2026_dev';
 
 function createToken(userId: string): string {
