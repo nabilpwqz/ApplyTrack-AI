@@ -14,6 +14,9 @@ import {
   updateProfile
 } from "firebase/auth";
 
+/**
+ * Firebase client configuration parameters.
+ */
 export const firebaseConfig = {
   apiKey: " ----------------",
   authDomain: "  -------------------",
