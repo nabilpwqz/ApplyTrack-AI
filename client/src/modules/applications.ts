@@ -75,6 +75,9 @@ export function renderApplicationsTable(): void {
     .join('');
 }
 
+/**
+ * Prepares form fields and opens dialog for adding a new job application.
+ */
 export function openAddApplicationModal(): void {
   state.editingId = null;
   const titleEl = document.getElementById('addAppModalTitle');
