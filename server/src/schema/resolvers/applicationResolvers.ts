@@ -176,7 +176,8 @@ deleteApplication: async (_: unknown, { id }: { id: number }, ctx: GraphQLContex
       return true;
     },
 
-    updateApplicationStatus: async (
+        // Mutation resolver transitioning pipeline stage and logging timeline
+updateApplicationStatus: async (
       _: unknown,
       { id, status }: { id: number; status: string },
       ctx: GraphQLContext
