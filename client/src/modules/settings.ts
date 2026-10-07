@@ -154,6 +154,9 @@ export function renderBillingTransactions(): void {
     : '<div class="billing-log-empty text-xs text-stone-400 py-3">No subscription payments recorded yet.</div>';
 }
 
+/**
+ * Confirms subscription upgrade and updates local account status.
+ */
 export function saveSubscription(): void {
   const plan =
     ((document.querySelector('input[name="subscriptionPlan"]:checked') as HTMLInputElement)?.value as any) || 'free';
