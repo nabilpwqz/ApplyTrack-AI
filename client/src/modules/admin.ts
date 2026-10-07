@@ -84,6 +84,9 @@ const DEFAULT_COMPANY_HEALTH: CompanyHealthRecord[] = [
 ];
 
 // Data Loaders with LocalStorage Persistence
+/**
+ * Reads administrator user management dataset from store.
+ */
 export function getAdminUsers(): AdminUserRecord[] {
   try {
     const data = localStorage.getItem('applytrack_admin_users');
