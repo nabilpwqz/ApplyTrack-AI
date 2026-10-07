@@ -61,6 +61,9 @@ export function getUpcomingEvents(limit = 4): Array<{ title: string; company: st
   return events.slice(0, limit);
 }
 
+/**
+ * Computes count of applications submitted during the active week.
+ */
 export function getWeekApplicationsCount(): number {
   const now = new Date();
   const start = new Date(now);
