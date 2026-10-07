@@ -16,6 +16,9 @@ const DAY_NAMES = [
   'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
 ];
 
+/**
+ * Classification categories for calendar events.
+ */
 export type CalendarCategory = 'interview' | 'deadline' | 'applied' | 'offer' | 'other';
 
 export interface CustomCalendarEvent {
