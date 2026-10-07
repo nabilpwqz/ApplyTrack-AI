@@ -7,6 +7,9 @@ import { prisma } from './db';
  */
 const JWT_SECRET = process.env.JWT_SECRET || 'applytrack_ai_super_secret_jwt_key_2026_dev';
 
+/**
+ * Request execution context passed to all GraphQL resolvers.
+ */
 export interface GraphQLContext {
   prisma: PrismaClient;
   user: User | null;
