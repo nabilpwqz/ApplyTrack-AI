@@ -59,6 +59,9 @@ let currentViewMode: 'month' | 'agenda' = 'month';
 let currentCategoryFilter: 'all' | CalendarCategory = 'all';
 let activeDayDate: string | null = null;
 
+/**
+ * Storage key for custom calendar events in local storage.
+ */
 const STORAGE_KEY = 'applytrack_calendar_events';
 
 // Persistence helpers
