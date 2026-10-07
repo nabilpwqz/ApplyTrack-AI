@@ -180,6 +180,9 @@ export function logAdminAction(action: string, type: 'security' | 'billing' | 'i
 }
 
 // ==================== 1. USER MANAGEMENT & BLOCK/UNBLOCK ====================
+/**
+ * Populates user management table in administrator dashboard.
+ */
 export function renderAdminUsers(): void {
   const body = document.getElementById('adminUsersBody');
   if (!body) return;
