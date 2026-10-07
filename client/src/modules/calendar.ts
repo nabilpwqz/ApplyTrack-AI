@@ -198,6 +198,9 @@ export function getAllCalendarEvents(): UnifiedCalendarEvent[] {
 }
 
 // Category styling helpers
+/**
+ * Resolves badge style classes and icons corresponding to event category.
+ */
 function getCategoryPillClasses(category: CalendarCategory): { bgClass: string; icon: string; label: string } {
   switch (category) {
     case 'interview':
