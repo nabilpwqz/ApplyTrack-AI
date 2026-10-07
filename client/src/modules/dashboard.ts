@@ -77,6 +77,9 @@ export function getWeekApplicationsCount(): number {
   }).length;
 }
 
+/**
+ * Computes total interviews conducted or scheduled during the active week.
+ */
 export function getWeekInterviewCount(): number {
   return state.applications.filter((a) => a.status === 'interview' || a.status === 'final_interview').length;
 }
