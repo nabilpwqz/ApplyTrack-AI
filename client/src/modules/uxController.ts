@@ -27,6 +27,9 @@ export function setupScrollPolish(): void {
   window.addEventListener('scroll', update, { passive: true });
 }
 
+/**
+ * Configures mobile drawer navigation toggles and swipe gestures.
+ */
 export function setupMobileSidebar(): void {
   const sidebar = document.getElementById('sidebar');
   const topbar = document.querySelector('.app-topbar');
