@@ -310,6 +310,9 @@ export async function calculateJobMatch(): Promise<void> {
   streamText('aiMatchRecommendation', recommendation, 12);
 }
 
+/**
+ * Copies AI generated resume bullet points to system clipboard.
+ */
 export function copyResumeBullets(): void {
   const box = document.getElementById('aiResumeBulletBox');
   if (box) {
