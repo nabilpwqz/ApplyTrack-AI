@@ -21,6 +21,9 @@ export const STATUS_CONFIG: Record<string, { label: string; color: string; bg: s
   withdrawn: { label: 'Withdrawn', color: '#6b7280', bg: '#f3f4f6' },
 };
 
+/**
+ * Default Kanban board status columns and display labels.
+ */
 export const KANBAN_COLUMNS = [
   { key: 'saved', label: 'Saved' },
   { key: 'applied', label: 'Applied' },
