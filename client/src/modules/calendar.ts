@@ -253,6 +253,9 @@ export function changeCalendarMonth(offset: number): void {
   renderCalendar();
 }
 
+/**
+ * Navigates calendar by offset depending on current view mode.
+ */
 export function navigateCalendar(offset: number): void {
   changeCalendarMonth(offset);
 }
