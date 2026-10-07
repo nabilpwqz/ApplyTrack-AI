@@ -238,6 +238,9 @@ function getCategoryPillClasses(category: CalendarCategory): { bgClass: string; 
 }
 
 // Navigation
+/**
+ * Adjusts active calendar view month by specified offset.
+ */
 export function changeCalendarMonth(offset: number): void {
   state.calendarMonth += offset;
   if (state.calendarMonth > 11) {
