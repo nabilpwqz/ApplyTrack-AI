@@ -5,6 +5,9 @@ import { switchView, updateNavBadges } from './dashboard';
 import { persistData, seedDefaultData, state } from './state';
 import { escapeHtml, showToast } from './utils';
 
+/**
+ * Storage key for active subscription membership parameters.
+ */
 const SUBSCRIPTION_KEY = 'applytrack_ai_subscription';
 const BILLING_LOG_KEY = 'applytrack_ai_billing_transactions';
 
