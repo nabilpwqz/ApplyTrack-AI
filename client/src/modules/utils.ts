@@ -1,5 +1,10 @@
 // Utility functions
 
+/**
+ * Sanitizes untrusted text to prevent cross-site scripting (XSS) in DOM injection.
+ * @param value Raw string or unknown value to escape
+ * @returns HTML-safe escaped string
+ */
 export function escapeHtml(value: unknown): string {
   return String(value ?? '').replace(
     /[&<>"']/g,
