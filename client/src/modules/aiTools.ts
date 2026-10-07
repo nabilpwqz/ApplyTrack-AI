@@ -329,6 +329,9 @@ export function openInterviewCalculator(): void {
   document.getElementById('interviewCalculatorModal')?.classList.remove('hidden');
 }
 
+/**
+ * Closes interview probability calculator dialog.
+ */
 export function closeInterviewCalculator(): void {
   document.getElementById('interviewCalculatorModal')?.classList.add('hidden');
 }
