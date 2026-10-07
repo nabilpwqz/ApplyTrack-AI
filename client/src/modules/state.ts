@@ -40,6 +40,9 @@ export const PRIORITY_CONFIG: Record<string, { color: string; bg: string }> = {
   Low: { color: '#1d4ed8', bg: '#eff6ff' },
 };
 
+/**
+ * Standard checklist items for comprehensive interview preparation.
+ */
 export const PREP_ITEMS = [
   'Research company & culture',
   'Review job description',
