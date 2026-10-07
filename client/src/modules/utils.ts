@@ -48,6 +48,10 @@ export function formatDate(dateString?: string): string {
   }
 }
 
+/**
+ * Generates a pseudo-random unique numeric identifier combining timestamp and entropy.
+ * @returns Unique numeric ID
+ */
 export function generateId(): number {
   return Date.now() + Math.floor(Math.random() * 1000);
 }
