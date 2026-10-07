@@ -16,6 +16,9 @@ export interface AdminUserRecord {
   joinedDate: string;
 }
 
+/**
+ * Administrative ledger record for customer payments.
+ */
 export interface PaymentRecord {
   id: string;
   name: string;
