@@ -118,6 +118,9 @@ export function renderWeeklyInsightsHTML(): string {
   </div>`;
 }
 
+/**
+ * Compiles recommended next-level career acceleration activities.
+ */
 export function getNextLevelActivities(): Array<{ title: string; copy: string; icon: string }> {
   const sorted = [...state.applications].sort(
     (a, b) => new Date(b.applicationDate || 0).getTime() - new Date(a.applicationDate || 0).getTime()
