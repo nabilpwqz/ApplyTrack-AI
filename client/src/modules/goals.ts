@@ -90,6 +90,9 @@ export function ensureInterviewPrep(app: Application): Record<string, boolean> {
   return (app as any)[PREP_KEY];
 }
 
+/**
+ * Toggles completion flag for a specific interview prep action item.
+ */
 export function togglePrepItem(appId: number, item: string, checked: boolean): void {
   const app = state.applications.find((a) => a.id === appId);
   if (!app) return;
