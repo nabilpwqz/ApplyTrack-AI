@@ -35,6 +35,9 @@ export interface RuntimeSnapshot {
   features: Record<string, RuntimeFeatureFlag>;
 }
 
+/**
+ * Client runtime controller coordinating lifecycle hooks and performance profiling.
+ */
 export class ApplicationRuntime {
   private readonly featureMatrix = new Map<string, RuntimeFeatureFlag>();
   private readonly lifecycleHooks: Array<() => void> = [];
