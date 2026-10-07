@@ -90,6 +90,9 @@ export function renderCommandResults(): void {
     : `<div class="nl-empty">No matching commands or applications.</div>`;
 }
 
+/**
+ * Dispatches selected command action and closes search palette.
+ */
 export function executeCommand(command: string): void {
   closeCommandPalette();
   if (command.startsWith('application:')) {
