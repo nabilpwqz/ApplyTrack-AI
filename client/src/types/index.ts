@@ -130,6 +130,9 @@ export interface UserSession {
   token?: string;
 }
 
+/**
+ * Financial ledger record for premium membership subscriptions.
+ */
 export interface BillingTransaction {
   id: string;
   time: string;
