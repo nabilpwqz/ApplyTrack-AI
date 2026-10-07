@@ -8,6 +8,9 @@ import {
   SalaryAnalysisParams,
 } from '../../services/aiSimulationService';
 
+/**
+ * Administrative queries and mutations for telemetry and user moderation.
+ */
 export const adminResolvers = {
   Query: {
     adminUsers: async (
