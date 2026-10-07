@@ -352,6 +352,9 @@ export function markNotificationsRead(): void {
   document.getElementById('nlNotificationPanel')?.classList.remove('open');
 }
 
+/**
+ * Updates indicator counts across navigation links and badges.
+ */
 export function updateNavBadges(): void {
   const appBadge = document.getElementById('appCountBadge');
   if (appBadge) appBadge.textContent = String(state.applications.length);
