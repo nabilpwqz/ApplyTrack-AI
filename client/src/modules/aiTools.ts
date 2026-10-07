@@ -322,6 +322,9 @@ export function copyResumeBullets(): void {
 }
 
 // ==================== 2. INTERVIEW SUCCESS CALCULATOR ====================
+/**
+ * Opens interview probability calculator dialog.
+ */
 export function openInterviewCalculator(): void {
   document.getElementById('interviewCalculatorModal')?.classList.remove('hidden');
 }
