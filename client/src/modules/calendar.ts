@@ -90,6 +90,9 @@ export function saveCustomCalendarEvents(events: CustomCalendarEvent[]): void {
 }
 
 // Extract and unify all events from applications + custom storage
+/**
+ * Consolidates all application dates and custom events into unified timeline.
+ */
 export function getAllCalendarEvents(): UnifiedCalendarEvent[] {
   const events: UnifiedCalendarEvent[] = [];
 
