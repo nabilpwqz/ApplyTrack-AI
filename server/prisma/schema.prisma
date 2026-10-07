@@ -39,6 +39,7 @@ model User {
   @@map("users")
 }
 
+/// Tracked job application entity representing candidacy at an employer
 model Application {
   id              Int      @id @default(autoincrement())
   userId          String?
