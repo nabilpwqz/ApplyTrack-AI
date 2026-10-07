@@ -71,6 +71,7 @@ model Application {
   @@map("applications")
 }
 
+/// Audit timeline marker representing status updates and interview events
 model TimelineEvent {
   id            String   @id @default(cuid())
   applicationId Int
