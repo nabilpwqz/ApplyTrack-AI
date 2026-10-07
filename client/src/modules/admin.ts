@@ -2,6 +2,9 @@ import { getSession, isAdmin, saveSession } from './auth';
 import { getSubscription, updateSubscriptionUI } from './settings';
 import { escapeHtml, formatDate, generateId, showToast } from './utils';
 
+/**
+ * Administrative representation of registered system user.
+ */
 export interface AdminUserRecord {
   id: number;
   name: string;
