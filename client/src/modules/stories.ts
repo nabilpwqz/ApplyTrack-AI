@@ -3,6 +3,9 @@ import { StoryItem } from '../types';
 import { persistData, state } from './state';
 import { escapeHtml, generateId, showToast } from './utils';
 
+/**
+ * Opens the modal dialog for composing a new STAR behavioral interview story.
+ */
 export function openStoryModal(): void {
   document.getElementById('storyModal')?.classList.remove('hidden');
 }
