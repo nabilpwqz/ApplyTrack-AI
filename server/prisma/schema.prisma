@@ -6,6 +6,7 @@ generator client {
   binaryTargets = ["native", "rhel-openssl-3.0.x", "debian-openssl-3.0.x"]
 }
 
+// Database datasource configuration for PostgreSQL connection
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
