@@ -1,6 +1,9 @@
 import { Request, Response, Router } from 'express';
 import { prisma } from '../db';
 
+/**
+ * Express router managing data export and import streaming endpoints.
+ */
 export const exportRouter = Router();
 
 // Health check endpoint
