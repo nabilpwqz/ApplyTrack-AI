@@ -134,6 +134,9 @@ export function getCompanyHealthRecords(): CompanyHealthRecord[] {
   }
 }
 
+/**
+ * Saves updated company health scores to persistent storage.
+ */
 export function saveCompanyHealthRecords(records: CompanyHealthRecord[]): void {
   localStorage.setItem('applytrack_company_health', JSON.stringify(records));
 }
