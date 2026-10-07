@@ -107,6 +107,9 @@ export function renderBrief(): void {
   `;
 }
 
+/**
+ * Appends a scratchpad quick note to the daily brief summary.
+ */
 export function addQuickBriefNote(): void {
   const input = document.getElementById('briefQuickNote') as HTMLInputElement | null;
   const value = input?.value?.trim();
