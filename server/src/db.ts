@@ -5,6 +5,9 @@ declare global {
   var prisma: PrismaClient | undefined;
 }
 
+/**
+ * Runtime connection status and query telemetry for Prisma ORM.
+ */
 interface PrismaRuntimeState {
   connected: boolean;
   lastCheckAt: number;
