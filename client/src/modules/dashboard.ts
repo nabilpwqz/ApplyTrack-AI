@@ -84,6 +84,9 @@ export function getWeekInterviewCount(): number {
   return state.applications.filter((a) => a.status === 'interview' || a.status === 'final_interview').length;
 }
 
+/**
+ * Builds HTML markup for weekly pipeline performance insights widget.
+ */
 export function renderWeeklyInsightsHTML(): string {
   const weekApps = getWeekApplicationsCount();
   const weekTarget = state.careerGoals.weeklyApplications || 5;
