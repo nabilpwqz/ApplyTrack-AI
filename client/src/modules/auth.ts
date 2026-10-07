@@ -87,6 +87,9 @@ export function saveSession(user: UserSession): void {
   state.session = user;
 }
 
+/**
+ * Converts raw Firebase or GraphQL errors into clear user-facing messages.
+ */
 export function formatAuthError(error: any): string {
   if (!error) return 'An unknown error occurred.';
   const code = error.code || '';
