@@ -74,6 +74,9 @@ export function setupOutsideClick(): void {
   });
 }
 
+/**
+ * Synchronizes browser navigation history state with internal view switcher.
+ */
 export function setupNavigationObserver(): void {
   const nav = document.getElementById('sidebarNav');
   if (!nav) return;
