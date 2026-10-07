@@ -129,6 +129,9 @@ function billingReference(prefix: string, length: number): string {
     .slice(0, length)}`;
 }
 
+/**
+ * Renders table rows representing prior payment receipts.
+ */
 export function renderBillingTransactions(): void {
   const list = document.getElementById('billingTransactionLog');
   if (!list) return;
