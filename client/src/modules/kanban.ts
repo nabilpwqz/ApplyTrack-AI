@@ -9,6 +9,9 @@ import { escapeHtml, formatCurrency, showToast } from './utils';
  */
 let draggedAppId: number | null = null;
 
+/**
+ * Generates interactive Kanban board columns and Draggable application cards.
+ */
 export function renderKanban(): void {
   const container = document.getElementById('kanbanBoard');
   if (!container) return;
