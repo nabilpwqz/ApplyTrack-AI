@@ -93,6 +93,9 @@ export interface CareerGoals {
   lastWeekKey?: string;
 }
 
+/**
+ * Professional network relationship touchpoint for referrals and outreach.
+ */
 export interface NetworkContact {
   id: number;
   name: string;
