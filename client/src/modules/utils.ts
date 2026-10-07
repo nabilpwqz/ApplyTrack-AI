@@ -19,6 +19,11 @@ export function escapeHtml(value: unknown): string {
   );
 }
 
+/**
+ * Formats a numeric salary or compensation amount as localized USD currency.
+ * @param amount Numeric financial value
+ * @returns Formatted currency string without cents
+ */
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
