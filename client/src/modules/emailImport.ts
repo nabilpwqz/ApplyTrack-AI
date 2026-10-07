@@ -252,6 +252,9 @@ export function simulateEmailSync(): void {
 }
 
 // ==================== REFRESH POP-UP LOGIC ====================
+/**
+ * Displays popup notification informing user of newly detected email imports.
+ */
 export function showRefreshPopup(newItems: any[]): void {
   let popup = document.getElementById('refreshPopupBanner');
   if (!popup) {
