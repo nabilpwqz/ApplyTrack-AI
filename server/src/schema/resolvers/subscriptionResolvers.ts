@@ -1,6 +1,9 @@
 import crypto from 'crypto';
 import { GraphQLContext } from '../../context';
 
+/**
+ * Generates unique payment transaction identifier.
+ */
 function generateTxnId(method: string): string {
   const methodCode = method.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 4) || 'CARD';
   const dateCode = new Date().toISOString().slice(0, 10).replace(/-/g, '');
