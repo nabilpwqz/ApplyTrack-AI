@@ -34,6 +34,9 @@ export function getSubscription(): SubscriptionState {
   }
 }
 
+/**
+ * Sets selected subscription tier and updates pricing display.
+ */
 export function selectSubscriptionPlan(plan: 'free' | 'premium'): void {
   document.querySelectorAll('[data-plan-option]').forEach((option) =>
     option.classList.toggle('selected', (option as HTMLElement).dataset.planOption === plan)
