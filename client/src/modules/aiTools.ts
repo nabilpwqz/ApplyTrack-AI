@@ -476,6 +476,9 @@ export function openCompanyHealth(): void {
   document.getElementById('companyHealthModal')?.classList.remove('hidden');
 }
 
+/**
+ * Hides company health analyzer dialog.
+ */
 export function closeCompanyHealth(): void {
   document.getElementById('companyHealthModal')?.classList.add('hidden');
 }
