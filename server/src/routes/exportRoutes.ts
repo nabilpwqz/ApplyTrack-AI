@@ -25,6 +25,7 @@ exportRouter.get('/health', async (_req: Request, res: Response) => {
 });
 
 // JSON Full Export
+  // Export full user database records as formatted JSON backup
 exportRouter.get('/export/json', async (_req: Request, res: Response) => {
   try {
     const [applications, emailImports, careerGoals, networkContacts, storyBank] = await Promise.all([
