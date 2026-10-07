@@ -577,6 +577,9 @@ export async function syncFirebaseUser(fbUser: any): Promise<UserSession> {
   return userSession;
 }
 
+/**
+ * Verifies Firebase client initialization state.
+ */
 export function initFirebaseAuth(): boolean {
   try {
     // Capture result if user returns from a redirect-based sign-in
