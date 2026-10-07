@@ -147,6 +147,9 @@ export function openEditApplication(id: number): void {
   document.getElementById('addAppModal')?.classList.remove('hidden');
 }
 
+/**
+ * Closes application entry modal and resets form inputs.
+ */
 export function closeAddAppModal(): void {
   document.getElementById('addAppModal')?.classList.add('hidden');
   state.editingId = null;
