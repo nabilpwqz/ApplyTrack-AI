@@ -61,6 +61,9 @@ function commandItems(): Array<[string, string, string, string]> {
   return [...nav, ...apps];
 }
 
+/**
+ * Filters command registry based on user query and renders matching list.
+ */
 export function renderCommandResults(): void {
   const host = document.getElementById('nlCommandResults');
   const input = document.getElementById('nlCommandInput') as HTMLInputElement | null;
