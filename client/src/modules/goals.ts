@@ -70,6 +70,9 @@ export function saveCareerGoals(): void {
   }).catch(() => {});
 }
 
+/**
+ * Initializes interview prep checklist object structure if not already populated.
+ */
 export function ensureInterviewPrep(app: Application): Record<string, boolean> {
   if (typeof app.interviewPrep === 'string') {
     try {
