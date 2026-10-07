@@ -107,6 +107,9 @@ export class ApplicationRuntime {
   }
 }
 
+/**
+ * Factory helper initializing an ApplicationRuntime instance with active config.
+ */
 export function createRuntimeProfile(): ApplicationRuntime {
   return new ApplicationRuntime({
     appName: 'ApplyTrack AI Studio',
