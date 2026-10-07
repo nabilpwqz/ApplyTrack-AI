@@ -78,6 +78,9 @@ export function getCustomCalendarEvents(): CustomCalendarEvent[] {
   }
 }
 
+/**
+ * Persists updated custom events to storage.
+ */
 export function saveCustomCalendarEvents(events: CustomCalendarEvent[]): void {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
