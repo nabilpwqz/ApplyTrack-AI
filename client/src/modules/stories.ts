@@ -67,6 +67,9 @@ export async function saveStory(): Promise<void> {
   }).catch(() => {});
 }
 
+/**
+ * Renders the behavioral story bank grid displaying situation, task, action, and results.
+ */
 export function renderStoryBank(): void {
   const host = document.getElementById('storiesGrid');
   if (!host) return;
