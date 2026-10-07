@@ -239,6 +239,9 @@ export function deleteApplication(id: number): void {
   }
 }
 
+/**
+ * Opens detailed slide-out inspector showing application timeline and notes.
+ */
 export function openAppDetails(id: number): void {
   const app = state.applications.find((a) => a.id === id);
   if (!app) return;
