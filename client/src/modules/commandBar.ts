@@ -37,6 +37,9 @@ export function closeShortcutsModal(): void {
   document.getElementById('nlShortcutsModal')?.classList.remove('open');
 }
 
+/**
+ * Compiles full registry of executable commands and shortcut descriptions.
+ */
 function commandItems(): Array<[string, string, string, string]> {
   const nav: Array<[string, string, string, string]> = [
     ['⌂', 'Dashboard', 'Open command center', 'dashboard'],
