@@ -7,6 +7,9 @@ import { GraphQLContext } from '../../context';
  */
 const JWT_SECRET = process.env.JWT_SECRET || 'applytrack_ai_super_secret_jwt_key_2026_dev';
 
+/**
+ * Signs a compact JSON Web Token carrying the authenticated user ID.
+ */
 function createToken(userId: string): string {
   return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '7d' });
 }
