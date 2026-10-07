@@ -16,6 +16,9 @@ import { UserSession } from '../types';
 import { state } from './state';
 import { showToast } from './utils';
 
+/**
+ * Key identifying saved user session payload in local storage.
+ */
 const AUTH_KEY = 'applytrack_ai_session';
 let authMode: 'login' | 'signup' | 'reset' = 'login';
 let googleAuthTimer: any = null;
