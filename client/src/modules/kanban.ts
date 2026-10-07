@@ -4,6 +4,9 @@ import { renderDashboard, updateNavBadges } from './dashboard';
 import { KANBAN_COLUMNS, persistData, state } from './state';
 import { escapeHtml, formatCurrency, showToast } from './utils';
 
+/**
+ * Tracks ID of active application card during HTML5 drag-and-drop operations.
+ */
 let draggedAppId: number | null = null;
 
 export function renderKanban(): void {
