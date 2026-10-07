@@ -93,6 +93,9 @@ export function animateProgressBar(elementId: string, targetPercent: number, dur
   }, 40);
 }
 
+/**
+ * Simulates typewriter text streaming for conversational AI responses.
+ */
 export function streamText(
   elementId: string,
   fullText: string,
