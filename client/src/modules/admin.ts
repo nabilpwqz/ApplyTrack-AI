@@ -103,6 +103,9 @@ export function saveAdminUsers(users: AdminUserRecord[]): void {
   localStorage.setItem('applytrack_admin_users', JSON.stringify(users));
 }
 
+/**
+ * Reads ledger of all platform billing transactions.
+ */
 export function getPaymentHistory(): PaymentRecord[] {
   try {
     const data = localStorage.getItem('applytrack_payment_history');
