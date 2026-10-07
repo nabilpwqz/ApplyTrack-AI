@@ -37,6 +37,9 @@ export interface CustomCalendarEvent {
   createdAt: string;
 }
 
+/**
+ * Unified event aggregating application deadlines and custom events.
+ */
 export interface UnifiedCalendarEvent {
   id: string;
   source: 'application_deadline' | 'application_applied' | 'application_timeline' | 'custom';
