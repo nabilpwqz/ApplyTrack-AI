@@ -19,6 +19,9 @@ const runtimeState: PrismaRuntimeState = {
   lastCheckAt: 0,
 };
 
+/**
+ * PrismaClient singleton instance configured with connection pooling.
+ */
 export const prisma =
   global.prisma ||
   new PrismaClient({
