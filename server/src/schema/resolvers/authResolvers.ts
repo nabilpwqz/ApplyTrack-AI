@@ -25,7 +25,8 @@ export const authResolvers = {
   },
 
   Mutation: {
-    login: async (
+        // Verifies credentials and issues bearer token
+login: async (
       _: unknown,
       { email, password }: { email: string; password: string },
       ctx: GraphQLContext
