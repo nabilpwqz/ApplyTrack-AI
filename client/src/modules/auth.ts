@@ -609,6 +609,9 @@ export function initFirebaseAuth(): boolean {
   }
 }
 
+/**
+ * Initiates simulated guest session with preconfigured sandbox access.
+ */
 export function handleGuestAuth(): void {
   saveSession({ name: 'Guest', email: 'guest@applytrack.local', provider: 'guest', role: 'USER' });
   closeAuth();
