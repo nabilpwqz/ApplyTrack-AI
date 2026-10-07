@@ -54,6 +54,7 @@ exportRouter.get('/export/json', async (_req: Request, res: Response) => {
 });
 
 // CSV Export
+  // Stream application records as downloadable CSV document
 exportRouter.get('/export/csv', async (_req: Request, res: Response) => {
   try {
     const applications = await prisma.application.findMany({
