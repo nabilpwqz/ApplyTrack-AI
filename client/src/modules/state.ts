@@ -198,6 +198,9 @@ export function persistData(): void {
   }
 }
 
+/**
+ * Creates timestamped snapshot backup of application data in local storage.
+ */
 export function createAutoBackup(): void {
   try {
     const backups = JSON.parse(localStorage.getItem('applytrack_backups') || '[]');
