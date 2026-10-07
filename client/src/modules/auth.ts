@@ -47,6 +47,9 @@ const authFlow: AuthExecutionContext = {
   stage: 'idle',
 };
 
+/**
+ * Infers role privilege based on authenticated user email domain rules.
+ */
 function resolveRoleFromEmail(email: string): 'USER' | 'ADMIN' {
   return email.toLowerCase().endsWith('@example.com') || email.toLowerCase() === 'admin@example.com' ? 'ADMIN' : 'USER';
 }
