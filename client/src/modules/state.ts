@@ -52,6 +52,9 @@ export const PREP_ITEMS = [
   'Test AV & environment',
 ];
 
+/**
+ * Local storage key storing interview preparation task completion.
+ */
 export const PREP_KEY = 'interviewPrep';
 
 export interface AppState {
