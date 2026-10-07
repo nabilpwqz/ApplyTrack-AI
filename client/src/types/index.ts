@@ -144,6 +144,9 @@ export interface BillingTransaction {
   message: string;
 }
 
+/**
+ * Subscription plan tier configuration and activation approval state.
+ */
 export interface SubscriptionState {
   plan: 'free' | 'premium';
   status: 'free' | 'pending' | 'approved';
