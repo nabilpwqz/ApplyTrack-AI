@@ -48,6 +48,9 @@ export function showAILoader(container: HTMLElement, phaseText: string): Promise
   });
 }
 
+/**
+ * Smoothly interpolates numeric score animation from zero to target value.
+ */
 export function animateCountUp(
   elementId: string,
   targetValue: number,
