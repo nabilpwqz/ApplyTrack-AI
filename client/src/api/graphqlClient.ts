@@ -1,5 +1,8 @@
 // Typed GraphQL client with automatic local persistence fallback
 
+/**
+ * Relative URI endpoint for GraphQL queries and mutations.
+ */
 const GRAPHQL_ENDPOINT = '/graphql';
 
 export interface GraphQLResponse<T> {
