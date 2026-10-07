@@ -163,6 +163,9 @@ export function resetGoogleAuthButton(): void {
   if (label?.dataset.defaultText) label.textContent = label.dataset.defaultText;
 }
 
+/**
+ * Closes authentication dialog and clears error alerts.
+ */
 export function closeAuth(): void {
   if (googleAuthTimer) {
     clearTimeout(googleAuthTimer);
