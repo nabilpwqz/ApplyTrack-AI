@@ -4,6 +4,9 @@ import { updateNavBadges } from './dashboard';
 import { persistData, state } from './state';
 import { escapeHtml, formatDate, generateId, showToast } from './utils';
 
+/**
+ * Displays the modal interface for creating or updating a networking contact.
+ */
 export function openContactModal(): void {
   document.getElementById('contactModal')?.classList.remove('hidden');
 }
