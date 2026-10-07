@@ -19,6 +19,9 @@ const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
  */
 const DEFAULT_ALLOWED_ORIGINS = ['http://localhost:5173', 'http://127.0.0.1:5173'];
 
+/**
+ * Apollo Server plugin logging operation names and execution duration.
+ */
 const requestLoggerPlugin = {
   async requestDidStart() {
     return {
