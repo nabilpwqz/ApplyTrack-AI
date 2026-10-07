@@ -4,6 +4,9 @@ import { renderDashboard, updateNavBadges } from './dashboard';
 import { getStatusBg, getStatusColor, getStatusLabel, persistData, state } from './state';
 import { escapeHtml, formatCurrency, formatDate, generateId, showToast } from './utils';
 
+/**
+ * Renders the primary tabular data grid with filtering, sorting, and pagination.
+ */
 export function renderApplicationsTable(): void {
   const tbody = document.getElementById('applicationsTableBody');
   if (!tbody) return;
