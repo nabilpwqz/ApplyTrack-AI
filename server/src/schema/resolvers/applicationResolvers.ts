@@ -36,7 +36,8 @@ applications: async (
       });
     },
 
-    application: async (_: unknown, { id }: { id: number }, ctx: GraphQLContext) => {
+        // Query resolver fetching single application by primary key
+application: async (_: unknown, { id }: { id: number }, ctx: GraphQLContext) => {
       return ctx.prisma.application.findUnique({
         where: { id },
         include: { timeline: { orderBy: { createdAt: 'desc' } } },
