@@ -260,6 +260,9 @@ export function navigateCalendar(offset: number): void {
   changeCalendarMonth(offset);
 }
 
+/**
+ * Resets calendar view to today's date.
+ */
 export function jumpToToday(): void {
   const now = new Date();
   state.calendarMonth = now.getMonth();
