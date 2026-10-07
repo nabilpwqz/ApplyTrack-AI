@@ -50,6 +50,9 @@ export interface SalaryAnalysisParams {
   otherComp?: string;
 }
 
+/**
+ * Input parameters for drafting personalized recruiter follow-up emails.
+ */
 export interface FollowUpEmailParams {
   company: string;
   jobTitle: string;
