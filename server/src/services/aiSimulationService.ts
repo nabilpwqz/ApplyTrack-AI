@@ -38,6 +38,9 @@ export interface CompanyHealthParams {
   funding: string;
 }
 
+/**
+ * Parameters for salary percentile benchmark analysis.
+ */
 export interface SalaryAnalysisParams {
   jobTitle: string;
   company: string;
