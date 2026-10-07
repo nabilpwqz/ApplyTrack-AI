@@ -13,7 +13,8 @@ import {
  */
 export const adminResolvers = {
   Query: {
-    adminUsers: async (
+        // Resolves paginated administrative user directory
+adminUsers: async (
       _: unknown,
       { search }: { search?: string },
       ctx: GraphQLContext
