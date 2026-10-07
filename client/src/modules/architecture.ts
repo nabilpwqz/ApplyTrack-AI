@@ -12,6 +12,9 @@ export interface RuntimeFeatureFlag {
   description?: string;
 }
 
+/**
+ * Runtime configuration parameters governing client polling and logging.
+ */
 export interface RuntimeConfig {
   appName: string;
   environment: RuntimeEnvironment;
