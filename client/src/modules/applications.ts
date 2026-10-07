@@ -223,6 +223,9 @@ export async function saveApplication(): Promise<void> {
   updateNavBadges();
 }
 
+/**
+ * Removes target application from state and triggers remote deletion.
+ */
 export function deleteApplication(id: number): void {
   if (confirm('Are you sure you want to delete this application?')) {
     state.applications = state.applications.filter((a) => a.id !== id);
