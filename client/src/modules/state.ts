@@ -156,6 +156,9 @@ export const state: AppState = {
   session: null,
 };
 
+/**
+ * Translates internal application status slug into human-readable label.
+ */
 export function getStatusLabel(status: string): string {
   return STATUS_CONFIG[status]?.label || status;
 }
