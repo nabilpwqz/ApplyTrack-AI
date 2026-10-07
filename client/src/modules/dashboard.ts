@@ -24,6 +24,9 @@ export function getNeedsAttentionApps(): Application[] {
   });
 }
 
+/**
+ * Determines highest-leverage next step recommended for an application.
+ */
 export function getNextActionLabel(app: Application): string {
   if (app.status === 'interview' || app.status === 'final_interview') return 'Prep interview answers';
   if (app.status === 'applied') return 'Send follow-up note';
