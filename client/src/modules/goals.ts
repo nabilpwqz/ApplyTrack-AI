@@ -32,6 +32,9 @@ export function updateGoalStreak(): void {
   }
 }
 
+/**
+ * Updates circular SVG progress indicator dash offset according to achievement ratio.
+ */
 export function setGoalRing(arcId: string, labelId: string, current: number, target: number): void {
   const arc = document.getElementById(arcId);
   const label = document.getElementById(labelId);
