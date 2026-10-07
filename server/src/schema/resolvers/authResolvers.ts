@@ -19,7 +19,8 @@ function createToken(userId: string): string {
  */
 export const authResolvers = {
   Query: {
-    me: async (_: unknown, __: unknown, ctx: GraphQLContext) => {
+        // Resolves authenticated user profile from request context
+me: async (_: unknown, __: unknown, ctx: GraphQLContext) => {
       return ctx.user;
     },
   },
