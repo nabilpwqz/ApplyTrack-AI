@@ -3,6 +3,9 @@
  */
 export type RuntimeEnvironment = 'local' | 'development' | 'staging' | 'production';
 
+/**
+ * Feature flag descriptor controlling dynamic client capabilities.
+ */
 export interface RuntimeFeatureFlag {
   key: string;
   enabled: boolean;
