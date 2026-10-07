@@ -30,6 +30,9 @@ export function openShortcutsModal(): void {
   document.getElementById('nlShortcutsModal')?.classList.add('open');
 }
 
+/**
+ * Hides keyboard shortcut cheatsheet modal.
+ */
 export function closeShortcutsModal(): void {
   document.getElementById('nlShortcutsModal')?.classList.remove('open');
 }
