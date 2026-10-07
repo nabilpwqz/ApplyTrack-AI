@@ -54,6 +54,9 @@ export function getPrismaRuntimeState(): PrismaRuntimeState {
   return { ...runtimeState };
 }
 
+/**
+ * Diagnostic helpers for inspecting database connection health.
+ */
 export const prismaRuntime = {
   state: runtimeState,
   bootstrap: bootstrapDatabase,
