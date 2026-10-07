@@ -1,3 +1,6 @@
+/**
+ * Mounts transitional loading overlay during initial bundle hydration.
+ */
 export function addBootScreen(): void {
   if (document.getElementById('uxBootScreen')) return;
   const el = document.createElement('div');
