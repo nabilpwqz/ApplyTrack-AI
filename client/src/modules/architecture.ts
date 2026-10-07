@@ -22,6 +22,9 @@ export interface RuntimeConfig {
   features?: Record<string, RuntimeFeatureFlag>;
 }
 
+/**
+ * Point-in-time diagnostic snapshot of client engine parameters.
+ */
 export interface RuntimeSnapshot {
   appName: string;
   environment: RuntimeEnvironment;
