@@ -58,6 +58,9 @@ export function setupMobileSidebar(): void {
   });
 }
 
+/**
+ * Listens for outside backdrop click events to dismiss active modal overlays.
+ */
 export function setupOutsideClick(): void {
   document.addEventListener('click', (e: MouseEvent) => {
     const target = e.target as HTMLElement;
