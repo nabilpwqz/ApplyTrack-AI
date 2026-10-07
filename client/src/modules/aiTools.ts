@@ -469,6 +469,9 @@ export async function calculateInterviewScore(): Promise<void> {
 }
 
 // ==================== 3. COMPANY HEALTH ANALYZER ====================
+/**
+ * Displays company stability and hiring trajectory analyzer modal.
+ */
 export function openCompanyHealth(): void {
   document.getElementById('companyHealthModal')?.classList.remove('hidden');
 }
