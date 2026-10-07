@@ -1,3 +1,7 @@
+/**
+ * Status lifecycle transitions for an application in the pipeline.
+ * Tracks progression from discovery to offer acceptance or archival.
+ */
 export type ApplicationStatus =
   | 'saved'
   | 'applied'
