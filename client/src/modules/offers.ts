@@ -8,7 +8,8 @@ export function renderOfferDesk(): void {
   const container = document.getElementById('offersContent');
   if (!container) return;
 
-  const offers = state.applications.filter((app) => ['offer', 'accepted'].includes(app.status));
+    // Identify applications currently in offer or accepted states
+const offers = state.applications.filter((app) => ['offer', 'accepted'].includes(app.status));
   const activeOffers = offers.length
     ? offers
     : state.applications.filter((app) => app.status === 'interview' || app.status === 'final_interview').slice(0, 2);
