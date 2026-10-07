@@ -64,6 +64,9 @@ export async function saveContact(): Promise<void> {
   }).catch(() => {});
 }
 
+/**
+ * Renders the networking directory cards filtered by search keywords and role tags.
+ */
 export function renderNetwork(): void {
   const grid = document.getElementById('networkGrid');
   if (!grid) return;
