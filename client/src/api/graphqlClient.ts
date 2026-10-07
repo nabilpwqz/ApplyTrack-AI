@@ -190,6 +190,9 @@ export const QUERIES = {
   `,
 };
 
+/**
+ * Mutation documents for creating, updating, and removing pipeline entities.
+ */
 export const MUTATIONS = {
   LOGIN: `#graphql
     mutation Login($email: String!, $password: String!) {
