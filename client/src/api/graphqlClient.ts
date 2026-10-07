@@ -62,6 +62,9 @@ export async function graphQLRequest<T = any>(
 }
 
 // Queries & Mutation Strings
+/**
+ * Query documents for fetching applications, analytics, and settings.
+ */
 export const QUERIES = {
   GET_APPLICATIONS: `#graphql
     query GetApplications($search: String, $status: String, $priority: String) {
