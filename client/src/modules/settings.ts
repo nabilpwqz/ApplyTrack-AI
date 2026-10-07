@@ -99,6 +99,9 @@ export function updateBillingAmount(): void {
   if (summary) summary.textContent = `${currency} ${amount} / month`;
 }
 
+/**
+ * Returns historical payment transactions recorded on account.
+ */
 export function getBillingTransactions(): BillingTransaction[] {
   try {
     return JSON.parse(localStorage.getItem(BILLING_LOG_KEY) || '[]');
