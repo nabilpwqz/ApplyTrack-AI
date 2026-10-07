@@ -3,6 +3,9 @@ import { updateNavBadges } from './dashboard';
 import { persistData, state } from './state';
 import { escapeHtml, formatDate, generateId, showToast } from './utils';
 
+/**
+ * Renders detected incoming job application opportunities from email sync.
+ */
 export function renderEmailImports(): void {
   const container = document.getElementById('emailPendingList') || document.getElementById('emailImportList');
   const countBadge = document.getElementById('pendingCount');
