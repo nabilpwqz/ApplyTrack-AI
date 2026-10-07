@@ -36,6 +36,9 @@ export interface GraphQLContext {
   };
 }
 
+/**
+ * Decoded authorization token payload and validation metadata.
+ */
 interface ResolvedToken {
   scheme?: string;
   token?: string;
