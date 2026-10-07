@@ -139,6 +139,9 @@ export function renderDashboard(): void {
   renderNextLevelDashboard();
 }
 
+/**
+ * Enhanced overview dashboard with AI recommendations and activity feeds.
+ */
 export function renderNextLevelDashboard(): void {
   const host = document.getElementById('view-dashboard');
   if (!host) return;
