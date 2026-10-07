@@ -18,6 +18,9 @@ export function closeContactModal(): void {
   document.getElementById('contactModal')?.classList.add('hidden');
 }
 
+/**
+ * Commits new contact record to in-memory state and triggers remote GraphQL mutation.
+ */
 export async function saveContact(): Promise<void> {
   const name = ((document.getElementById('ctName') as HTMLInputElement)?.value || '').trim();
   if (!name) {
