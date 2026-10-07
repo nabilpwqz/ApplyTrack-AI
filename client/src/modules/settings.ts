@@ -117,6 +117,9 @@ export function saveBillingTransactions(transactions: BillingTransaction[]): voi
   localStorage.setItem(BILLING_LOG_KEY, JSON.stringify(transactions.slice(0, 12)));
 }
 
+/**
+ * Generates formatted billing reference voucher code.
+ */
 function billingReference(prefix: string, length: number): string {
   const bytes = new Uint8Array(Math.ceil(length / 2));
   crypto.getRandomValues(bytes);
