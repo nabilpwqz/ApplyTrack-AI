@@ -54,6 +54,9 @@ function resolveRoleFromEmail(email: string): 'USER' | 'ADMIN' {
   return email.toLowerCase().endsWith('@example.com') || email.toLowerCase() === 'admin@example.com' ? 'ADMIN' : 'USER';
 }
 
+/**
+ * Prepares standardized execution context for auth pipeline execution.
+ */
 function normalizeAuthPipeline(email: string, provider: 'email' | 'google', mode: 'login' | 'signup' | 'reset'): AuthExecutionContext {
   const normalizedEmail = (email || '').trim();
   return {
