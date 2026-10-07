@@ -2,6 +2,9 @@ import { PrismaClient, User } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 import { prisma } from './db';
 
+/**
+ * Secret key used for signing and verifying JSON Web Tokens.
+ */
 const JWT_SECRET = process.env.JWT_SECRET || 'applytrack_ai_super_secret_jwt_key_2026_dev';
 
 export interface GraphQLContext {
