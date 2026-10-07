@@ -150,6 +150,9 @@ export function openAuth(mode: 'login' | 'signup' | 'reset' = 'login'): void {
   }, 60);
 }
 
+/**
+ * Resets OAuth submit button state and clears loading spinners.
+ */
 export function resetGoogleAuthButton(): void {
   const button = document.getElementById('googleAuthButton');
   const icon = document.getElementById('googleButtonIcon');
