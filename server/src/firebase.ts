@@ -38,6 +38,9 @@ export const app = initializeApp(firebaseConfig);
  * Firebase Auth service instance for token verification.
  */
 export const auth = getAuth(app);
+/**
+ * Google OAuth provider configuration for single sign-on.
+ */
 export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
 
