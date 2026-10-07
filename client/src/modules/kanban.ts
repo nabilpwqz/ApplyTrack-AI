@@ -78,6 +78,9 @@ export function handleKanbanDragStart(event: DragEvent, id: number): void {
   }
 }
 
+/**
+ * Handles card drop into a column, updates stage status, and appends timeline log.
+ */
 export function handleKanbanDrop(event: DragEvent, newStatus: string): void {
   event.preventDefault();
   if (draggedAppId === null) return;
