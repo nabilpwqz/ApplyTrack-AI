@@ -130,6 +130,9 @@ export function streamText(
 }
 
 // ==================== 1. AI JOB MATCH ====================
+/**
+ * Opens AI resume and job description match analyzer modal.
+ */
 export function openJobMatch(): void {
   document.getElementById('jobMatchModal')?.classList.remove('hidden');
 }
