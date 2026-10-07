@@ -22,6 +22,9 @@ export function getWeeklyApplications(): { labels: string[]; data: number[] } {
   return { labels, data };
 }
 
+/**
+ * Calculates mean turnaround duration between submission and recruiter response.
+ */
 export function getAverageResponseTime(): number {
   const responded = state.applications.filter((a) =>
     a.timeline?.some((t) => t.type !== 'submitted' && t.type !== 'saved')
