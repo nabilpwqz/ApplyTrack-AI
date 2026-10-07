@@ -14,6 +14,7 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+/// User account entity storing credentials, role, and relational links
 model User {
   id           String   @id @default(cuid())
   email        String   @unique
