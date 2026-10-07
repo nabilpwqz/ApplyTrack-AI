@@ -271,6 +271,9 @@ export function jumpToToday(): void {
 }
 
 // View Mode Switching
+/**
+ * Toggles between month grid view and agenda list view.
+ */
 export function setCalendarViewMode(mode: 'month' | 'agenda'): void {
   currentViewMode = mode;
   const btnMonth = document.getElementById('calendarBtnMonthView');
