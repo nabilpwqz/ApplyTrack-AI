@@ -11,6 +11,9 @@ function generateTxnId(method: string): string {
   return `TXN-${dateCode}-${methodCode}-${random}`;
 }
 
+/**
+ * Generates unique payment gateway audit tracking code.
+ */
 function generateGatewayRef(method: string): string {
   const methodCode = method.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 4) || 'GW';
   const random = crypto.randomBytes(4).toString('hex').toUpperCase();
