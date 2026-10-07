@@ -605,6 +605,9 @@ export function openSalaryNegotiation(): void {
   document.getElementById('salaryNegotiationModal')?.classList.remove('hidden');
 }
 
+/**
+ * Closes compensation negotiation dialog.
+ */
 export function closeSalaryNegotiation(): void {
   document.getElementById('salaryNegotiationModal')?.classList.add('hidden');
 }
