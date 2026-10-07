@@ -148,6 +148,9 @@ export function dismissEmailImport(id: number): void {
 }
 
 // Pool of realistic recruitment emails for simulated sync
+/**
+ * Simulated mock inbound recruiting emails for demonstration pipeline.
+ */
 const EMAIL_POOLS = [
   {
     company: 'Dropbox',
