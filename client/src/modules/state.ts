@@ -177,6 +177,9 @@ export function getStatusBg(status: string): string {
   return STATUS_CONFIG[status]?.bg || '#f5f5f4';
 }
 
+/**
+ * Serializes current state trees to browser local storage.
+ */
 export function persistData(): void {
   try {
     localStorage.setItem(
