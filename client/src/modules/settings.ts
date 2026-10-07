@@ -49,6 +49,9 @@ export function selectSubscriptionPlan(plan: 'free' | 'premium'): void {
   if (action) action.textContent = plan === 'premium' ? 'Pay for premium plan' : 'Continue with free plan';
 }
 
+/**
+ * Selects active payment gateway method in checkout dialog.
+ */
 export function selectPaymentMethod(method: string): void {
   document.querySelectorAll('[data-payment-method]').forEach((option) =>
     option.classList.toggle('selected', (option as HTMLElement).dataset.paymentMethod === method)
