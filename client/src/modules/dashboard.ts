@@ -335,6 +335,9 @@ export function renderNotifications(): void {
   badge?.classList.toggle('show', data.length > 0 && localStorage.getItem('applytrack_notifications_read') !== '1');
 }
 
+/**
+ * Toggles visibility of notification popover tray.
+ */
 export function toggleNotifications(): void {
   document.getElementById('nlNotificationPanel')?.classList.toggle('open');
   renderNotifications();
