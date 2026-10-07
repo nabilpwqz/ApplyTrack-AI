@@ -34,6 +34,9 @@ export const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase Auth & Google Provider
+/**
+ * Firebase Auth service instance for token verification.
+ */
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
