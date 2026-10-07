@@ -126,6 +126,9 @@ export function acceptEmailImport(id: number): void {
 }
 
 // Alias for backward compatibility
+/**
+ * Backward-compatible alias for accepting email imports.
+ */
 export const importEmailApp = acceptEmailImport;
 
 export function dismissEmailImport(id: number): void {
