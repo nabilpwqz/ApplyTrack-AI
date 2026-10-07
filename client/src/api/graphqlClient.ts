@@ -5,6 +5,9 @@
  */
 const GRAPHQL_ENDPOINT = '/graphql';
 
+/**
+ * Standard response envelope returned by GraphQL execution pipeline.
+ */
 export interface GraphQLResponse<T> {
   data?: T;
   errors?: Array<{ message: string }>;
