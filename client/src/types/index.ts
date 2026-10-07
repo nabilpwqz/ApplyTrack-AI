@@ -80,6 +80,9 @@ export interface EmailImport {
   };
 }
 
+/**
+ * User target benchmarks for weekly outreach, interview quotas, and streaks.
+ */
 export interface CareerGoals {
   weeklyApplications: number;
   weeklyInterviews: number;
