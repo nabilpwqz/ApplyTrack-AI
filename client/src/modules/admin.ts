@@ -115,6 +115,9 @@ export function getPaymentHistory(): PaymentRecord[] {
   }
 }
 
+/**
+ * Commits updated payment records to storage.
+ */
 export function savePaymentHistory(records: PaymentRecord[]): void {
   localStorage.setItem('applytrack_payment_history', JSON.stringify(records));
 }
