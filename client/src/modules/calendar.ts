@@ -21,6 +21,9 @@ const DAY_NAMES = [
  */
 export type CalendarCategory = 'interview' | 'deadline' | 'applied' | 'offer' | 'other';
 
+/**
+ * User-defined scheduled event entry.
+ */
 export interface CustomCalendarEvent {
   id: string;
   title: string;
