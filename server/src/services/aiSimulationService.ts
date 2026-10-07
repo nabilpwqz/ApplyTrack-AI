@@ -1,6 +1,9 @@
 // Server-side AI evaluation & simulation services
 // Providing dynamic, role-specific, context-aware intelligence
 
+/**
+ * Parameters for calculating candidate resume job match score.
+ */
 export interface JobMatchParams {
   jobTitle: string;
   company: string;
