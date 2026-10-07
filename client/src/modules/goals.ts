@@ -44,6 +44,9 @@ export function setGoalRing(arcId: string, labelId: string, current: number, tar
   if (label) label.textContent = `${current}/${target}`;
 }
 
+/**
+ * Extracts goal inputs from settings form and persists benchmarks to state.
+ */
 export function saveCareerGoals(): void {
   const weeklyApps = parseInt((document.getElementById('goalWeeklyApps') as HTMLInputElement)?.value, 10) || 5;
   const weeklyInterviews = parseInt((document.getElementById('goalWeeklyInterviews') as HTMLInputElement)?.value, 10) || 2;
