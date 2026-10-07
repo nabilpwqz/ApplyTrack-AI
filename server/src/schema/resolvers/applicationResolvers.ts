@@ -170,7 +170,8 @@ updateApplication: async (
       });
     },
 
-    deleteApplication: async (_: unknown, { id }: { id: number }, ctx: GraphQLContext) => {
+        // Mutation resolver removing application and cascading timeline events
+deleteApplication: async (_: unknown, { id }: { id: number }, ctx: GraphQLContext) => {
       await ctx.prisma.application.delete({ where: { id } });
       return true;
     },
