@@ -5,7 +5,8 @@ import { GraphQLContext } from '../../context';
  */
 export const applicationResolvers = {
   Query: {
-    applications: async (
+        // Query resolver fetching all applications for authenticated user
+applications: async (
       _: unknown,
       { search, status, priority }: { search?: string; status?: string; priority?: string },
       ctx: GraphQLContext
