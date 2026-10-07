@@ -106,6 +106,9 @@ export function openAddApplicationModal(): void {
   document.getElementById('addAppModal')?.classList.remove('hidden');
 }
 
+/**
+ * Loads existing application values into modal inputs for updating details.
+ */
 export function openEditApplication(id: number): void {
   const app = state.applications.find((a) => a.id === id);
   if (!app) return;
