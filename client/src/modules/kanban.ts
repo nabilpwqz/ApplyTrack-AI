@@ -68,6 +68,9 @@ export function renderKanban(): void {
   }).join('');
 }
 
+/**
+ * Initializes drag payload and sets transfer metadata for the moving card.
+ */
 export function handleKanbanDragStart(event: DragEvent, id: number): void {
   draggedAppId = id;
   if (event.dataTransfer) {
