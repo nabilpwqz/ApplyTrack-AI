@@ -63,6 +63,9 @@ function buildRequestMetadata(req: any) {
   };
 }
 
+/**
+ * Parses and validates bearer authorization header token.
+ */
 function resolveAuthorizationToken(value: unknown): ResolvedToken {
   if (typeof value !== 'string') {
     return { valid: false };
