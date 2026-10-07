@@ -64,6 +64,9 @@ export interface FollowUpEmailParams {
   context?: string;
 }
 
+/**
+ * Simulated AI reasoning engine providing heuristics and draft generation.
+ */
 export const aiSimulationService = {
   analyzeJobMatch(params: JobMatchParams) {
     const rawSkills = params.skills
