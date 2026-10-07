@@ -20,6 +20,9 @@ function generateGatewayRef(method: string): string {
   return `GW-${methodCode}-${random}`;
 }
 
+/**
+ * Resolvers handling premium membership billing and payment approvals.
+ */
 export const subscriptionResolvers = {
   Query: {
     subscription: async (_: unknown, __: unknown, ctx: GraphQLContext) => {
