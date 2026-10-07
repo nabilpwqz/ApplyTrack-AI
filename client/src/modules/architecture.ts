@@ -1,3 +1,6 @@
+/**
+ * Recognized environment execution stages with differentiated telemetry.
+ */
 export type RuntimeEnvironment = 'local' | 'development' | 'staging' | 'production';
 
 export interface RuntimeFeatureFlag {
