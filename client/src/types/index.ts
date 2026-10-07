@@ -28,6 +28,9 @@ export interface TimelineItem {
   type: string;
 }
 
+/**
+ * Primary job application entity with interview tracking and recruiter metadata.
+ */
 export interface Application {
   id: number;
   userId?: string | null;
