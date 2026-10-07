@@ -3,6 +3,9 @@ import { switchView } from './dashboard';
 import { state } from './state';
 import { escapeHtml, showToast } from './utils';
 
+/**
+ * Opens fuzzy command search palette and focuses input field.
+ */
 export function openCommandPalette(): void {
   document.getElementById('nlCommandBar')?.classList.add('open');
   const input = document.getElementById('nlCommandInput') as HTMLInputElement | null;
