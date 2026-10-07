@@ -68,6 +68,9 @@ function normalizeAuthPipeline(email: string, provider: 'email' | 'google', mode
   };
 }
 
+/**
+ * Reads and parses currently active session from storage.
+ */
 export function getSession(): UserSession | null {
   try {
     return JSON.parse(localStorage.getItem(AUTH_KEY) || 'null');
