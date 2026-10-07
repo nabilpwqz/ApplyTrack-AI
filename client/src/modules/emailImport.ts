@@ -210,6 +210,9 @@ const EMAIL_POOLS = [
 
 let syncIteration = 0;
 
+/**
+ * Simulates IMAP email synchronization discovery cycle.
+ */
 export function simulateEmailSync(): void {
   const today = new Date().toISOString().split('T')[0];
   const offset = (syncIteration * 2) % EMAIL_POOLS.length;
