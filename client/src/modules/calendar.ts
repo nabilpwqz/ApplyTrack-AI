@@ -65,6 +65,9 @@ let activeDayDate: string | null = null;
 const STORAGE_KEY = 'applytrack_calendar_events';
 
 // Persistence helpers
+/**
+ * Retrieves custom calendar events from persistent store.
+ */
 export function getCustomCalendarEvents(): CustomCalendarEvent[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
