@@ -14,6 +14,9 @@ function createToken(userId: string): string {
   return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '7d' });
 }
 
+/**
+ * Authentication query and mutation resolvers handling login and sessions.
+ */
 export const authResolvers = {
   Query: {
     me: async (_: unknown, __: unknown, ctx: GraphQLContext) => {
